@@ -35,16 +35,7 @@ public class ProjectPlug {
 //          Customer Ibrahim = customerdao.findCustomer(123);
 //          System.out.println(Ibrahim.getBalance());
           
-//          TransactionsDao transactionsDao = new TransactionsDao();
-//          transactionsDao.deleteTransactions(1);//Delete Transactions by TransactionID(pk)
-//          
-//          Transactions transactionKunde1 = new Transactions(1,1,10,"2014-11-03 19:32:16","Hundige","Tryllestav");
-//          transactionsDao.addTransactions(transactionKunde1);
-//          
-//          
-//          Transactions Lookup = transactionsDao.findTransactions(1);
-//          System.out.println(Lookup.getCustomerID());
-//        
+            TransactionsDao transactionsDao = new TransactionsDao();
           
           CustomerDao customerDao =new CustomerDao();
           Customer customerFromDatabase = customerDao.findCustomer(123);

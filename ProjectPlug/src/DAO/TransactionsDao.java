@@ -61,7 +61,7 @@ public class TransactionsDao {
    
  
       public int addTransactions(Transactions transactions) {
-        String insertQuery = "insert into TRANSACTIONS  values (?,?,?,?,?,?)";
+        String insertQuery = "insert into TRANSACTIONS  values (?,?,?,?,?,?,?)";
         Connection con = null;
         int rowCount = -1;
         try {
@@ -73,6 +73,7 @@ public class TransactionsDao {
             preparedStatement.setString(4, transactions.getTimeDate());
             preparedStatement.setString(5, transactions.getLocation());
             preparedStatement.setString(6, transactions.getDevice());
+            preparedStatement.setDouble(7, transactions.getTimeSpent());
             
             rowCount = preparedStatement.executeUpdate();
 
@@ -128,7 +129,8 @@ private Transactions createTransactionsObject(ResultSet resultSet) throws SQLExc
         String timeDate = resultSet.getString("timeDate");
         String location = resultSet.getString("location");
         String device = resultSet.getString("device");
-        return new Transactions(transactionID, customerID, amount, timeDate, location, device);
+        double timeSpent = resultSet.getDouble("timeSpent");
+        return new Transactions(transactionID, customerID, amount, timeDate, location, device,timeSpent);
     }
     
 }

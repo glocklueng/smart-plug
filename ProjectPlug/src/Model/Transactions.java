@@ -16,8 +16,10 @@ public class Transactions {
     private String timeDate;
     private String location;
     private String device;
+    private double timeSpent;
     
-    public Transactions(int transactionID, int customerID, double amount, String timeDate, String location, String device)
+    public Transactions(int transactionID, int customerID, double amount, 
+            String timeDate, String location, String device, double timeSpent)
     {
         this.setTransactionID(transactionID);
         this.setCustomerID(customerID);
@@ -25,6 +27,7 @@ public class Transactions {
         this.setTimeDate(timeDate);
         this.setLocation(location);
         this.setDevice(device);
+        this.setTimeSpent(timeSpent);
     
     }
 
@@ -74,6 +77,20 @@ public class Transactions {
 
     public void setDevice(String device) {
         this.device = device;
+    }
+
+    /**
+     * @return the timeSpent
+     */
+    public double getTimeSpent() {
+        return timeSpent;
+    }
+
+    /**
+     * @param timeSpent the timeSpent to set
+     */
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
     }
     
 }
