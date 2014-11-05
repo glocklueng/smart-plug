@@ -35,20 +35,30 @@ public class ProjectPlug {
 //          Customer Ibrahim = customerdao.findCustomer(123);
 //          System.out.println(Ibrahim.getBalance());
           
-          TransactionsDAO transactionsDao = new TransactionsDAO();
-          transactionsDao.deleteTransactions(1);//Delete Transactions by TransactionID(pk)
+//          TransactionsDao transactionsDao = new TransactionsDao();
+//          transactionsDao.deleteTransactions(1);//Delete Transactions by TransactionID(pk)
+//          
+//          Transactions transactionKunde1 = new Transactions(1,1,10,"2014-11-03 19:32:16","Hundige","Tryllestav");
+//          transactionsDao.addTransactions(transactionKunde1);
+//          
+//          
+//          Transactions Lookup = transactionsDao.findTransactions(1);
+//          System.out.println(Lookup.getCustomerID());
+//        
           
-          Transactions transactionKunde1 = new Transactions(1,1,10,"2014-11-03 19:32:16","Hundige","Tryllestav");
-          transactionsDao.addTransactions(transactionKunde1);
+          CustomerDao customerDao =new CustomerDao();
+          Customer customerFromDatabase = customerDao.findCustomer(123);
+          System.out.println(customerFromDatabase.getName());
           
           
-          Transactions Lookup = transactionsDao.findTransactions(1);
-          System.out.println(Lookup.getCustomerID());
+          Customer newCustomerInDatabase= new Customer(145, "LALA", "123213213",1000,"IKnowHowToDoThis@yes.com","Finally" ); 
+          customerDao.addCustomer(newCustomerInDatabase);
+          customerFromDatabase = customerDao.findCustomer(145);
+          System.out.println(customerFromDatabase.getName());
           
+          System.out.println(customerDao.deleteCustomer(145));
           
-          
-          
-    System.out.println(prices.getLocation()+ ":" + prices.getPrice_day()+":"+ prices.getPrice_night());
+    System.out.println(prices.getLocation()+ ": " + prices.getPrice_day()+": "+ prices.getPrice_night());
     System.out.println(checkPrices.getLocation() + ":" + checkPrices.getPrice_day() +":"+ checkPrices.getPrice_night());
     }
     
