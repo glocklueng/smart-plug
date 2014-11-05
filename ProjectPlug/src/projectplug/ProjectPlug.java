@@ -29,9 +29,28 @@ public class ProjectPlug {
           pricesDao.addPrices(pricesCopenhagen);
           Prices prices= pricesDao.findPrices("Copenhagen");
           Prices checkPrices = pricesDao.findPrices("Tokyo");
+       
+//          CustomerDao customerdao = new CustomerDao();
+//          
+//          Customer Ibrahim = customerdao.findCustomer(123);
+//          System.out.println(Ibrahim.getBalance());
+          
+          TransactionsDAO transactionsDao = new TransactionsDAO();
+          transactionsDao.deleteTransactions(1);//Delete Transactions by TransactionID(pk)
+          
+          Transactions transactionKunde1 = new Transactions(1,1,10,"2014-11-03 19:32:16","Hundige","Tryllestav");
+          transactionsDao.addTransactions(transactionKunde1);
+          
+          
+          Transactions Lookup = transactionsDao.findTransactions(1);
+          System.out.println(Lookup.getCustomerID());
+          
+          
+          
           
     System.out.println(prices.getLocation()+ ":" + prices.getPrice_day()+":"+ prices.getPrice_night());
     System.out.println(checkPrices.getLocation() + ":" + checkPrices.getPrice_day() +":"+ checkPrices.getPrice_night());
     }
     
 }
+
