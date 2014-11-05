@@ -1,31 +1,29 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package DAO;
 
+/**
+ *
+ * @author Morten
+ */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import Model.Customer;
-import Model.Prices;
+import Model.Transactions;
 
-/**
- *
- * @author Ibrahim
- */
-public class CustomerDao {
-
-    public Customer findCustomer(int id) {
+public class TransactionsDao {
+    
+     public Transactions findTransactions(int transactionID) {
         /*
          Sql query to be executed in order to obtain a result set
          */
-        String customerQuery = "select * from customer where id =?";
+        String TransactionsQuery = "select * from transaction where location =?";
         //
         // 
-        Customer customer = null;
+        Transactions transactions = null;
         Connection con = null;
 
         try {
@@ -34,8 +32,8 @@ public class CustomerDao {
              The query is saved inside the prepared statment where the needed variable(location)
              is added to the statement. The location changes the question mark inside the query
              */
-            PreparedStatement preparedStatement = con.prepareStatement(customerQuery);
-            preparedStatement.setInt(1, id);
+            PreparedStatement preparedStatement = con.prepareStatement(TransactionsQuery);
+            preparedStatement.setInt(1, transactionID);
 
             /*
              By executing query on the prepared statement you obtain a result set
@@ -43,7 +41,7 @@ public class CustomerDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                customer = createCustomerObject(resultSet);// create a customer object by using the result set
+                transactions = createTransactionsObject(resultSet);// create a transaction object by using the result set
             }
             preparedStatement.close();
         } catch (SQLException e) {
@@ -57,22 +55,50 @@ public class CustomerDao {
                 }
             }
         }
-        return customer;
+        return transactions;
     }
-
-    public int addCustomer(Customer customer) {
-        String insertQuery = "insert into CUSTOMER  values (?,?,?,?,?,?)";
+     
+   
+ 
+      public int addTransactions(Transactions transactions) {
+        String insertQuery = "insert into TRANSACTIONS  values (?,?,?,?,?,?)";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, customer.getId());
-            preparedStatement.setString(2, customer.getPassword());
-            preparedStatement.setString(3, customer.getName());
-            preparedStatement.setString(4, customer.getPhone());
-            preparedStatement.setString(5, customer.getEmail());
-            preparedStatement.setDouble(6, customer.getBalance());
+            preparedStatement.setInt(1, transactions.getTransactionID());
+            preparedStatement.setInt(2, transactions.getCustomerID());
+            preparedStatement.setDouble(3, transactions.getAmount());
+            preparedStatement.setString(4, transactions.getTimeDate());
+            preparedStatement.setString(5, transactions.getLocation());
+            preparedStatement.setString(6, transactions.getDevice());
+            
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+      
+          public int deleteTransactions(int transactionID) {
+        String insertQuery = "delete from transactions where location =?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+            preparedStatement.setInt(1,transactionID);
 
             rowCount = preparedStatement.executeUpdate();
 
@@ -90,42 +116,19 @@ public class CustomerDao {
         }
         return rowCount;
     }
- public int deleteCustomer(int id) {
-        String insertQuery = "delete from customer where id =?";
-        Connection con = null;
-        int rowCount = -1;
-        try {
-            con = DerbyDAOFactory.createConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1,id);
 
-            rowCount = preparedStatement.executeUpdate();
 
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }
-        return rowCount;
-    }
-    private Customer createCustomerObject(ResultSet resultSet) throws SQLException /*
-     This method creates a Customer Object from the resultset obtained by 
+private Transactions createTransactionsObject(ResultSet resultSet) throws SQLException /*
+     This method creates a Tranactions Object from the resultset obtained by 
      executing the SQL query
      */ {
-        int id = resultSet.getInt("id");
-        String name = resultSet.getString("name");
-        String phone = resultSet.getString("phone");
-        double balance = resultSet.getDouble("balance");
-        String email = resultSet.getString("email");
-        String password = resultSet.getString("password");
-
-        return new Customer(id, name, phone, balance, email, password);
+        int transactionID = resultSet.getInt("transactionsID");
+        int customerID = resultSet.getInt("customerID");
+        double amount = resultSet.getDouble("amount");
+        String timeDate = resultSet.getString("timeDate");
+        String location = resultSet.getString("location");
+        String device = resultSet.getString("device");
+        return new Transactions(transactionID, customerID, amount, timeDate, location, device);
     }
+    
 }
