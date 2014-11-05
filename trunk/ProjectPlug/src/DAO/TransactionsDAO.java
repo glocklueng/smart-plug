@@ -1,30 +1,29 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package DAO;
 
+/**
+ *
+ * @author Morten
+ */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import Model.Prices;
+import Model.Transactions;
 
-/**
- *
- * @author Ibrahim
- */
-public class PricesDao {
-
-    public Prices findPrices(String location) {
+public class TransactionsDAO {
+    
+     public Transactions findTransactions(int transactionID) {
         /*
          Sql query to be executed in order to obtain a result set
          */
-        String pricesQuery = "select * from prices where location =?";
+        String TransactionsQuery = "select * from transaction where location =?";
         //
         // 
-        Prices prices = null;
+        Transactions transactions = null;
         Connection con = null;
 
         try {
@@ -33,8 +32,8 @@ public class PricesDao {
              The query is saved inside the prepared statment where the needed variable(location)
              is added to the statement. The location changes the question mark inside the query
              */
-            PreparedStatement preparedStatement = con.prepareStatement(pricesQuery);
-            preparedStatement.setString(1, location);
+            PreparedStatement preparedStatement = con.prepareStatement(TransactionsQuery);
+            preparedStatement.setInt(1, transactionID);
 
             /*
              By executing query on the prepared statement you obtain a result set
@@ -42,7 +41,7 @@ public class PricesDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                prices = createPricesObject(resultSet);// create a prices object by using the result set
+                transactions = createTransactionsObject(resultSet);// create a transaction object by using the result set
             }
             preparedStatement.close();
         } catch (SQLException e) {
@@ -56,19 +55,50 @@ public class PricesDao {
                 }
             }
         }
-        return prices;
+        return transactions;
     }
-
-    public int addPrices(Prices prices) {
-        String insertQuery = "insert into PRICES  values (?,?,?)";
+     
+   
+ 
+      public int addTransactions(Transactions transactions) {
+        String insertQuery = "insert into TRANSACTIONS  values (?,?,?,?,?,?)";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setString(1, prices.getLocation());
-            preparedStatement.setDouble(2, prices.getPrice_day());
-            preparedStatement.setDouble(3, prices.getPrice_night());
+            preparedStatement.setInt(1, transactions.getTransactionID());
+            preparedStatement.setInt(2, transactions.getCustomerID());
+            preparedStatement.setDouble(3, transactions.getAmount());
+            preparedStatement.setString(4, transactions.getTimeDate());
+            preparedStatement.setString(5, transactions.getLocation());
+            preparedStatement.setString(6, transactions.getDevice());
+            
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+      
+          public int deleteTransactions(int transactionID) {
+        String insertQuery = "delete from transactions where location =?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+            preparedStatement.setInt(1,transactionID);
 
             rowCount = preparedStatement.executeUpdate();
 
@@ -87,40 +117,18 @@ public class PricesDao {
         return rowCount;
     }
 
-    public int deletePrices(String location) {
-        String insertQuery = "delete from prices where location =?";
-        Connection con = null;
-        int rowCount = -1;
-        try {
-            con = DerbyDAOFactory.createConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setString(1,location);
 
-            rowCount = preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }
-        return rowCount;
-    }
-
-    private Prices createPricesObject(ResultSet resultSet) throws SQLException /*
-     This method creates a Prices Object from the resultset obtained by 
+private Transactions createTransactionsObject(ResultSet resultSet) throws SQLException /*
+     This method creates a Tranactions Object from the resultset obtained by 
      executing the SQL query
      */ {
+        int transactionID = resultSet.getInt("transactionsID");
+        int customerID = resultSet.getInt("customerID");
+        double amount = resultSet.getDouble("amount");
+        String timeDate = resultSet.getString("timeDate");
         String location = resultSet.getString("location");
-        double price_day = resultSet.getDouble("price_day");
-        double price_night = resultSet.getDouble("price_night");
-        return new Prices(location, price_day, price_night);
+        String device = resultSet.getString("device");
+        return new Transactions(transactionID, customerID, amount, timeDate, location, device);
     }
+    
 }
-// need to make update prices

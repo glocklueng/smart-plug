@@ -9,22 +9,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import Model.Customer;
 import Model.Prices;
 
 /**
  *
  * @author Ibrahim
  */
-public class PricesDao {
+public class CustomerDao {
 
-    public Prices findPrices(String location) {
+    public Customer findCustomer(int id) {
         /*
          Sql query to be executed in order to obtain a result set
          */
-        String pricesQuery = "select * from prices where location =?";
+        String customerQuery = "select * from customer where id =?";
         //
         // 
-        Prices prices = null;
+        Customer customer = null;
         Connection con = null;
 
         try {
@@ -33,8 +34,8 @@ public class PricesDao {
              The query is saved inside the prepared statment where the needed variable(location)
              is added to the statement. The location changes the question mark inside the query
              */
-            PreparedStatement preparedStatement = con.prepareStatement(pricesQuery);
-            preparedStatement.setString(1, location);
+            PreparedStatement preparedStatement = con.prepareStatement(customerQuery);
+            preparedStatement.setInt(1, id);
 
             /*
              By executing query on the prepared statement you obtain a result set
@@ -42,7 +43,7 @@ public class PricesDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                prices = createPricesObject(resultSet);// create a prices object by using the result set
+                customer = createCustomerObject(resultSet);// create a customer object by using the result set
             }
             preparedStatement.close();
         } catch (SQLException e) {
@@ -56,11 +57,10 @@ public class PricesDao {
                 }
             }
         }
-        return prices;
+        return customer;
     }
-
-    public int addPrices(Prices prices) {
-        String insertQuery = "insert into PRICES  values (?,?,?)";
+    public int addCustomer(Customer Customer) {
+        String insertQuery = "insert into CUSTOMER  values (?,?,?,?,?,?)";
         Connection con = null;
         int rowCount = -1;
         try {
@@ -87,40 +87,17 @@ public class PricesDao {
         return rowCount;
     }
 
-    public int deletePrices(String location) {
-        String insertQuery = "delete from prices where location =?";
-        Connection con = null;
-        int rowCount = -1;
-        try {
-            con = DerbyDAOFactory.createConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setString(1,location);
-
-            rowCount = preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }
-        return rowCount;
-    }
-
-    private Prices createPricesObject(ResultSet resultSet) throws SQLException /*
-     This method creates a Prices Object from the resultset obtained by 
+    private Customer createCustomerObject(ResultSet resultSet) throws SQLException /*
+     This method creates a Customer Object from the resultset obtained by 
      executing the SQL query
      */ {
-        String location = resultSet.getString("location");
-        double price_day = resultSet.getDouble("price_day");
-        double price_night = resultSet.getDouble("price_night");
-        return new Prices(location, price_day, price_night);
+        int id = resultSet.getInt("id");
+        String name = resultSet.getString("name");
+        String phone = resultSet.getString("phone");
+        double balance = resultSet.getDouble("balance");
+        String email = resultSet.getString("email");
+        String password = resultSet.getString("password");
+
+        return new Customer(id, name, phone, balance, email, password);
     }
 }
-// need to make update prices
