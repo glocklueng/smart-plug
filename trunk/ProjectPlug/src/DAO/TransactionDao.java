@@ -12,18 +12,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import Model.Transactions;
+import Model.Transaction;
 
-public class TransactionsDao {
+public class TransactionDao {
     
-     public Transactions findTransactions(int transactionID) {
+     public Transaction findTransactions(int transactionID) {
         /*
          Sql query to be executed in order to obtain a result set
          */
-        String TransactionsQuery = "select * from transaction where location =?";
+        String TransactionsQuery = "select * from transactions where transaction_id =?";
         //
         // 
-        Transactions transactions = null;
+        Transaction transaction = null;
         Connection con = null;
 
         try {
@@ -41,7 +41,7 @@ public class TransactionsDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                transactions = createTransactionsObject(resultSet);// create a transaction object by using the result set
+                transaction = createTransactionsObject(resultSet);// create a transaction object by using the result set
             }
             preparedStatement.close();
         } catch (SQLException e) {
@@ -55,25 +55,25 @@ public class TransactionsDao {
                 }
             }
         }
-        return transactions;
+        return transaction;
     }
      
    
  
-      public int addTransactions(Transactions transactions) {
+      public int addTransaction(Transaction transaction) {
         String insertQuery = "insert into TRANSACTIONS  values (?,?,?,?,?,?,?)";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, transactions.getTransactionID());
-            preparedStatement.setInt(2, transactions.getCustomerID());
-            preparedStatement.setDouble(3, transactions.getAmount());
-            preparedStatement.setString(4, transactions.getTimeDate());
-            preparedStatement.setString(5, transactions.getLocation());
-            preparedStatement.setString(6, transactions.getDevice());
-            preparedStatement.setDouble(7, transactions.getTimeSpent());
+            preparedStatement.setInt(1, transaction.getTransactionID());
+            preparedStatement.setInt(2, transaction.getCustomerID());
+            preparedStatement.setDouble(3, transaction.getAmount());
+            preparedStatement.setString(4, transaction.getTimeDate());
+            preparedStatement.setString(5, transaction.getLocation());
+            preparedStatement.setString(6, transaction.getDevice());
+            preparedStatement.setDouble(7, transaction.getTimeSpent());
             
             rowCount = preparedStatement.executeUpdate();
 
@@ -92,8 +92,8 @@ public class TransactionsDao {
         return rowCount;
     }
       
-          public int deleteTransactions(int transactionID) {
-        String insertQuery = "delete from transactions where location =?";
+        public int deleteTransaction(int transactionID) {
+        String insertQuery = "delete from transactions where transaction_id =?";
         Connection con = null;
         int rowCount = -1;
         try {
@@ -119,18 +119,18 @@ public class TransactionsDao {
     }
 
 
-private Transactions createTransactionsObject(ResultSet resultSet) throws SQLException /*
+private Transaction createTransactionsObject(ResultSet resultSet) throws SQLException /*
      This method creates a Tranactions Object from the resultset obtained by 
      executing the SQL query
      */ {
-        int transactionID = resultSet.getInt("transactionsID");
-        int customerID = resultSet.getInt("customerID");
+        int transactionID = resultSet.getInt("transaction_ID");
+        int customerID = resultSet.getInt("customer_ID");
         double amount = resultSet.getDouble("amount");
         String timeDate = resultSet.getString("timeDate");
         String location = resultSet.getString("location");
         String device = resultSet.getString("device");
-        double timeSpent = resultSet.getDouble("timeSpent");
-        return new Transactions(transactionID, customerID, amount, timeDate, location, device,timeSpent);
+        double timeSpent = resultSet.getDouble("time_Spent");
+        return new Transaction(transactionID, customerID, amount, timeDate, location, device,timeSpent);
     }
     
 }
