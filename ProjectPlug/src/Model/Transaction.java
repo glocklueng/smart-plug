@@ -8,7 +8,7 @@ package Model;
  *
  * @author Morten
  */
-public class Transactions {
+public class Transaction {
     
     private int transactionID;
     private int customerID;
@@ -18,7 +18,7 @@ public class Transactions {
     private String device;
     private double timeSpent;
     
-    public Transactions(int transactionID, int customerID, double amount, 
+    public Transaction(int transactionID, int customerID, double amount, 
             String timeDate, String location, String device, double timeSpent)
     {
         this.setTransactionID(transactionID);
