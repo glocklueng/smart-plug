@@ -36,6 +36,7 @@ public class CustomerDao {
              */
             PreparedStatement preparedStatement = con.prepareStatement(customerQuery);
             preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement.toString());
 
             /*
              By executing query on the prepared statement you obtain a result set
