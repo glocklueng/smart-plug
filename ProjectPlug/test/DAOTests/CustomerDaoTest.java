@@ -36,7 +36,8 @@ public class CustomerDaoTest {
   
     
     @Before
-    public void setUp() {
+    public void setUp() //it's called before the tests start
+    {
         customerDao= new CustomerDao();
         customerToBeAdded = new Customer(999, "LALA", "123213213",1000,"IKnowHowToDoT2h1is@yes.com","Finally" );
         customerToBeFound = new Customer(992, "LALA", "123213213",1000,"IKnowHowToDoTh23is@yes.com","Finally" );
@@ -46,7 +47,8 @@ public class CustomerDaoTest {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() // it's called after the tests end
+    {
         customerDao.deleteCustomer(customerToBeAdded.getId());
         customerDao.deleteCustomer(customerToBeFound.getId());
     }
