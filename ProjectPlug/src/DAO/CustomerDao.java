@@ -91,14 +91,15 @@ public class CustomerDao {
         }
         return rowCount;
     }
- public int deleteCustomer(int id) {
+
+    public int deleteCustomer(int id) {
         String insertQuery = "delete from customer where id =?";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
 
             rowCount = preparedStatement.executeUpdate();
 
@@ -116,6 +117,39 @@ public class CustomerDao {
         }
         return rowCount;
     }
+
+    public int updateCustomer(Customer customer) {
+        String insertQuery = "update CUSTOMER "
+                + "Set password=?,name=?,phone=?, email=?,balance=?  where id=?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, customer.getPassword());
+            preparedStatement.setString(2, customer.getName());
+            preparedStatement.setString(3, customer.getPhone());
+            preparedStatement.setString(4, customer.getEmail());
+            preparedStatement.setDouble(5, customer.getBalance());
+            preparedStatement.setInt(6, customer.getId());
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+
     private Customer createCustomerObject(ResultSet resultSet) throws SQLException /*
      This method creates a Customer Object from the resultset obtained by 
      executing the SQL query
