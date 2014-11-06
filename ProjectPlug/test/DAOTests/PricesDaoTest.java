@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package DAOTests;
 
@@ -27,6 +22,7 @@ public class PricesDaoTest {
     Prices pricesToBeAdded;
     Prices pricesToBeFound;
     Prices pricesToBeDeleted;
+    Prices pricesToBeUpdated;
  public PricesDaoTest() {
         
     }
@@ -37,12 +33,14 @@ public class PricesDaoTest {
        pricesToBeAdded = new Prices ("Brøndby", 3.5, 6.9);
        pricesToBeFound = new Prices ("FCK", 3.0, 6.5);
        pricesToBeDeleted = new Prices ("Pakistan", 3.5, 999.9);
+       pricesToBeUpdated = new Prices ("Heaven", 3.5, 999.9);
     }
     
     @After
     public void tearDown() {
        pricesDao.deletePrices(pricesToBeAdded.getLocation());
        pricesDao.deletePrices(pricesToBeFound.getLocation());
+       pricesDao.deletePrices(pricesToBeUpdated.getLocation());
     }
 
     /**
@@ -69,5 +67,15 @@ public class PricesDaoTest {
         pricesDao.addPrices(pricesToBeDeleted);
         int value = pricesDao.deletePrices(pricesToBeDeleted.getLocation());
         assertEquals(1,value);
+    }
+     @Test 
+    public void test4updatePrices()
+    {   
+        pricesDao.addPrices(pricesToBeUpdated);
+        Prices updatePrice= new Prices(pricesToBeUpdated.getLocation(), 150,250);
+        int value = pricesDao.updatePrices(updatePrice);
+        assertEquals(1,value);
+        Prices afterUpdate= pricesDao.findPrices(updatePrice.getLocation());
+        assertEquals(updatePrice.getPrice_day(), afterUpdate.getPrice_day(),0.0);
     }
 }
