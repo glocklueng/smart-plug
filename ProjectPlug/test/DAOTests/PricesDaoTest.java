@@ -40,7 +40,7 @@ public class PricesDaoTest {
     public void tearDown() {
        pricesDao.deletePrices(pricesToBeAdded.getLocation());
        pricesDao.deletePrices(pricesToBeFound.getLocation());
-       pricesDao.deletePrices(pricesToBeUpdated.getLocation());
+       pricesDao.deletePrices(pricesToBeUpdated.getLocation()); //delete after use
     }
 
     /**
