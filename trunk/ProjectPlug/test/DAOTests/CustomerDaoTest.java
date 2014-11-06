@@ -24,6 +24,7 @@ public class CustomerDaoTest {
     Customer customerToBeAdded;
     Customer customerToBeFound;
     Customer customerToBeDeleted;
+    Customer customerToBeUpdated;
     public CustomerDaoTest() {
         
     }
@@ -37,7 +38,7 @@ public class CustomerDaoTest {
         customerToBeAdded = new Customer(999, "LALA", "123213213",1000,"IKnowHowToDoT2h1is@yes.com","Finally" );
         customerToBeFound = new Customer(992, "LALA", "123213213",1000,"IKnowHowToDoTh23is@yes.com","Finally" );
         customerToBeDeleted =new Customer(922, "LALA", "123213213",1000,"IKn1owHowToDoT2his@yes.com","Finally" );
-        
+        customerToBeUpdated = new Customer(928, "LALA", "123213213",1000,"IKn1owHowToDoT2his@yes.com","Finally" );
         
     }
     
@@ -70,6 +71,17 @@ public class CustomerDaoTest {
     public void test3deleteCustomer()
     {   customerDao.addCustomer(customerToBeDeleted);
         int value = customerDao.deleteCustomer(customerToBeDeleted.getId());
-        assertEquals(value,1);
+        assertEquals(1,value);
+    }
+    
+    @Test
+    public void test4updateCustomer()
+    {   customerDao.addCustomer(customerToBeUpdated);
+    Customer updateCustomer= new Customer(customerToBeUpdated.getId(),"dsadsa","lala",9.0,"yes","sdada");
+    int value = customerDao.updateCustomer(updateCustomer);
+    assertEquals(1,value);
+    Customer afterUpdate= customerDao.findCustomer(updateCustomer.getId());
+    assertEquals(updateCustomer.getBalance(), afterUpdate.getBalance(),0.0);
+    
     }
 }
