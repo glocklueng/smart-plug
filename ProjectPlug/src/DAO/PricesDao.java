@@ -86,7 +86,34 @@ public class PricesDao {
         }
         return rowCount;
     }
+ public int updatePrices(Prices prices) {
+        String insertQuery = "update PRICES "
+                + "Set price_day= ?, price_night=?  where location=?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+            preparedStatement.setDouble(1, prices.getPrice_day());
+            preparedStatement.setDouble(2, prices.getPrice_night());
+            preparedStatement.setString(3, prices.getLocation());
 
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
     public int deletePrices(String location) {
         String insertQuery = "delete from prices where location =?";
         Connection con = null;
