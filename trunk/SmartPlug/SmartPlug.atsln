@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "SmartPlug", "SmartPlug\SmartPlug.cproj", "{50FF090B-067C-42E5-B9B4-328A84C8825D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50FF090B-067C-42E5-B9B4-328A84C8825D}.Debug|AVR.ActiveCfg = Debug|AVR
+		{50FF090B-067C-42E5-B9B4-328A84C8825D}.Debug|AVR.Build.0 = Debug|AVR
+		{50FF090B-067C-42E5-B9B4-328A84C8825D}.Release|AVR.ActiveCfg = Release|AVR
+		{50FF090B-067C-42E5-B9B4-328A84C8825D}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
