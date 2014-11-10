@@ -9,6 +9,8 @@
 #define DECODE2= PC7;
 #define ENCODE1= PD6;
 #define ENCODE2= PD7;
+
+unsigned char RawKeyPressed();
 void setRow(char cnt);
 char scanKeyPad();
 char findKey(char row, char temp);
