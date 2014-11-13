@@ -37,3 +37,9 @@ void USART_Transmit( unsigned char data )
 	/* Put data into buffer, sends the data */
 	UDR = data;
 }
+void Usart_sendString(unsigned char *str){
+	unsigned char c;
+	for (;(c=*str); str++){
+		USART_Transmit(c);
+	}
+}
