@@ -6,11 +6,17 @@
  */ 
 #include <avr/io.h>
 #include "Keypad.h"
+#include "uart.h"
 char key_table[4][4]= {{'F','E','D','C'},
 					   {'3','6','9','B'},
                        {'2','5','8','0'},
                        {'1','4','7','A'}};
 unsigned char keyPressed= 0;
+void initKeypad()
+{
+	DDRC|= (1<<DECODE1) | (1<<DECODE2);
+}
+
 enum state1
 {
 	idle,
@@ -23,13 +29,15 @@ enum state1
 	};
 state1=idle; 
 int count=1;
-int ms=0;
-unsigned char key;
-unsigned char keyFound;
-unsigned char keyPressed;
+
+
+
+
+
 unsigned char RawKeyPressed()
-{
-	return (PINB&((1<<ENCODE1)|(1<<ENCODE2))>>6); //0b000000q1q0 - the values of the output are in bit 0(q0),bit 1(q1)
+{	char temp1 = PIND&(1<<ENCODE1)>>6;
+	char temp2 = PIND&(1<<ENCODE2)>>6;
+	return temp1|temp2 |(PINB & (1<<PB2)); //0b000000q1q0 - the values of the output are in bit 0(q0),bit 1(q1)
 }
 
 void setRow(char cnt)
@@ -44,14 +52,15 @@ void setRow(char cnt)
 	}
 }
 char scanKeyPad()
-{
+{	
 	static char temp;
 	switch(state1)
 	{
 		case idle: {if (count==5) 
 						count=1;
-					setRow(count);
-					if (keyPressed) {
+					 PORTC&=~(1<<DECODE2); PORTC&=~(1<<DECODE1);
+					if ((PINB& (1<<PB2)) !=0) {
+						
 						state1=keyPresses;
 					}
 					else
@@ -59,14 +68,15 @@ char scanKeyPad()
 						state1=idle;
 						count++;
 					}
+					USART_Transmit('a');
 					break;
 					}
-		case keyPresses: temp = RawKeyPressed(); state1= debounce; ms=0; break;
-		case debounce: if((ms= 30) && (temp==RawKeyPressed())) state1= getKey; else state1= debounce; break;
-		case getKey: state1= waitRelease; key=findKey(count,temp); keyFound=1; break;
-		case waitRelease: PORTB ^= (1<<PB0); if (keyPressed) {state1= releasedDebounce; ms=0;} else {state1=released;}break;
-		case releasedDebounce: if((ms== 100) && !keyPressed) {state1= released;} else { state1= releasedDebounce;} break;
-		case released: state1=idle; count=1; 
+		case keyPresses: temp = RawKeyPressed(); state1= debounce; ms=0; USART_Transmit('b');break;
+		case debounce: if((ms= 30) && (temp==RawKeyPressed())) state1= getKey; else state1= debounce; USART_Transmit('c'); break;
+		case getKey: state1= waitRelease; key=findKey(count,temp); keyFound=1;USART_Transmit('d'); break;
+		case waitRelease: PORTB ^= (1<<PB0); if (((PINB& (1<<PB2)) !=0)) {state1= releasedDebounce; ms=0;} else {state1=released;}USART_Transmit('e');break ;
+		case releasedDebounce: if((ms>= 100) && ((PINB& (1<<PB2)) ==0)) {state1= released;USART_Transmit('f');} else { state1= releasedDebounce;USART_Transmit('k');} break;
+		case released:USART_Transmit('g'); state1=idle; count=1; 
 		default: state1=idle; count=1;
 	}	
 	return keyFound;
@@ -86,3 +96,5 @@ char findKey(char row, char temp)
 	return key_d;
 }
 
+
+	
