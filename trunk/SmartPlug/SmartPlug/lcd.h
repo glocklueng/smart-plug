@@ -44,6 +44,7 @@
 #define WAIT_43u        25      // Clock dependant
 #define WAIT_15m        800    // Clock dependant  
 #define longdelay       11000   //24 ms
+#define Bitmask 0x0f
 //////////////////////////////////////////////////////////////////////
 //
 //            port definitions
