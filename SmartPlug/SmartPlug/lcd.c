@@ -9,7 +9,7 @@
 #include <avr/io.h>
 #include "lcd.h"
 
-#define Bitmask 0x0f
+
 
 int cursor_Position=0;
 int line =0;
