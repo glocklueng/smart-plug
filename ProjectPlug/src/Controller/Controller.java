@@ -53,7 +53,7 @@ public class Controller {
                                     
                             if (password.equals(retypePassword)){
                                 CustomerDao customerDao= new CustomerDao(); 
-                                Customer customer = new Customer(1,name,phone,0,email,password);
+                                Customer customer = new Customer(3,name,phone,0,email,password);
                                 customerDao.addCustomer(customer);
                                 
                             }
