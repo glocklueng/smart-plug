@@ -11,5 +11,5 @@ package DAO;
  */
 public abstract class DAOFactory {
     public abstract PricesDao getPricesDao();
-    
+    public abstract CustomerDao getCustomerDao();
 }

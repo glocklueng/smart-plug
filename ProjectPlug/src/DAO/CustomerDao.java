@@ -61,7 +61,7 @@ public class CustomerDao {
         return customer;
     }
 
-    public int addCustomer(Customer customer) {
+    public int addCustomer(Customer customer) throws SQLException {
         String insertQuery = "insert into CUSTOMER  values (?,?,?,?,?,?)";
         Connection con = null;
         int rowCount = -1;
@@ -79,7 +79,7 @@ public class CustomerDao {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         } finally {
             if (con != null) {
                 try {

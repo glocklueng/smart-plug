@@ -37,5 +37,10 @@ public class DerbyDAOFactory extends DAOFactory {
         return new  PricesDao(); 
     }
     
+      @Override
+    public CustomerDao getCustomerDao() {
+        return new  CustomerDao(); 
+    }
+    
 
 }
