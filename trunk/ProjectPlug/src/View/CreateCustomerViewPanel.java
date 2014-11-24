@@ -6,6 +6,9 @@
 
 package View;
 
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dan
@@ -44,6 +47,11 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         return textFieldPhone.getText();
     }
     
+    public void displayErrorMessage(String errorMessage)
+    {
+        JOptionPane.showMessageDialog(this, errorMessage);    
+    }
+    
     
     
 
@@ -68,23 +76,6 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         buttonCreateCustomer = new javax.swing.JButton();
 
-        textFieldName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldNameActionPerformed(evt);
-            }
-        });
-
-        textFieldPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldPasswordActionPerformed(evt);
-            }
-        });
-
-        textFieldRetypePassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldRetypePasswordActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Name:");
 
@@ -97,6 +88,7 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         jLabel5.setText("Phone Number");
 
         buttonCreateCustomer.setText("Create");
+      
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -150,18 +142,10 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldNameActionPerformed
-
-    private void textFieldPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldPasswordActionPerformed
-
-    private void textFieldRetypePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldRetypePasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldRetypePasswordActionPerformed
-
+public void addButtonCreateCustomerListener(ActionListener buttonCreateCustomerListnener)
+{
+    buttonCreateCustomer.addActionListener(buttonCreateCustomerListnener);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCreateCustomer;
