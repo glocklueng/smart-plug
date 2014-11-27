@@ -30,10 +30,12 @@ public class MainInterface extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         createCustomerPanel = new View.CreateCustomerViewPanel();
+        deleteCustomerViewPanel1 = new View.DeleteCustomerViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane1.addTab("CreateCustomer", createCustomerPanel);
+        jTabbedPane1.addTab("tab2", deleteCustomerViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,6 +94,7 @@ public class MainInterface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.CreateCustomerViewPanel createCustomerPanel;
+    private View.DeleteCustomerViewPanel deleteCustomerViewPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 
@@ -101,5 +104,12 @@ public class MainInterface extends javax.swing.JFrame {
     
     public View.CreateCustomerViewPanel getCreateCustomerPanel() {
         return createCustomerPanel;
+    }
+
+    /**
+     * @return the deleteCustomerViewPanel1
+     */
+    public View.DeleteCustomerViewPanel getDeleteCustomerViewPanel1() {
+        return deleteCustomerViewPanel1;
     }
 }

@@ -5,12 +5,13 @@
  */
 package DAO;
 
+import Model.Customer;
+import Model.Prices;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import Model.Customer;
-import Model.Prices;
+import java.util.ArrayList;
 
 /**
  *
@@ -61,27 +62,29 @@ public class CustomerDao {
         return customer;
     }
     
-    public Customer findCustomer(Customer customer) {
-        String insertQuery = "select * from CUSTOMER where name like '%?%'"
-                           + " and email like '%?%'"
-                           + " and phone like '%?%'";
+    public ArrayList<Customer> findCustomers(String name, String email, String phone) {
+        String insertQuery = "select * from CUSTOMER where name like '%" +name+  "%'" 
+                           + " and email like '%" + email + "%'"
+                           + " and phone like '%"+phone+"%'";
         Connection con = null;
+        ArrayList customers = new ArrayList<Customer>();
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
-            preparedStatement.setString(1, customer.getName());
-            preparedStatement.setString(2, customer.getEmail());
-            preparedStatement.setString(3, customer.getPhone());
-            System.out.println(preparedStatement.toString());
-
+//            preparedStatement.setString(1, name);
+//            preparedStatement.setString(2, email);
+//            preparedStatement.setString(3, phone);
+            System.err.println(preparedStatement.toString());
+           
             /*
              By executing query on the prepared statement you obtain a result set
              */
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                customer = createCustomerObject(resultSet);// create a customer object by using the result set
+            
+            while(resultSet.next()) {
+                customers.add(createCustomerObject(resultSet));// create a customer object by using the result set
             }
             preparedStatement.close();
         } catch (SQLException e) {
@@ -95,7 +98,7 @@ public class CustomerDao {
                 }
             }
         }
-        return customer;
+        return customers;
     }
    
     public int addCustomer(Customer customer) throws SQLException {
