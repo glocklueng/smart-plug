@@ -15,7 +15,8 @@
 volatile int ms;
 unsigned char key;
 unsigned char keyFound;
-unsigned char keyPressed;
+//unsigned char keyPressed;
+volatile int keyPressed;
 
 void initKeypad();
 unsigned char RawKeyPressed();

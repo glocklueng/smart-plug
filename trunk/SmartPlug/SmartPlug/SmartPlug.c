@@ -12,45 +12,70 @@
 #include "uart.h"
 extern volatile int ms;
 extern unsigned char key;
+extern volatile int keyPressed;
+unsigned char buffer[10];
 
-void timer1Init()
+enum state
 {
-	TCNT1H= (-39)>>8;// the high byte
-	TCNT1L= (-39)&0xFF; //overflow after 31250 clocks
-	
-	TCCR1A = 0x00; //normal mode
-	TCCR1B= 0x04; // internal clock set to 1:256;
-	
-	TIMSK= (1<<TOIE1); //enable Timer 1 on the Timermask
-	
+	idle,
+	scanCard,
+	enterPin,
+	showMenu,
+	showPrices,
+	startCharging,
+	charging,
+	stopCharging,
+	showInfo
+};
+state= idle;
+
+void doStates(){
+	switch (state)
+	{
+		case idle: 
+					break;
+		case scanCard:
+					break;
+		case enterPin:
+					break;
+		case showMenu:
+					break;
+		case showPrices:
+					break;
+		case startCharging:
+					break;
+		case charging:
+					break;
+		case stopCharging:
+					break;
+		showInfo;
+					break;
+		default: break;
+		
+		
+		
+	}
 }
-
-
-ISR(TIMER1_OVF_vect	){
-	ms++;
-	TCNT1H= (-39)>>8;// the high byte
-	TCNT1L= (-39)&0xFF;
-	//PORTB ^= (1<<PB0);
-}
-
-
 
 int main(void)
 {   sei();
 	initKeypad();
-	
 	USART_Init(64);
 	timer1Init();
+	int2Init();
 	DDRB |= 0x01;
 	PORTB |= (1<<PB0);
 	ms=0;
 	while(1){
-		
-		if(scanKeyPad())
-		{
+		keyFound=0;
+		sprintf(buffer, '%i',ms);
+		Usart_sendString(buffer);
+		if (scanKeyPad()==1) {
 			
-			PORTB^=(1<<PB0);
-		}
+			USART_Transmit(key);}
+			//if(key=='1')
+			//PORTB^=(1<<PB0);
+		
 		
 			
 		

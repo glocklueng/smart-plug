@@ -14,6 +14,7 @@
 int cursor_Position=0;
 int line =0;
 
+//Initializes the LCD 
 void lcd_init(){
 	DDRB |= 1<<PB0;
 	DDRA |= 0b11111100;
@@ -43,6 +44,7 @@ _delay_ms(2);
 
 }
 
+//Delays for a x nanoseconds
 void delay_ns(unsigned int x){
 	
 	for (int i = 0; i += 100; i<x){
@@ -51,7 +53,7 @@ void delay_ns(unsigned int x){
 }
 
 void lcd_cmd_write( unsigned char cmd){
-	lcd_port &= ~(1<<lcd_RS); //Sæt RS til 0.
+	lcd_port &= ~(1<<lcd_RS); //set RS to 0.
 	delay_ns(200);
 	lcd_transfer(cmd);
 	
