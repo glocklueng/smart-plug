@@ -8,13 +8,49 @@ package DAO;
  *
  * @author Morten
  */
+import Model.Customer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import Model.Transaction;
+import java.util.ArrayList;
 
 public class TransactionDao {
+    
+    public ArrayList<Transaction> findTransactions() {
+        String insertQuery = "select * from TRANSACTIONS";
+        Connection con = null;
+        ArrayList transactions = new ArrayList<Transaction>();
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+
+            System.err.println(preparedStatement.toString());
+           
+            /*
+             By executing query on the prepared statement you obtain a result set
+             */
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            while(resultSet.next()) {
+                transactions.add(createTransactionsObject(resultSet));// create a customer object by using the result set
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return transactions;
+    }
     
      public Transaction findTransactions(int transactionID) {
         /*

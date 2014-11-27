@@ -1,15 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package View;
 
-/**
- *
- * @author Dan
- */
 public class MainInterface extends javax.swing.JFrame {
 
     /**
@@ -28,14 +18,16 @@ public class MainInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        createCustomerPanel = new View.CreateCustomerViewPanel();
-        deleteCustomerViewPanel1 = new View.DeleteCustomerViewPanel();
+        jTabbedPanel = new javax.swing.JTabbedPane();
+        createCustomerViewPanel = new View.CreateCustomerViewPanel();
+        editCustomerViewPanel = new View.EditCustomerViewPanel();
+        seeTransactionsViewPanel = new View.SeeTransactionsViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.addTab("CreateCustomer", createCustomerPanel);
-        jTabbedPane1.addTab("tab2", deleteCustomerViewPanel1);
+        jTabbedPanel.addTab("Create customer", createCustomerViewPanel);
+        jTabbedPanel.addTab("Edit customer", editCustomerViewPanel);
+        jTabbedPanel.addTab("See transactions", seeTransactionsViewPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -43,14 +35,14 @@ public class MainInterface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
@@ -93,23 +85,28 @@ public class MainInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.CreateCustomerViewPanel createCustomerPanel;
-    private View.DeleteCustomerViewPanel deleteCustomerViewPanel1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private View.CreateCustomerViewPanel createCustomerViewPanel;
+    private View.EditCustomerViewPanel editCustomerViewPanel;
+    private javax.swing.JTabbedPane jTabbedPanel;
+    private View.SeeTransactionsViewPanel seeTransactionsViewPanel;
     // End of variables declaration//GEN-END:variables
+
+    public SeeTransactionsViewPanel getSeeTransactionsViewPanel() {
+        return seeTransactionsViewPanel;
+    }
 
     /**
      * @return the createCustomerPanel
      */
-    
     public View.CreateCustomerViewPanel getCreateCustomerPanel() {
-        return createCustomerPanel;
+        return createCustomerViewPanel;
     }
 
     /**
-     * @return the deleteCustomerViewPanel1
+     * @return the editCustomerViewPanel1
      */
-    public View.DeleteCustomerViewPanel getDeleteCustomerViewPanel1() {
-        return deleteCustomerViewPanel1;
+    public View.EditCustomerViewPanel getEditCustomerViewPanel() {
+        return editCustomerViewPanel;
     }
+
 }
