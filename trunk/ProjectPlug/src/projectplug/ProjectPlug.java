@@ -7,6 +7,9 @@
 package projectplug;
 import DAO.*;
 import Model.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,7 +53,11 @@ public class ProjectPlug {
           
           
           Customer newCustomerInDatabase= new Customer(145, "LALA", "123213213",1000,"IKnowHowToDoThis@yes.com","Finally" ); 
-          customerDao.addCustomer(newCustomerInDatabase);
+        try {
+            customerDao.addCustomer(newCustomerInDatabase);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectPlug.class.getName()).log(Level.SEVERE, null, ex);
+        }
           customerFromDatabase = customerDao.findCustomer(145);
           System.out.println(customerFromDatabase.getName());
           

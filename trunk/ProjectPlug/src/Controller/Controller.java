@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Controller;
-
 
 import DAO.CustomerDao;
 import Model.Customer;
@@ -14,25 +12,18 @@ import View.MainInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author Dan
- */
 public class Controller {
+
     CreateCustomerViewPanel createCustomerViewPanel;
     MainInterface mainInterface;
-    
-    
-    public Controller(MainInterface mainInterface ) 
-    {
-                this.mainInterface= mainInterface;
-                this.createCustomerViewPanel= this.mainInterface.getCreateCustomerPanel();
-                this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
-                
-    }           
-    
-    class CreateCustomerListener implements ActionListener
-        {
+
+    public Controller(MainInterface mainInterface) {
+        this.mainInterface = mainInterface;
+        this.createCustomerViewPanel = this.mainInterface.getCreateCustomerPanel();
+        this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
+    }
+
+    class CreateCustomerListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -41,39 +32,26 @@ public class Controller {
             String email;
             String password;
             String retypePassword;
-            
-            
-                    
-                        try{
-                            name= createCustomerViewPanel.getCustomerName();
-                            phone= createCustomerViewPanel.getPhone();
-                            email= createCustomerViewPanel.getEmail();
-                            password= createCustomerViewPanel.getPassword();
-                            retypePassword= createCustomerViewPanel.getRetypePassword();
-                                    
-                            if (password.equals(retypePassword)){
-                                CustomerDao customerDao= new CustomerDao(); 
-                                Customer customer = new Customer(3,name,phone,0,email,password);
-                                customerDao.addCustomer(customer);
-                                
-                            }
-                            else
-                            {
-                                createCustomerViewPanel.displayErrorMessage("Passwords don't match");
-                            }
-                            
-                        }
-                        catch ( Exception e) { 
-                            createCustomerViewPanel.displayErrorMessage("Try again.");
-                        }
-                    
-            
-            
-        }
-            
-        }
-    
-    
-}
 
-    
+            try {
+                name = createCustomerViewPanel.getCustomerName();
+                phone = createCustomerViewPanel.getPhone();
+                email = createCustomerViewPanel.getEmail();
+                password = createCustomerViewPanel.getPassword();
+                retypePassword = createCustomerViewPanel.getRetypePassword();
+
+                if (password.equals(retypePassword)) {
+                    CustomerDao customerDao = new CustomerDao();
+                    Customer customer = new Customer(3, name, phone, 0, email, password);
+                    customerDao.addCustomer(customer);
+
+                } else {
+                    createCustomerViewPanel.displayErrorMessage("Passwords don't match");
+                }
+
+            } catch (Exception e) {
+                createCustomerViewPanel.displayErrorMessage("Try again.");
+            }
+        }
+    }
+}

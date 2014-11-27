@@ -18,7 +18,7 @@ import Model.Prices;
  */
 public class CustomerDao {
 
-    public Customer findCustomer(int id) {
+    public Customer findCustomerById(int id) {
         /*
          Sql query to be executed in order to obtain a result set
          */
@@ -60,7 +60,44 @@ public class CustomerDao {
         }
         return customer;
     }
+    
+    public Customer findCustomer(Customer customer) {
+        String insertQuery = "select * from CUSTOMER where name like '%?%'"
+                           + " and email like '%?%'"
+                           + " and phone like '%?%'";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
+            preparedStatement.setString(1, customer.getName());
+            preparedStatement.setString(2, customer.getEmail());
+            preparedStatement.setString(3, customer.getPhone());
+            System.out.println(preparedStatement.toString());
+
+            /*
+             By executing query on the prepared statement you obtain a result set
+             */
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                customer = createCustomerObject(resultSet);// create a customer object by using the result set
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return customer;
+    }
+   
     public int addCustomer(Customer customer) throws SQLException {
         String insertQuery = "insert into CUSTOMER  values (?,?,?,?,?,?)";
         Connection con = null;
