@@ -10,7 +10,7 @@
 
 #include "uart.h"
 unsigned char buffer[16];
-unsigned char buffer2[16];
+unsigned char buffer2[17];
 char dataS;
 
 void SPI_MasterInit()
@@ -20,6 +20,7 @@ void SPI_MasterInit()
 	DDR_SPI |= (1<<DD_MOSI)|(1<<DD_SCK)| (1<<PB0) | (1<<DD_SS);
 	/* Enable SPI, Master, set clock-rate fck/16 */
 	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
+	
 }
 
 void SPI_MasterTransmit( char data)
@@ -32,6 +33,7 @@ void SPI_MasterTransmit( char data)
 	while(!(SPSR & (1<<SPIF)));
 	
 	PORTB|= (1<<DD_SS); //
+	
 }
 
 char SPIRecieve(void){
@@ -59,6 +61,7 @@ ISR(INT0_vect) {
 	PORTB^=(1<<PB0);
 	//USART_Transmit('0');
 	SPI_MasterTransmit(0x55);
+	dataS=SPDR;
 	//USART_Transmit('2');
 }
 
@@ -68,24 +71,25 @@ ISR(INT1_vect) //interrupt 1
 	
 	int i=0;
 	while (PIND & (1<<PD3))
-	{   SPI_MasterTransmit(0xF5);
+	{   
+		SPI_MasterTransmit(0xF5);
+		buffer[i]=SPDR;
 		_delay_ms(20);
-		buffer[i]=SPIRecieve();
 		i++;
 		
 	}
 	
 	i=0;
 	while(i<=7){
-		char temp[2];
+		char temp[3];
 		sprintf(temp, "%02x", buffer[i]);
 		buffer2[2*i] = temp[0];
-		if (i!=7)
+		//if (i!=7)
 		buffer2[2*i+1] = temp[1];
 		i++;
 		
 	}
-	
+	buffer2[16]='\0';
 	Usart_sendString("\n");
 	Usart_sendString(buffer2);
 	Usart_sendString("\n");
