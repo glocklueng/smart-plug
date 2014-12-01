@@ -80,7 +80,7 @@ void lcd_data_write( unsigned char d){
 	lcd_transfer(d);
 }
 
-void putString(unsigned char *s){
+void LCDPutString(unsigned char *s){
 	while (*s)
 	{	
 		unsigned char d = *s;
