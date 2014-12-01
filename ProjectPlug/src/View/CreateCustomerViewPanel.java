@@ -22,6 +22,12 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    public int getCosutmerID()
+    {
+        String SID = textFieldID.getText();
+        return Integer.parseInt(SID);
+    }
+    
     public String getCustomerName()
     {
         return textFieldName.getText();
@@ -75,18 +81,22 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         textFieldPassword = new javax.swing.JTextField();
         textFieldRetypePassword = new javax.swing.JTextField();
         buttonCreateCustomer = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        textFieldID = new javax.swing.JTextField();
 
         jLabel1.setText("Name:");
 
-        jLabel2.setText("Password");
+        jLabel2.setText("Password:");
 
-        jLabel3.setText("Retype password");
+        jLabel3.setText("Retype password:");
 
-        jLabel4.setText("E-mail");
+        jLabel4.setText("E-mail:");
 
-        jLabel5.setText("Phone Number");
+        jLabel5.setText("Phone Number:");
 
         buttonCreateCustomer.setText("Create customer");
+
+        jLabel6.setText("ID:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -94,27 +104,33 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonCreateCustomer)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(textFieldEmail)
-                        .addComponent(textFieldPhone)
-                        .addComponent(textFieldName)
-                        .addComponent(textFieldPassword)
-                        .addComponent(textFieldRetypePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                    .addComponent(textFieldEmail)
+                    .addComponent(textFieldPhone)
+                    .addComponent(textFieldName)
+                    .addComponent(textFieldPassword)
+                    .addComponent(textFieldRetypePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addComponent(textFieldID))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(textFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -136,7 +152,7 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addComponent(buttonCreateCustomer)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -152,7 +168,9 @@ public void addButtonCreateCustomerListener(ActionListener buttonCreateCustomerL
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField textFieldEmail;
+    private javax.swing.JTextField textFieldID;
     private javax.swing.JTextField textFieldName;
     private javax.swing.JTextField textFieldPassword;
     private javax.swing.JTextField textFieldPhone;

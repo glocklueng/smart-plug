@@ -58,6 +58,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
+            int ID;
             String name;
             String phone;
             String email;
@@ -65,6 +66,7 @@ public class Controller {
             String retypePassword;
 
             try {
+                ID = createCustomerViewPanel.getCosutmerID();
                 name = createCustomerViewPanel.getCustomerName();
                 phone = createCustomerViewPanel.getPhone();
                 email = createCustomerViewPanel.getEmail();
@@ -73,9 +75,9 @@ public class Controller {
 
                 if (password.equals(retypePassword)) {
                     CustomerDao customerDao = new CustomerDao();
-                    Customer customer = new Customer(3, name, phone, 0, email, password);
+                    Customer customer = new Customer(ID, name, phone, 0, email, password);
                     customerDao.addCustomer(customer);
-
+                    createCustomerViewPanel.displayErrorMessage("Customer created");
                 } else {
                     createCustomerViewPanel.displayErrorMessage("Passwords don't match");
                 }
