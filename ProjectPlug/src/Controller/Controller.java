@@ -27,7 +27,8 @@ public class Controller {
     MainInterface mainInterface;
     EditCustomerViewPanel editCustomerViewPanel;
     SeeTransactionsViewPanel seeTransactionsViewPanel;
-    int position;
+    int row;
+    int column;
     DefaultTableModel tableModel;
 
     public Controller(MainInterface mainInterface) {
@@ -40,6 +41,7 @@ public class Controller {
         this.editCustomerViewPanel.addButtonSearchListner(new SearchCustomerListener());
         this.editCustomerViewPanel.addButtonDeleteListner(new DeleteCustomerListener());
         this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener());
+        this.editCustomerViewPanel.addButtonEditListner(new EditCustomerListener());
         this.seeTransactionsViewPanel.addButtonUpdateListner(new UpdateTransactionsListener());
 
     }
@@ -49,11 +51,49 @@ public class Controller {
         //Reads what customer that are marked.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            Object ID = tableModel.getValueAt(position, 0);
+            Object ID = tableModel.getValueAt(row, 0);
             String id = ID.toString();
             //Deletes the marked customer.
             CustomerDao customerDao = new CustomerDao();
             customerDao.deleteCustomer(Integer.parseInt(id));
+        }
+    }
+    
+       class EditCustomerListener implements ActionListener {
+
+        //Reads what customer that are marked.
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            Object ID = tableModel.getValueAt(row, 0);
+            
+            if (column == 0){
+                editCustomerViewPanel.displayErrorMessage("You cannot change the ID!");
+            } else if (column ==1 ){
+                String update = editCustomerViewPanel.getUpdate();
+                
+                CustomerDao customerDao = new CustomerDao();
+                customerDao.updateCustomerName(update, (int) ID);
+                editCustomerViewPanel.displayErrorMessage("Name changed");
+            } else if (column == 2){
+                String update = editCustomerViewPanel.getUpdate();
+                
+                CustomerDao customerDao = new CustomerDao();
+                customerDao.updateCustomerPhone(update, (int) ID);
+                editCustomerViewPanel.displayErrorMessage("Phone number changed");
+            } else if (column == 3){
+                String update = editCustomerViewPanel.getUpdate();
+                
+                CustomerDao customerDao = new CustomerDao();
+                customerDao.updateCustomerEmail(update, (int) ID);
+                editCustomerViewPanel.displayErrorMessage("Email changed");
+            } else if (column == 4) {
+                String update = editCustomerViewPanel.getUpdate();
+                double intUpdate = Integer.parseInt(update);
+                
+                CustomerDao customerDao = new CustomerDao();
+                customerDao.updateCustomerBalance(intUpdate, (int) ID);
+                editCustomerViewPanel.displayErrorMessage("Balance changed");
+            }
         }
     }
     // when click the creat button, it creates the new customer.
@@ -149,7 +189,8 @@ public class Controller {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            position = editCustomerViewPanel.getTableCustomers().rowAtPoint(e.getPoint());
+            row = editCustomerViewPanel.getTableCustomers().rowAtPoint(e.getPoint());
+            column = editCustomerViewPanel.getTableCustomers().columnAtPoint(e.getPoint());
         }
 
         @Override

@@ -158,21 +158,101 @@ public class CustomerDao {
         return rowCount;
     }
 
-    public int updateCustomer(Customer customer) {
+    public int updateCustomerName(String name, int ID) {
         String insertQuery = "update CUSTOMER "
-                + "Set password=?,name=?,phone=?, email=?,balance=?  where id=?";
+                + "Set name=? where id=?";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
-            preparedStatement.setString(1, customer.getPassword());
-            preparedStatement.setString(2, customer.getName());
-            preparedStatement.setString(3, customer.getPhone());
-            preparedStatement.setString(4, customer.getEmail());
-            preparedStatement.setDouble(5, customer.getBalance());
-            preparedStatement.setInt(6, customer.getId());
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, ID);
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+    
+    public int updateCustomerPhone(String phone, int ID) {
+        String insertQuery = "update CUSTOMER "
+                + "Set phone=? where id=?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, phone);
+            preparedStatement.setInt(2, ID);
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+    
+    public int updateCustomerEmail(String email, int ID) {
+        String insertQuery = "update CUSTOMER "
+                + "Set email=? where id=?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, email);
+            preparedStatement.setInt(2, ID);
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+    
+    public int updateCustomerBalance(double balance, int ID) {
+        String insertQuery = "update CUSTOMER "
+                + "Set balance=? where id=?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+
+            preparedStatement.setDouble(1, balance);
+            preparedStatement.setInt(2, ID);
             rowCount = preparedStatement.executeUpdate();
 
             preparedStatement.close();
