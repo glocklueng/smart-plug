@@ -35,25 +35,28 @@ public class Controller {
         this.createCustomerViewPanel = this.mainInterface.getCreateCustomerPanel();
         this.editCustomerViewPanel = this.mainInterface.getEditCustomerViewPanel();
         this.seeTransactionsViewPanel = this.mainInterface.getSeeTransactionsViewPanel();
+        
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
         this.editCustomerViewPanel.addButtonSearchListner(new SearchCustomerListener());
         this.editCustomerViewPanel.addButtonDeleteListner(new DeleteCustomerListener());
+        this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener());
         this.seeTransactionsViewPanel.addButtonUpdateListner(new UpdateTransactionsListener());
-        this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener() {});
 
     }
-
+    // When click the delete button, it deletes the marked customer.
     class DeleteCustomerListener implements ActionListener {
 
+        //Reads what customer that are marked.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object ID = tableModel.getValueAt(position, 0);
             String id = ID.toString();
+            //Deletes the marked customer.
             CustomerDao customerDao = new CustomerDao();
             customerDao.deleteCustomer(Integer.parseInt(id));
         }
     }
-
+    // when click the creat button, it creates the new customer.
     class CreateCustomerListener implements ActionListener {
 
         @Override
@@ -66,6 +69,7 @@ public class Controller {
             String retypePassword;
 
             try {
+                //Gets all the textfields from the viewpanel.
                 ID = createCustomerViewPanel.getCosutmerID();
                 name = createCustomerViewPanel.getCustomerName();
                 phone = createCustomerViewPanel.getPhone();
@@ -73,16 +77,21 @@ public class Controller {
                 password = createCustomerViewPanel.getPassword();
                 retypePassword = createCustomerViewPanel.getRetypePassword();
 
+                //Sees if the to passwords are the same.
                 if (password.equals(retypePassword)) {
+                    //creates a new customer from with the data from the textfields.
                     CustomerDao customerDao = new CustomerDao();
                     Customer customer = new Customer(ID, name, phone, 0, email, password);
                     customerDao.addCustomer(customer);
+                    //Writes when the customer are created.
                     createCustomerViewPanel.displayErrorMessage("Customer created");
                 } else {
+                    //Writes if the password does not match.
                     createCustomerViewPanel.displayErrorMessage("Passwords don't match");
                 }
 
             } catch (Exception e) {
+                //Writes if there are any other exceptions.
                 createCustomerViewPanel.displayErrorMessage("Try again.");
             }
         }
@@ -114,7 +123,7 @@ public class Controller {
             }
         }
     }
-    
+
     class UpdateTransactionsListener implements ActionListener {
 
         @Override
