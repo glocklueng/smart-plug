@@ -9,6 +9,10 @@
 #define DD_MOSI PB5
 #define DD_SCK PB7
 #define DD_SS PB4
+#include <avr/interrupt.h>
+extern int cardPresent;
 void SPI_MasterInit();
 void SPI_MasterTransmit( char data);
 char SPIRecieve(void);
+void Init_SPI_interrupts();
+
