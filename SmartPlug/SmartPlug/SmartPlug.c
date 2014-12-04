@@ -105,7 +105,10 @@ int main(void)
 		Usart_sendString(buffer);
 		if (scanKeyPad()==1) {
 			
-			USART_Transmit(key);}
+			USART_Transmit(key);
+			sprintf(buffer,"%c", key);
+			LCDPutString(buffer);
+			}
 			//if(key=='1')
 			//PORTB^=(1<<PB0);
 		

@@ -12,6 +12,7 @@
 #define DECODE2 PC7
 #define ENCODE1 PD6
 #define ENCODE2 PD7
+#define debug 0
 volatile int ms;
 unsigned char key;
 unsigned char keyFound;
