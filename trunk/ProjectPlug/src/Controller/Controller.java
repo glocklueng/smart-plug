@@ -6,10 +6,13 @@
 package Controller;
 
 import DAO.CustomerDao;
+import DAO.PricesDao;
 import DAO.TransactionDao;
 import Model.Customer;
+import Model.Prices;
 import Model.Transaction;
 import View.CreateCustomerViewPanel;
+import View.CreatePricesViewPanel;
 import View.EditCustomerViewPanel;
 import View.SeeTransactionsViewPanel;
 import View.MainInterface;
@@ -27,6 +30,7 @@ public class Controller {
     MainInterface mainInterface;
     EditCustomerViewPanel editCustomerViewPanel;
     SeeTransactionsViewPanel seeTransactionsViewPanel;
+    CreatePricesViewPanel createPricesViewPanel;
     int row;
     int column;
     DefaultTableModel tableModel;
@@ -36,15 +40,46 @@ public class Controller {
         this.createCustomerViewPanel = this.mainInterface.getCreateCustomerPanel();
         this.editCustomerViewPanel = this.mainInterface.getEditCustomerViewPanel();
         this.seeTransactionsViewPanel = this.mainInterface.getSeeTransactionsViewPanel();
-        
+        this.createPricesViewPanel = this.mainInterface.getCreatePricesViewPanel();
+
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
         this.editCustomerViewPanel.addButtonSearchListner(new SearchCustomerListener());
         this.editCustomerViewPanel.addButtonDeleteListner(new DeleteCustomerListener());
         this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener());
         this.editCustomerViewPanel.addButtonEditListner(new EditCustomerListener());
         this.seeTransactionsViewPanel.addButtonUpdateListner(new UpdateTransactionsListener());
+        this.createPricesViewPanel.addButtonCreatePricesListener(new CreatePricesListener());
 
     }
+
+     class CreatePricesListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            
+            String location;
+            double priceDay;
+            double priceNight;
+
+            try {
+
+                location = createPricesViewPanel.getPriceLocation();
+                priceDay = createPricesViewPanel.getPriceDay();
+                priceNight = createPricesViewPanel.getPriceNight();
+                
+                PricesDao pricesDao = new PricesDao();
+                    Prices prices = new Prices (location, priceDay, priceNight);
+                    pricesDao.addPrices(prices);
+                    //Writes when the prices are created.
+                    createPricesViewPanel.displayErrorMessage("Prices created");
+                
+            } catch (Exception e) {
+                //Writes if there are any other exceptions.
+                createPricesViewPanel.displayErrorMessage("Try again.");
+        }
+    }
+ }
+
     // When click the delete button, it deletes the marked customer.
     class DeleteCustomerListener implements ActionListener {
 
@@ -58,44 +93,45 @@ public class Controller {
             customerDao.deleteCustomer(Integer.parseInt(id));
         }
     }
-    
-       class EditCustomerListener implements ActionListener {
+
+    class EditCustomerListener implements ActionListener {
 
         //Reads what customer that are marked.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object ID = tableModel.getValueAt(row, 0);
-            
-            if (column == 0){
+
+            if (column == 0) {
                 editCustomerViewPanel.displayErrorMessage("You cannot change the ID!");
-            } else if (column ==1 ){
+            } else if (column == 1) {
                 String update = editCustomerViewPanel.getUpdate();
-                
+
                 CustomerDao customerDao = new CustomerDao();
                 customerDao.updateCustomerName(update, (int) ID);
                 editCustomerViewPanel.displayErrorMessage("Name changed");
-            } else if (column == 2){
+            } else if (column == 2) {
                 String update = editCustomerViewPanel.getUpdate();
-                
+
                 CustomerDao customerDao = new CustomerDao();
                 customerDao.updateCustomerPhone(update, (int) ID);
                 editCustomerViewPanel.displayErrorMessage("Phone number changed");
-            } else if (column == 3){
+            } else if (column == 3) {
                 String update = editCustomerViewPanel.getUpdate();
-                
+
                 CustomerDao customerDao = new CustomerDao();
                 customerDao.updateCustomerEmail(update, (int) ID);
                 editCustomerViewPanel.displayErrorMessage("Email changed");
             } else if (column == 4) {
                 String update = editCustomerViewPanel.getUpdate();
                 double intUpdate = Integer.parseInt(update);
-                
+
                 CustomerDao customerDao = new CustomerDao();
                 customerDao.updateCustomerBalance(intUpdate, (int) ID);
                 editCustomerViewPanel.displayErrorMessage("Balance changed");
             }
         }
     }
+
     // when click the creat button, it creates the new customer.
     class CreateCustomerListener implements ActionListener {
 
