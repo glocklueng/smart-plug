@@ -18,16 +18,18 @@ public class MainInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPanel = new javax.swing.JTabbedPane();
-        createCustomerViewPanel = new View.CreateCustomerViewPanel();
-        editCustomerViewPanel = new View.EditCustomerViewPanel();
-        seeTransactionsViewPanel = new View.SeeTransactionsViewPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        createCustomerViewPanel1 = new View.CreateCustomerViewPanel();
+        editCustomerViewPanel1 = new View.EditCustomerViewPanel();
+        seeTransactionsViewPanel2 = new View.SeeTransactionsViewPanel();
+        createPricesViewPanel1 = new View.CreatePricesViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPanel.addTab("Create customer", createCustomerViewPanel);
-        jTabbedPanel.addTab("Edit customer", editCustomerViewPanel);
-        jTabbedPanel.addTab("See transactions", seeTransactionsViewPanel);
+        jTabbedPane1.addTab("Create customer", createCustomerViewPanel1);
+        jTabbedPane1.addTab("Edit customer", editCustomerViewPanel1);
+        jTabbedPane1.addTab("See transactions", seeTransactionsViewPanel2);
+        jTabbedPane1.addTab("Prices", createPricesViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -35,14 +37,14 @@ public class MainInterface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
@@ -85,28 +87,33 @@ public class MainInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.CreateCustomerViewPanel createCustomerViewPanel;
-    private View.EditCustomerViewPanel editCustomerViewPanel;
-    private javax.swing.JTabbedPane jTabbedPanel;
-    private View.SeeTransactionsViewPanel seeTransactionsViewPanel;
+    private View.CreateCustomerViewPanel createCustomerViewPanel1;
+    private View.CreatePricesViewPanel createPricesViewPanel1;
+    private View.EditCustomerViewPanel editCustomerViewPanel1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private View.SeeTransactionsViewPanel seeTransactionsViewPanel2;
     // End of variables declaration//GEN-END:variables
-
+   
     public SeeTransactionsViewPanel getSeeTransactionsViewPanel() {
-        return seeTransactionsViewPanel;
+        return seeTransactionsViewPanel2;
     }
 
     /**
      * @return the createCustomerPanel
      */
     public View.CreateCustomerViewPanel getCreateCustomerPanel() {
-        return createCustomerViewPanel;
+        return createCustomerViewPanel1;
     }
 
     /**
      * @return the editCustomerViewPanel1
      */
     public View.EditCustomerViewPanel getEditCustomerViewPanel() {
-        return editCustomerViewPanel;
+        return editCustomerViewPanel1;
+    }
+    
+    public View.CreatePricesViewPanel getCreatePricesViewPanel(){
+        return createPricesViewPanel1;
     }
 
 }
