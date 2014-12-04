@@ -3,6 +3,9 @@ package DAOTests;
 
 import DAO.CustomerDao;
 import Model.Customer;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -10,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
 
 
 /**
@@ -55,32 +59,49 @@ public class CustomerDaoTest {
     @Test
     public void test1addCustomer(){
         
-        int value = customerDao.addCustomer(customerToBeAdded);
+        int value=0;
+        try {
+            value = customerDao.addCustomer(customerToBeAdded);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(value, 1);
     }
     
     @Test
     public void test2findCustomer()
     {
-        customerDao.addCustomer(customerToBeFound);
-        Customer customerFound = customerDao.findCustomer(customerToBeFound.getId());
+        try {
+            customerDao.addCustomer(customerToBeFound);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Customer customerFound = customerDao.findCustomerById(customerToBeFound.getId());
         assertEquals(customerToBeFound.getId(), customerToBeFound.getId());
     }
   
     @Test 
     public void test3deleteCustomer()
-    {   customerDao.addCustomer(customerToBeDeleted);
+    {   try {
+            customerDao.addCustomer(customerToBeDeleted);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         int value = customerDao.deleteCustomer(customerToBeDeleted.getId());
         assertEquals(1,value);
     }
     
     @Test
     public void test4updateCustomer()
-    {   customerDao.addCustomer(customerToBeUpdated);
+    {   try {
+            customerDao.addCustomer(customerToBeUpdated);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     Customer updateCustomer= new Customer(customerToBeUpdated.getId(),"dsadsa","lala",9.0,"yes","sdada");
     int value = customerDao.updateCustomer(updateCustomer);
     assertEquals(1,value);
-    Customer afterUpdate= customerDao.findCustomer(updateCustomer.getId());
+    Customer afterUpdate= customerDao.findCustomerById(updateCustomer.getId());
     assertEquals(updateCustomer.getBalance(), afterUpdate.getBalance(),0.0);
     
     }
