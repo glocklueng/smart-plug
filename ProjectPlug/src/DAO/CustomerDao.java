@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @author Ibrahim
  */
 public class CustomerDao {
-
+    
     public Customer findCustomerById(int id) {
         /*
          Sql query to be executed in order to obtain a result set
@@ -158,7 +158,7 @@ public class CustomerDao {
         return rowCount;
     }
 
-    public int updateCustomerName(String name, int ID) {
+        public int updateCustomerName(String name, int ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set name=? where id=?";
         Connection con = null;
