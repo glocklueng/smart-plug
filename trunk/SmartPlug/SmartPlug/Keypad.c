@@ -34,11 +34,6 @@ state1=idle;
 int count=1;
 unsigned char buffer[10];
 
-
-
-
-
-
 unsigned char RawKeyPressed()
 {   char temp1 = (PIND&(1<<ENCODE1))>>6;
 	 char temp2 = (PIND&(1<<ENCODE2))>>6;
@@ -56,6 +51,7 @@ void setRow(char cnt)
 		default: break;
 	}
 }
+
 char scanKeyPad()
 {	
 	static char temp;
@@ -64,7 +60,7 @@ char scanKeyPad()
 		case idle: {if (count==5) 
 						count=1;
 					 setRow(count-1);
-					if ((PINB& (1<<PB2)) !=0 && ms>30 ) {
+					if ((PINB& (1<<PB2)) !=0 ) {
 						
 						state1=keyPresses;
 						ms=0;
@@ -77,12 +73,12 @@ char scanKeyPad()
 					
 					break;
 					}
-		case keyPresses:  state1= debounce;  break;
-		case debounce: if((ms==30) ) {   state1= getKey;} else state1= debounce;  break;
-		case getKey: temp = RawKeyPressed(); state1= waitRelease; key=findKey(count,temp); keyFound=1; break;
-		case waitRelease:  if (keyPressed==1) {state1= releasedDebounce;} else {state1=released;}break ;
-		case releasedDebounce: if((ms>= 100) && (keyPressed ==0)) {state1= released;} else { state1= releasedDebounce;} break;
-		case released: state1=idle; count=1; break;
+		case keyPresses: if(((PINB& (1<<PB2)) !=0)) { temp = RawKeyPressed(); state1= debounce;} else state1=idle;  break;
+		case debounce: if((ms>=30) && (temp==RawKeyPressed()) && ((PINB& (1<<PB2)) !=0) ) {   state1= getKey;} else state1= keyPresses;  break;
+		case getKey:  state1= waitRelease; key=findKey(count,temp);  break;
+		case waitRelease:  if ((PINB& (1<<PB2)) !=0) {state1= releasedDebounce;} else {state1=released;}break ;
+		case releasedDebounce: if((ms>= 70) && ((PINB& (1<<PB2)) ==0)) {state1= released;} else { state1= releasedDebounce;} break;
+		case released: state1=idle; count=1; TIMSK&= ~(1<<TOIE1); keyFound=1; break;
 		default: state1=idle; count=1; break;
 	}	
 	return keyFound;
