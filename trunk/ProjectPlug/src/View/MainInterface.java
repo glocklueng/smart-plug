@@ -23,6 +23,7 @@ public class MainInterface extends javax.swing.JFrame {
         editCustomerViewPanel1 = new View.EditCustomerViewPanel();
         seeTransactionsViewPanel2 = new View.SeeTransactionsViewPanel();
         createPricesViewPanel1 = new View.CreatePricesViewPanel();
+        editPricesViewPanel1 = new View.EditPricesViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -30,6 +31,7 @@ public class MainInterface extends javax.swing.JFrame {
         jTabbedPane1.addTab("Edit customer", editCustomerViewPanel1);
         jTabbedPane1.addTab("See transactions", seeTransactionsViewPanel2);
         jTabbedPane1.addTab("Prices", createPricesViewPanel1);
+        jTabbedPane1.addTab("Edit Prices", editPricesViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -43,9 +45,8 @@ public class MainInterface extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -90,6 +91,7 @@ public class MainInterface extends javax.swing.JFrame {
     private View.CreateCustomerViewPanel createCustomerViewPanel1;
     private View.CreatePricesViewPanel createPricesViewPanel1;
     private View.EditCustomerViewPanel editCustomerViewPanel1;
+    private View.EditPricesViewPanel editPricesViewPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private View.SeeTransactionsViewPanel seeTransactionsViewPanel2;
     // End of variables declaration//GEN-END:variables
@@ -114,6 +116,11 @@ public class MainInterface extends javax.swing.JFrame {
     
     public View.CreatePricesViewPanel getCreatePricesViewPanel(){
         return createPricesViewPanel1;
+    }
+
+    public View.EditPricesViewPanel getEditPricesViewPanel() {
+        return editPricesViewPanel1;
+        
     }
 
 }

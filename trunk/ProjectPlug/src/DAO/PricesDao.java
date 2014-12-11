@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import Model.Prices;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,16 +18,13 @@ import Model.Prices;
  */
 public class PricesDao {
 
-    public Prices findPrices(String location) {
-        /*
-         Sql query to be executed in order to obtain a result set
-         */
-        String pricesQuery = "select * from prices where location =?";
-        //
-        // 
-        Prices prices = null;
-        Connection con = null;
+    public ArrayList<Prices> findPrices(String location) {
 
+        String pricesQuery = "select * from PRICES where location like '%" + location + "%'";
+
+        Connection con = null;
+        ArrayList prices = new ArrayList<Prices>();
+        int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection(); // connection is created
             /*
@@ -34,15 +32,17 @@ public class PricesDao {
              is added to the statement. The location changes the question mark inside the query
              */
             PreparedStatement preparedStatement = con.prepareStatement(pricesQuery);
-            preparedStatement.setString(1, location);
+            System.err.println(preparedStatement.toString());
+
+       
 
             /*
              By executing query on the prepared statement you obtain a result set
              */
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                prices = createPricesObject(resultSet);// create a prices object by using the result set
+            while (resultSet.next()) {
+                prices.add(createPricesObject(resultSet)); // create a prices object by using the result set
             }
             preparedStatement.close();
         } catch (SQLException e) {
@@ -86,17 +86,17 @@ public class PricesDao {
         }
         return rowCount;
     }
- public int updatePrices(Prices prices) {
+
+    public int updatePricesDay(double pricesDay, String location) {
         String insertQuery = "update PRICES "
-                + "Set price_day= ?, price_night=?  where location=?";
+                + "Set price_day= ?  where location=?";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setDouble(1, prices.getPrice_day());
-            preparedStatement.setDouble(2, prices.getPrice_night());
-            preparedStatement.setString(3, prices.getLocation());
+            preparedStatement.setDouble(1, pricesDay);
+            preparedStatement.setString(2, location);
 
             rowCount = preparedStatement.executeUpdate();
 
@@ -114,6 +114,35 @@ public class PricesDao {
         }
         return rowCount;
     }
+
+    public int updatePricesNight(double pricesNight, String location) {
+        String insertQuery = "update PRICES "
+                + "Set price_night= ?  where location=?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+            preparedStatement.setDouble(1, pricesNight);
+            preparedStatement.setString(2, location);
+
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+
     public int deletePrices(String location) {
         String insertQuery = "delete from prices where location =?";
         Connection con = null;
@@ -121,7 +150,7 @@ public class PricesDao {
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setString(1,location);
+            preparedStatement.setString(1, location);
 
             rowCount = preparedStatement.executeUpdate();
 
