@@ -127,7 +127,7 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonDelete)
-                        .addGap(67, 67, 67))))
+                        .addGap(73, 73, 73))))
             .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
@@ -148,11 +148,11 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(textFieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonDelete)
-                    .addComponent(buttonSearch))
+                    .addComponent(buttonSearch)
+                    .addComponent(buttonDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -176,7 +176,7 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
-    public void addButtonSearchListner(ActionListener buttonListener) {
+    public void addButtonSearchCustomerListner(ActionListener buttonListener) {
         buttonSearch.addActionListener(buttonListener);
     }
     

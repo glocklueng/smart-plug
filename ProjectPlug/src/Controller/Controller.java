@@ -16,6 +16,7 @@ import View.CreatePricesViewPanel;
 import View.EditCustomerViewPanel;
 import View.SeeTransactionsViewPanel;
 import View.MainInterface;
+import View.EditPricesViewPanel;
 import com.sun.java.accessibility.util.EventID;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,8 +30,10 @@ public class Controller {
     CreateCustomerViewPanel createCustomerViewPanel;
     MainInterface mainInterface;
     EditCustomerViewPanel editCustomerViewPanel;
+    EditPricesViewPanel editPricesViewPanel;
     SeeTransactionsViewPanel seeTransactionsViewPanel;
     CreatePricesViewPanel createPricesViewPanel;
+    
     int row;
     int column;
     DefaultTableModel tableModel;
@@ -41,16 +44,21 @@ public class Controller {
         this.editCustomerViewPanel = this.mainInterface.getEditCustomerViewPanel();
         this.seeTransactionsViewPanel = this.mainInterface.getSeeTransactionsViewPanel();
         this.createPricesViewPanel = this.mainInterface.getCreatePricesViewPanel();
-
+        this.editPricesViewPanel= this.mainInterface.getEditPricesViewPanel();
+        
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
-        this.editCustomerViewPanel.addButtonSearchListner(new SearchCustomerListener());
+        this.editPricesViewPanel.addButtonEditPricesListner(new EditPricesListener());
         this.editCustomerViewPanel.addButtonDeleteListner(new DeleteCustomerListener());
         this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener());
         this.editCustomerViewPanel.addButtonEditListner(new EditCustomerListener());
         this.seeTransactionsViewPanel.addButtonUpdateListner(new UpdateTransactionsListener());
         this.createPricesViewPanel.addButtonCreatePricesListener(new CreatePricesListener());
-
+        this.editPricesViewPanel.addButtonDeletePricesListner(new DeletePricesListener());
+        this.editPricesViewPanel.addButtonSearchPricesListner(new SearchPricesListener());
+         this.editPricesViewPanel.addMouseClicked(new TableCustomerListener());
     }
+    
+    
 
      class CreatePricesListener implements ActionListener {
 
@@ -131,6 +139,35 @@ public class Controller {
             }
         }
     }
+    // needs to be changed ****************************************
+    class EditPricesListener implements ActionListener {
+        
+        //Reads what customer that are marked.
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            Object Location = tableModel.getValueAt(row, 0);
+
+            if (column == 0) {
+                editPricesViewPanel.displayErrorMessage("You shouldn't change the location!");
+            } else if (column == 1) {
+                String update = editPricesViewPanel.getPricesUpdate();
+                double intUpdate = Integer.parseInt(update);
+
+                PricesDao pricesDao = new PricesDao();
+                pricesDao.updatePricesDay(intUpdate,Location.toString());
+                editPricesViewPanel.displayErrorMessage("PricesDay changed");
+            } else if (column == 2) {
+                String update = editPricesViewPanel.getPricesUpdate();
+                double intUpdate = Integer.parseInt(update);
+                
+                PricesDao pricesDao = new PricesDao();
+                pricesDao.updatePricesNight(intUpdate,Location.toString());
+                editCustomerViewPanel.displayErrorMessage("PriceNight Changed");
+           
+            }
+        }
+        
+    }
 
     // when click the creat button, it creates the new customer.
     class CreateCustomerListener implements ActionListener {
@@ -195,6 +232,46 @@ public class Controller {
                     tableModel.addRow(objs);
                 }
             } catch (Exception e) {
+                editCustomerViewPanel.displayErrorMessage("Try again.");
+            }
+        }
+    }
+       class DeletePricesListener implements ActionListener {
+
+        //Reads what customer that are marked.
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            Object Location = tableModel.getValueAt(row, 0);
+            String location = Location.toString();
+            //Deletes the marked customer.
+            PricesDao pricesDao = new PricesDao();
+            pricesDao.deletePrices(location);
+        }
+    }
+
+     class SearchPricesListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            String location;
+            double price_Day;
+            double price_Night;
+            
+
+            String col[] = {"Location", "PriceDay", "PriceNight"};
+            tableModel = new DefaultTableModel(col, 0);
+            editPricesViewPanel.addTableModel(tableModel);
+            try {
+                location = editPricesViewPanel.getPricesLocation();
+                 // converts first String to double
+                PricesDao pricesDao = new PricesDao();
+                ArrayList<Prices> prices = pricesDao.findPrices(location);
+                for (Prices c : prices) {
+                    Object[] objs = {c.getLocation(), c.getPrice_day(), c.getPrice_night(),};
+                    tableModel.addRow(objs);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 editCustomerViewPanel.displayErrorMessage("Try again.");
             }
         }
