@@ -13,6 +13,7 @@ import View.SeeTransactionsViewPanel;
 import View.MainInterface;
 import View.EditPricesViewPanel;
 import View.LoginViewPanel;
+import View.UserViewPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -29,6 +30,7 @@ public class Controller {
     SeeTransactionsViewPanel seeTransactionsViewPanel;
     CreatePricesViewPanel createPricesViewPanel;
     LoginViewPanel loginViewPanel;
+    UserViewPanel userViewPanel;
 
     int row;
     int column;
@@ -42,7 +44,8 @@ public class Controller {
         this.createPricesViewPanel = this.mainInterface.getCreatePricesViewPanel();
         this.editPricesViewPanel = this.mainInterface.getEditPricesViewPanel();
         this.loginViewPanel = this.mainInterface.getLoginViewPanel();
-
+        this.userViewPanel = this.userViewPanel.getUserViewPanel();
+        
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
         this.editPricesViewPanel.addButtonEditPricesListner(new EditPricesListener());
         this.editCustomerViewPanel.addButtonDeleteListner(new DeleteCustomerListener());
@@ -55,8 +58,14 @@ public class Controller {
         this.editPricesViewPanel.addButtonSearchPricesListner(new SearchPricesListener());
         this.editPricesViewPanel.addMouseClicked(new TableCustomerListener());
         this.loginViewPanel.addButtonLoginListner(new LoginListener());
+        this.userViewPanel.addButtonLogOffListner(new LogOffListener());
+        this.userViewPanel.addButtonInsertMoneyListner(new InsertMoneyListner());
+        this.userViewPanel.addButtonSeePricesListner(new SeePricesListner());
+        this.userViewPanel.addButtonSeeUserTransactionsListner(new SeeUserTransactionsListner());
+        this.userViewPanel.addButtonSeeUserAccountListner(new SeeUserAccountListner());
     }
 
+    
     class CreatePricesListener implements ActionListener {
 
         @Override
@@ -254,7 +263,7 @@ public class Controller {
                     mainInterface.invalidate();
                     mainInterface.validate();
                 } else {
-                    loginViewPanel.displayErrorMessage("Wrong username or password.");
+                    loginViewPanel.displayErrorMessage("Wrong username or password.  og Nicklas sutter Dans pik!!!!!!!");
                 }
             } catch (Exception e) {
                 loginViewPanel.displayErrorMessage("Try again");
@@ -262,6 +271,52 @@ public class Controller {
         }
 
     }
+    
+    class LogOffListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent arg0){
+        mainInterface.setContentPane(loginViewPanel);
+        mainInterface.invalidate();
+        mainInterface.validate();
+        }
+    }
+    
+    class InsertMoneyListner implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent arg0){
+        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+        mainInterface.invalidate();
+        mainInterface.validate();
+        }
+    }
+    
+    class SeePricesListner implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent arg0){
+        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+        mainInterface.invalidate();
+        mainInterface.validate();
+        }
+    }
+    
+    class SeeUserTransactionsListner implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent arg0){
+        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+        mainInterface.invalidate();
+        mainInterface.validate();
+        }
+    }
+    
+    class SeeUserAccountListner implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent arg0){
+        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+        mainInterface.invalidate();
+        mainInterface.validate();
+        }
+    }
+    
 
     class DeletePricesListener implements ActionListener {
 
