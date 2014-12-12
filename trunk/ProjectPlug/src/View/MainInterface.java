@@ -130,5 +130,10 @@ public class MainInterface extends javax.swing.JFrame {
         return loginViewPanel1;
         
     }
+    
+    public View.UserViewPanel getUserViewPanel() {
+        return userViewPanel1;
+        
+    }
 
 }
