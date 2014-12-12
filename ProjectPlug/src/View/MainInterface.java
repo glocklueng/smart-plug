@@ -24,6 +24,7 @@ public class MainInterface extends javax.swing.JFrame {
         seeTransactionsViewPanel2 = new View.SeeTransactionsViewPanel();
         createPricesViewPanel1 = new View.CreatePricesViewPanel();
         editPricesViewPanel1 = new View.EditPricesViewPanel();
+        loginViewPanel1 = new View.LoginViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -32,6 +33,7 @@ public class MainInterface extends javax.swing.JFrame {
         jTabbedPane1.addTab("See transactions", seeTransactionsViewPanel2);
         jTabbedPane1.addTab("Prices", createPricesViewPanel1);
         jTabbedPane1.addTab("Edit Prices", editPricesViewPanel1);
+        jTabbedPane1.addTab("Login", loginViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,6 +95,7 @@ public class MainInterface extends javax.swing.JFrame {
     private View.EditCustomerViewPanel editCustomerViewPanel1;
     private View.EditPricesViewPanel editPricesViewPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private View.LoginViewPanel loginViewPanel1;
     private View.SeeTransactionsViewPanel seeTransactionsViewPanel2;
     // End of variables declaration//GEN-END:variables
    
@@ -120,6 +123,11 @@ public class MainInterface extends javax.swing.JFrame {
 
     public View.EditPricesViewPanel getEditPricesViewPanel() {
         return editPricesViewPanel1;
+        
+    }
+    
+    public View.LoginViewPanel getLoginViewPanel() {
+        return loginViewPanel1;
         
     }
 

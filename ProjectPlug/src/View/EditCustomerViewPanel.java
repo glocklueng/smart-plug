@@ -6,11 +6,7 @@
 package View;
 
 import java.awt.event.ActionListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -179,16 +175,16 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
     public void addButtonSearchCustomerListner(ActionListener buttonListener) {
         buttonSearch.addActionListener(buttonListener);
     }
-    
+
     public void addButtonDeleteListner(ActionListener buttonListener) {
         buttonDelete.addActionListener(buttonListener);
     }
-    
+
     public void addButtonEditListner(ActionListener buttonListener) {
         buttonEdit.addActionListener(buttonListener);
     }
-    
-    public void addMouseClicked ( MouseListener mouseListener){
+
+    public void addMouseClicked(MouseListener mouseListener) {
         getTableCustomers().addMouseListener(mouseListener);
     }
 
@@ -203,7 +199,7 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
     public String getPhone() {
         return textFieldPhone.getText();
     }
-    
+
     public String getUpdate() {
         return textFieldUpdate.getText();
     }
