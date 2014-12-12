@@ -100,6 +100,39 @@ public class CustomerDao {
         }
         return customers;
     }
+    
+    public String findPassword(String email) {
+        String insertQuery = "select * from CUSTOMER where" 
+                           + " email = '" + email + "'";
+        Connection con = null;
+        int rowCount = -1;
+        Customer customer;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            try (PreparedStatement preparedStatement = con.prepareStatement(insertQuery)) {
+                System.err.println(preparedStatement.toString());
+                
+                ResultSet resultSet = preparedStatement.executeQuery();
+                
+                if (resultSet.next()) {
+                    customer = createCustomerObject(resultSet);// create a customer object by using the result set
+                    return customer.getPassword();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return null;
+        
+    }
    
     public int addCustomer(Customer customer) throws SQLException {
         String insertQuery = "insert into CUSTOMER  values (?,?,?,?,?,?)";
