@@ -19,21 +19,21 @@ public class MainInterface extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        loginViewPanel1 = new View.LoginViewPanel();
         createCustomerViewPanel1 = new View.CreateCustomerViewPanel();
         editCustomerViewPanel1 = new View.EditCustomerViewPanel();
-        seeTransactionsViewPanel2 = new View.SeeTransactionsViewPanel();
         createPricesViewPanel1 = new View.CreatePricesViewPanel();
         editPricesViewPanel1 = new View.EditPricesViewPanel();
-        loginViewPanel1 = new View.LoginViewPanel();
+        seeTransactionsViewPanel2 = new View.SeeTransactionsViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.addTab("Login", loginViewPanel1);
         jTabbedPane1.addTab("Create customer", createCustomerViewPanel1);
         jTabbedPane1.addTab("Edit customer", editCustomerViewPanel1);
-        jTabbedPane1.addTab("See transactions", seeTransactionsViewPanel2);
-        jTabbedPane1.addTab("Prices", createPricesViewPanel1);
+        jTabbedPane1.addTab("Create Prices", createPricesViewPanel1);
         jTabbedPane1.addTab("Edit Prices", editPricesViewPanel1);
-        jTabbedPane1.addTab("Login", loginViewPanel1);
+        jTabbedPane1.addTab("See transactions", seeTransactionsViewPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -47,8 +47,8 @@ public class MainInterface extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
