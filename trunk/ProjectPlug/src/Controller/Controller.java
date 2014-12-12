@@ -250,8 +250,11 @@ public class Controller {
                 realPassword = customerDao.findPassword(username);
                 if (realPassword.equals(password)) {
                     loginViewPanel.displayErrorMessage("You are logged in.");
+                    mainInterface.setContentPane(editCustomerViewPanel);
+                    mainInterface.invalidate();
+                    mainInterface.validate();
                 } else {
-                    loginViewPanel.displayErrorMessage("Wrong username or password.  og dan sutter pik!!!!!!!");
+                    loginViewPanel.displayErrorMessage("Wrong username or password.");
                 }
             } catch (Exception e) {
                 loginViewPanel.displayErrorMessage("Try again");
