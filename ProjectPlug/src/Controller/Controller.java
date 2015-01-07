@@ -1,21 +1,8 @@
 package Controller;
 
-import DAO.CustomerDao;
-import DAO.PricesDao;
-import DAO.TransactionDao;
-import Model.Customer;
-import Model.Prices;
-import Model.Transaction;
-import View.UserAccountViewPanel;
-import View.AdminViewPanel;
-import View.CreateCustomerViewPanel;
-import View.CreatePricesViewPanel;
-import View.EditCustomerViewPanel;
-import View.SeeTransactionsViewPanel;
-import View.MainInterface;
-import View.EditPricesViewPanel;
-import View.LoginViewPanel;
-import View.UserViewPanel;
+import DAO.*;
+import Model.*;
+import View.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -29,17 +16,18 @@ public class Controller {
     MainInterface mainInterface;
     EditCustomerViewPanel editCustomerViewPanel;
     EditPricesViewPanel editPricesViewPanel;
-    SeeTransactionsViewPanel seeTransactionsViewPanel;
+    AdminTransactionsViewPanel seeTransactionsViewPanel;
     CreatePricesViewPanel createPricesViewPanel;
     LoginViewPanel loginViewPanel;
     UserViewPanel userViewPanel;
     AdminViewPanel adminViewPanel;
     UserAccountViewPanel accountViewPanel;
-    String LoginAs;
+    UserTransactionsViewPanel userTransactionsViewPanel;
 
     int row;
     int column;
     DefaultTableModel tableModel;
+    String LoginAs;
 
     public Controller(MainInterface mainInterface) {
         this.mainInterface = mainInterface;
@@ -51,6 +39,7 @@ public class Controller {
         this.loginViewPanel = this.mainInterface.getLoginViewPanel();
         this.userViewPanel = this.mainInterface.getUserViewPanel();
         this.accountViewPanel = this.mainInterface.getAccountViewPanel();
+        this.userTransactionsViewPanel = this.mainInterface.getUserTransactionsViewPanel();
 
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
         this.editPricesViewPanel.addButtonEditPricesListener(new EditPricesListener());
@@ -65,11 +54,12 @@ public class Controller {
         this.editPricesViewPanel.addMouseClicked(new TableCustomerListener());
         this.loginViewPanel.addButtonLoginListener(new LoginListener());
         this.userViewPanel.addButtonLogOffListener(new LogOffListener());
-        this.userViewPanel.addButtonInsertMoneyListener(new InsertMoneyListener());
+        this.userViewPanel.addButtonSeeUserTransactionsListener(new SeeTransactionsListener());
         this.userViewPanel.addButtonSeePricesListener(new SeePricesListener());
         this.userViewPanel.addButtonSeeUserTransactionsListener(new SeeUserTransactionsListener());
         this.userViewPanel.addButtonSeeUserAccountListener(new FindSingleCustomerListener());
         this.accountViewPanel.addButtonSaveListener(new EditSingleCustomerListener());
+        this.userTransactionsViewPanel.addButtonBackListener(new BackToUserViewPanel());
     }
 
     class CreatePricesListener implements ActionListener {
@@ -290,6 +280,33 @@ public class Controller {
         }
     }
 
+    class SeeTransactionsListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            int customerID = 0;
+
+            String col[] = {"Transaction ID", "Amount", "Timedate", "Location", "Device", "Time Spent"};
+            tableModel = new DefaultTableModel(col, 0);
+            userTransactionsViewPanel.addTableModel(tableModel);
+            try {
+                CustomerDao customerDao = new CustomerDao();
+                ArrayList<Customer> customers = customerDao.findCustomers("", LoginAs, "");
+                for (Customer c : customers) {
+                    customerID = c.getId();
+                }
+                TransactionDao transactionDao = new TransactionDao();
+                ArrayList<Transaction> transactions = transactionDao.findTransactionsByCustomerID(customerID);
+                for (Transaction t : transactions) {
+                    Object[] objs = {t.getTransactionID(), t.getAmount(), t.getTimeDate(), t.getLocation(), t.getDevice(), t.getTimeSpent()};
+                    tableModel.addRow(objs);
+                }
+            } catch (Exception e) {
+                editCustomerViewPanel.displayErrorMessage("Try again.");
+            }
+        }
+    }
+
     class FindSingleCustomerListener implements ActionListener {
 
         @Override
@@ -350,6 +367,16 @@ public class Controller {
 
     }
 
+    class BackToUserViewPanel implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            mainInterface.setContentPane(userViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
+        }
+    }
+
     class LogOffListener implements ActionListener {
 
         @Override
@@ -384,7 +411,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+            mainInterface.setContentPane(userTransactionsViewPanel);//Skift til kommende panel
             mainInterface.invalidate();
             mainInterface.validate();
         }

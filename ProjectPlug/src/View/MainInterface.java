@@ -25,9 +25,10 @@ public class MainInterface extends javax.swing.JFrame {
         editCustomerViewPanel1 = new View.EditCustomerViewPanel();
         createPricesViewPanel1 = new View.CreatePricesViewPanel();
         editPricesViewPanel1 = new View.EditPricesViewPanel();
-        seeTransactionsViewPanel2 = new View.SeeTransactionsViewPanel();
+        seeTransactionsViewPanel2 = new View.AdminTransactionsViewPanel();
         userViewPanel1 = new View.UserViewPanel();
         accountViewPanel1 = new View.UserAccountViewPanel();
+        userTransactionsViewPanel1 = new View.UserTransactionsViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,6 +41,7 @@ public class MainInterface extends javax.swing.JFrame {
         jTabbedPane1.addTab("See transactions", seeTransactionsViewPanel2);
         jTabbedPane1.addTab("User view panel", userViewPanel1);
         jTabbedPane1.addTab("User account view panel", accountViewPanel1);
+        jTabbedPane1.addTab("User Transations", userTransactionsViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,11 +106,12 @@ public class MainInterface extends javax.swing.JFrame {
     private View.EditPricesViewPanel editPricesViewPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private View.LoginViewPanel loginViewPanel1;
-    private View.SeeTransactionsViewPanel seeTransactionsViewPanel2;
+    private View.AdminTransactionsViewPanel seeTransactionsViewPanel2;
+    private View.UserTransactionsViewPanel userTransactionsViewPanel1;
     private View.UserViewPanel userViewPanel1;
     // End of variables declaration//GEN-END:variables
    
-    public SeeTransactionsViewPanel getSeeTransactionsViewPanel() {
+    public AdminTransactionsViewPanel getSeeTransactionsViewPanel() {
         return seeTransactionsViewPanel2;
     }
 
@@ -149,5 +152,8 @@ public class MainInterface extends javax.swing.JFrame {
     public View.UserAccountViewPanel getAccountViewPanel() {
         return accountViewPanel1;
     }
-
+    
+    public View.UserTransactionsViewPanel getUserTransactionsViewPanel() {
+        return userTransactionsViewPanel1;
+    }
 }

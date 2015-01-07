@@ -13,12 +13,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Nicklas
  */
-public class SeeTransactionsViewPanel extends javax.swing.JPanel {
+public class UserTransactionsViewPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form SeeTransactionsViewPanel
+     * Creates new form UserTransactionsPanel
      */
-    public SeeTransactionsViewPanel() {
+    public UserTransactionsViewPanel() {
         initComponents();
     }
 
@@ -33,7 +33,7 @@ public class SeeTransactionsViewPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransactions = new javax.swing.JTable();
-        buttonUpdate = new javax.swing.JButton();
+        buttonBack = new javax.swing.JButton();
 
         tableTransactions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -48,42 +48,41 @@ public class SeeTransactionsViewPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tableTransactions);
 
-        buttonUpdate.setText("Update");
+        buttonBack.setText("Back");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonUpdate)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonBack)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(buttonUpdate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addComponent(buttonBack)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     public void addTableModel(DefaultTableModel tableModel) {
         getTableTransactions().setModel(tableModel);
     }
-    
+
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
-    
-    public void addButtonUpdateListener(ActionListener buttonListener) {
-        buttonUpdate.addActionListener(buttonListener);
+
+    public void addButtonBackListener(ActionListener buttonListener) {
+        buttonBack.addActionListener(buttonListener);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonUpdate;
+    private javax.swing.JButton buttonBack;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableTransactions;
     // End of variables declaration//GEN-END:variables

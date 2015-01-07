@@ -98,7 +98,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="View.SeeTransactionsViewPanel" name="seeTransactionsViewPanel2">
+        <Component class="View.AdminTransactionsViewPanel" name="seeTransactionsViewPanel2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="See transactions">
@@ -121,6 +121,15 @@
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="User account view panel">
                 <Property name="tabTitle" type="java.lang.String" value="User account view panel"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="View.UserTransactionsViewPanel" name="userTransactionsViewPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="User Transations">
+                <Property name="tabTitle" type="java.lang.String" value="User Transations"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
