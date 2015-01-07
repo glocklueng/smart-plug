@@ -23,6 +23,8 @@ public class Controller {
     AdminViewPanel adminViewPanel;
     UserAccountViewPanel accountViewPanel;
     UserTransactionsViewPanel userTransactionsViewPanel;
+    UserPricesViewPanel userPricesViewPanel;
+    InsertMoneyViewPanel insertMoneyViewPanel;
 
     int row;
     int column;
@@ -40,8 +42,11 @@ public class Controller {
         this.userViewPanel = this.mainInterface.getUserViewPanel();
         this.accountViewPanel = this.mainInterface.getAccountViewPanel();
         this.userTransactionsViewPanel = this.mainInterface.getUserTransactionsViewPanel();
+        this.userPricesViewPanel = this.mainInterface.getUserPricesViewPanel();
+        this.insertMoneyViewPanel = this.mainInterface.getInsertMoneyViewPanel();
 
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
+        
         this.editPricesViewPanel.addButtonEditPricesListener(new EditPricesListener());
         this.editCustomerViewPanel.addButtonDeleteListener(new DeleteCustomerListener());
         this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener());
@@ -50,18 +55,20 @@ public class Controller {
         this.seeTransactionsViewPanel.addButtonUpdateListener(new UpdateTransactionsListener());
         this.createPricesViewPanel.addButtonCreatePricesListener(new CreatePricesListener());
         this.editPricesViewPanel.addButtonDeletePricesListener(new DeletePricesListener());
-        this.editPricesViewPanel.addButtonSearchPricesListener(new SearchPricesListener());
+        this.editPricesViewPanel.addButtonSearchPricesListener(new AdminSearchPricesListener());
         this.editPricesViewPanel.addMouseClicked(new TableCustomerListener());
         this.loginViewPanel.addButtonLoginListener(new LoginListener());
         this.userViewPanel.addButtonLogOffListener(new LogOffListener());
         this.userViewPanel.addButtonSeeUserTransactionsListener(new SeeTransactionsListener());
-        this.userViewPanel.addButtonSeePricesListener(new SeePricesListener());
-        this.userViewPanel.addButtonSeeUserTransactionsListener(new SeeUserTransactionsListener());
+        this.userViewPanel.addButtonSeePricesListener(new UserSearchPricesListener());
+        this.userViewPanel.addButtonInsertMoneyListener(new SeeInsertMoneyListener());
         this.userViewPanel.addButtonSeeUserAccountListener(new FindSingleCustomerListener());
         this.accountViewPanel.addButtonSaveListener(new EditSingleCustomerListener());
-        this.userTransactionsViewPanel.addButtonBackListener(new BackToUserViewPanel());
+        this.userTransactionsViewPanel.addButtonBackListener(new BackToUserViewPanelListener());
+        this.userPricesViewPanel.addButtonSearchListener(new UserSearchPricesListener());
+        this.userPricesViewPanel.addButtonBackListener(new BackToUserViewPanelListener());
+        this.insertMoneyViewPanel.addButtonInsertMoneyListener(new InsertMoneyListener());
     }
-
     class CreatePricesListener implements ActionListener {
 
         @Override
@@ -307,6 +314,32 @@ public class Controller {
         }
     }
 
+    class UserSearchPricesListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            String location;
+
+            String col[] = {"Location", "Prices day", "Prices night"};
+            tableModel = new DefaultTableModel(col, 0);
+            userPricesViewPanel.addTableModel(tableModel);
+            try {
+                location = userPricesViewPanel.getTextFieldLocation();
+                PricesDao pricesDao = new PricesDao();
+                ArrayList<Prices> prices = pricesDao.findPrices(location);
+                for (Prices p : prices) {
+                    Object[] objs = {p.getLocation(), p.getPrice_day(), p.getPrice_night()};
+                    tableModel.addRow(objs);
+                }
+            } catch (Exception e) {
+                editCustomerViewPanel.displayErrorMessage("Try again.");
+            }
+            mainInterface.setContentPane(userPricesViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
+        }
+    }
+
     class FindSingleCustomerListener implements ActionListener {
 
         @Override
@@ -323,12 +356,12 @@ public class Controller {
                     accountViewPanel.setTextFieldAccountPhone(c.getPhone());
                     accountViewPanel.setTextFieldAccountBalance(Double.toString(c.getBalance()));
                 }
-                mainInterface.setContentPane(accountViewPanel);//Skift til kommende panel
-                mainInterface.invalidate();
-                mainInterface.validate();
             } catch (Exception e) {
                 accountViewPanel.displayErrorMessage("Try again.");
             }
+            mainInterface.setContentPane(accountViewPanel);//Skift til kommende panel
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
 
@@ -366,8 +399,29 @@ public class Controller {
         }
 
     }
+    
+    class InsertMoneyListener implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            Double balance;
+            int ID = 0;
+            
+            try {
+                balance = insertMoneyViewPanel.getTextFieldInsertMoney();
+                CustomerDao customerDao = new CustomerDao();
+                ArrayList<Customer> customers = customerDao.findCustomers("", LoginAs, "");
+                for (Customer c : customers) {
+                    ID = c.getId();
+                }
+                customerDao.updateCustomerBalance(balance, ID);
+            } catch (Exception e){
+                insertMoneyViewPanel.displayErrorMessage("Try again!");
+            }
+        }
+    }
 
-    class BackToUserViewPanel implements ActionListener {
+    class BackToUserViewPanelListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -387,21 +441,11 @@ public class Controller {
         }
     }
 
-    class InsertMoneyListener implements ActionListener {
+    class SeeInsertMoneyListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
-            mainInterface.invalidate();
-            mainInterface.validate();
-        }
-    }
-
-    class SeePricesListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+            mainInterface.setContentPane(insertMoneyViewPanel);//Skift til kommende panel
             mainInterface.invalidate();
             mainInterface.validate();
         }
@@ -440,7 +484,7 @@ public class Controller {
         }
     }
 
-    class SearchPricesListener implements ActionListener {
+    class AdminSearchPricesListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
