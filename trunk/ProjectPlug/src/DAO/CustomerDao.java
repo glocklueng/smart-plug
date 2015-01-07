@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @author Ibrahim
  */
 public class CustomerDao {
-    
+
     public Customer findCustomerById(int id) {
         /*
          Sql query to be executed in order to obtain a result set
@@ -61,11 +61,11 @@ public class CustomerDao {
         }
         return customer;
     }
-    
+
     public ArrayList<Customer> findCustomers(String name, String email, String phone) {
-        String insertQuery = "select * from CUSTOMER where name like '%" +name+  "%'" 
-                           + " and email like '%" + email + "%'"
-                           + " and phone like '%"+phone+"%'";
+        String insertQuery = "select * from CUSTOMER where name like '%" + name + "%'"
+                + " and email like '%" + email + "%'"
+                + " and phone like '%" + phone + "%'";
         Connection con = null;
         ArrayList customers = new ArrayList<Customer>();
         int rowCount = -1;
@@ -77,13 +77,13 @@ public class CustomerDao {
 //            preparedStatement.setString(2, email);
 //            preparedStatement.setString(3, phone);
             System.err.println(preparedStatement.toString());
-           
+
             /*
              By executing query on the prepared statement you obtain a result set
              */
             ResultSet resultSet = preparedStatement.executeQuery();
-            
-            while(resultSet.next()) {
+
+            while (resultSet.next()) {
                 customers.add(createCustomerObject(resultSet));// create a customer object by using the result set
             }
             preparedStatement.close();
@@ -100,10 +100,10 @@ public class CustomerDao {
         }
         return customers;
     }
-    
+
     public String findPassword(String email) {
-        String insertQuery = "select * from CUSTOMER where" 
-                           + " email = '" + email + "'";
+        String insertQuery = "select * from CUSTOMER where"
+                + " email = '" + email + "'";
         Connection con = null;
         int rowCount = -1;
         Customer customer;
@@ -111,9 +111,9 @@ public class CustomerDao {
             con = DerbyDAOFactory.createConnection();
             try (PreparedStatement preparedStatement = con.prepareStatement(insertQuery)) {
                 System.err.println(preparedStatement.toString());
-                
+
                 ResultSet resultSet = preparedStatement.executeQuery();
-                
+
                 if (resultSet.next()) {
                     customer = createCustomerObject(resultSet);// create a customer object by using the result set
                     return customer.getPassword();
@@ -131,9 +131,9 @@ public class CustomerDao {
             }
         }
         return null;
-        
+
     }
-   
+
     public int addCustomer(Customer customer) throws SQLException {
         String insertQuery = "insert into CUSTOMER  values (?,?,?,?,?,?)";
         Connection con = null;
@@ -191,7 +191,7 @@ public class CustomerDao {
         return rowCount;
     }
 
-        public int updateCustomerName(String name, int ID) {
+    public int updateCustomerName(String name, int ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set name=? where id=?";
         Connection con = null;
@@ -218,7 +218,7 @@ public class CustomerDao {
         }
         return rowCount;
     }
-    
+
     public int updateCustomerPhone(String phone, int ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set phone=? where id=?";
@@ -246,7 +246,7 @@ public class CustomerDao {
         }
         return rowCount;
     }
-    
+
     public int updateCustomerEmail(String email, int ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set email=? where id=?";
@@ -275,6 +275,34 @@ public class CustomerDao {
         return rowCount;
     }
     
+    public int updateCustomerPassword(String password, int ID) {
+        String insertQuery = "update CUSTOMER "
+                + "Set password=? where id=?";
+        Connection con = null;
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, password);
+            preparedStatement.setInt(2, ID);
+            rowCount = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return rowCount;
+    }
+
     public int updateCustomerBalance(double balance, int ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set balance=? where id=?";

@@ -34,8 +34,8 @@ public class LoginViewPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         textFieldUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textFieldPassword = new javax.swing.JTextField();
         buttonLogin = new javax.swing.JButton();
+        textFieldPassword = new javax.swing.JPasswordField();
 
         jLabel1.setText("Username");
 
@@ -53,11 +53,10 @@ public class LoginViewPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonLogin)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(textFieldUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                        .addComponent(textFieldPassword)))
+                    .addComponent(textFieldUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                    .addComponent(textFieldPassword))
                 .addContainerGap(139, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -81,7 +80,7 @@ public class LoginViewPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
-    public void addButtonLoginListner(ActionListener buttonListener) {
+    public void addButtonLoginListener(ActionListener buttonListener) {
         buttonLogin.addActionListener(buttonListener);
     }
 
@@ -89,7 +88,7 @@ public class LoginViewPanel extends javax.swing.JPanel {
     private javax.swing.JButton buttonLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField textFieldPassword;
+    private javax.swing.JPasswordField textFieldPassword;
     private javax.swing.JTextField textFieldUsername;
     // End of variables declaration//GEN-END:variables
 
