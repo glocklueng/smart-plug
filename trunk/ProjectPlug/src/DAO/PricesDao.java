@@ -20,7 +20,7 @@ public class PricesDao {
 
     public ArrayList<Prices> findPrices(String location) {
 
-        String pricesQuery = "select * from PRICES where location like '%" + location + "%'";
+        String pricesQuery = "select * from PRICES where location like '%?%'";
 
         Connection con = null;
         ArrayList prices = new ArrayList<Prices>();
@@ -33,6 +33,7 @@ public class PricesDao {
              */
             PreparedStatement preparedStatement = con.prepareStatement(pricesQuery);
             System.err.println(preparedStatement.toString());
+            preparedStatement.setString(1, location);
 
        
 

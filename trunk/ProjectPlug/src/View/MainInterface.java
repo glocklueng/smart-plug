@@ -29,6 +29,8 @@ public class MainInterface extends javax.swing.JFrame {
         userViewPanel1 = new View.UserViewPanel();
         accountViewPanel1 = new View.UserAccountViewPanel();
         userTransactionsViewPanel1 = new View.UserTransactionsViewPanel();
+        userPricesViewPanel1 = new View.UserPricesViewPanel();
+        insertMoneyViewPanel1 = new View.InsertMoneyViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,6 +44,8 @@ public class MainInterface extends javax.swing.JFrame {
         jTabbedPane1.addTab("User view panel", userViewPanel1);
         jTabbedPane1.addTab("User account view panel", accountViewPanel1);
         jTabbedPane1.addTab("User Transations", userTransactionsViewPanel1);
+        jTabbedPane1.addTab("User Prices", userPricesViewPanel1);
+        jTabbedPane1.addTab("Insert money", insertMoneyViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,9 +108,11 @@ public class MainInterface extends javax.swing.JFrame {
     private View.CreatePricesViewPanel createPricesViewPanel1;
     private View.EditCustomerViewPanel editCustomerViewPanel1;
     private View.EditPricesViewPanel editPricesViewPanel1;
+    private View.InsertMoneyViewPanel insertMoneyViewPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private View.LoginViewPanel loginViewPanel1;
     private View.AdminTransactionsViewPanel seeTransactionsViewPanel2;
+    private View.UserPricesViewPanel userPricesViewPanel1;
     private View.UserTransactionsViewPanel userTransactionsViewPanel1;
     private View.UserViewPanel userViewPanel1;
     // End of variables declaration//GEN-END:variables
@@ -155,5 +161,13 @@ public class MainInterface extends javax.swing.JFrame {
     
     public View.UserTransactionsViewPanel getUserTransactionsViewPanel() {
         return userTransactionsViewPanel1;
+    }
+    
+    public View.UserPricesViewPanel getUserPricesViewPanel() {
+        return userPricesViewPanel1;
+    }
+    
+    public View.InsertMoneyViewPanel getInsertMoneyViewPanel() {
+        return insertMoneyViewPanel1;
     }
 }
