@@ -16,13 +16,86 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="buttonLogOff" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="buttonCreateCustomer" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="buttonEditCustomer" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="buttonCreatePrice" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="buttonEditPrices" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="buttonSeeTransactions" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="483" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="buttonLogOff" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="buttonCreateCustomer" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonEditCustomer" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="buttonCreatePrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonEditPrices" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="buttonSeeTransactions" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="283" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JButton" name="buttonLogOff">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Log off"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonCreateCustomer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Create customer"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonEditCustomer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Edit customers"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonCreatePrice">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Create price"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonEditPrices">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Edit prices"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonSeeTransactions">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="See transactions"/>
+      </Properties>
+    </Component>
+  </SubComponents>
 </Form>

@@ -20,20 +20,26 @@ public class MainInterface extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         loginViewPanel1 = new View.LoginViewPanel();
+        adminViewPanel2 = new View.AdminViewPanel();
         createCustomerViewPanel1 = new View.CreateCustomerViewPanel();
         editCustomerViewPanel1 = new View.EditCustomerViewPanel();
         createPricesViewPanel1 = new View.CreatePricesViewPanel();
         editPricesViewPanel1 = new View.EditPricesViewPanel();
         seeTransactionsViewPanel2 = new View.SeeTransactionsViewPanel();
+        userViewPanel1 = new View.UserViewPanel();
+        accountViewPanel1 = new View.UserAccountViewPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane1.addTab("Login", loginViewPanel1);
+        jTabbedPane1.addTab("Admin view panel", adminViewPanel2);
         jTabbedPane1.addTab("Create customer", createCustomerViewPanel1);
         jTabbedPane1.addTab("Edit customer", editCustomerViewPanel1);
         jTabbedPane1.addTab("Create Prices", createPricesViewPanel1);
         jTabbedPane1.addTab("Edit Prices", editPricesViewPanel1);
         jTabbedPane1.addTab("See transactions", seeTransactionsViewPanel2);
+        jTabbedPane1.addTab("User view panel", userViewPanel1);
+        jTabbedPane1.addTab("User account view panel", accountViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,6 +96,8 @@ public class MainInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private View.UserAccountViewPanel accountViewPanel1;
+    private View.AdminViewPanel adminViewPanel2;
     private View.CreateCustomerViewPanel createCustomerViewPanel1;
     private View.CreatePricesViewPanel createPricesViewPanel1;
     private View.EditCustomerViewPanel editCustomerViewPanel1;
@@ -97,6 +105,7 @@ public class MainInterface extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private View.LoginViewPanel loginViewPanel1;
     private View.SeeTransactionsViewPanel seeTransactionsViewPanel2;
+    private View.UserViewPanel userViewPanel1;
     // End of variables declaration//GEN-END:variables
    
     public SeeTransactionsViewPanel getSeeTransactionsViewPanel() {
@@ -122,18 +131,23 @@ public class MainInterface extends javax.swing.JFrame {
     }
 
     public View.EditPricesViewPanel getEditPricesViewPanel() {
-        return editPricesViewPanel1;
-        
+        return editPricesViewPanel1;       
     }
     
     public View.LoginViewPanel getLoginViewPanel() {
-        return loginViewPanel1;
-        
+        return loginViewPanel1; 
     }
     
     public View.UserViewPanel getUserViewPanel() {
-        return userViewPanel1;
-        
+        return userViewPanel1; 
+    }
+    
+    public View.AdminViewPanel getAdminViewPanel() {
+        return adminViewPanel2; 
+    }
+    
+    public View.UserAccountViewPanel getAccountViewPanel() {
+        return accountViewPanel1;
     }
 
 }

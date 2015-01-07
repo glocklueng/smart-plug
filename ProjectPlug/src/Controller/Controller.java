@@ -6,6 +6,8 @@ import DAO.TransactionDao;
 import Model.Customer;
 import Model.Prices;
 import Model.Transaction;
+import View.UserAccountViewPanel;
+import View.AdminViewPanel;
 import View.CreateCustomerViewPanel;
 import View.CreatePricesViewPanel;
 import View.EditCustomerViewPanel;
@@ -31,6 +33,9 @@ public class Controller {
     CreatePricesViewPanel createPricesViewPanel;
     LoginViewPanel loginViewPanel;
     UserViewPanel userViewPanel;
+    AdminViewPanel adminViewPanel;
+    UserAccountViewPanel accountViewPanel;
+    String LoginAs;
 
     int row;
     int column;
@@ -44,28 +49,29 @@ public class Controller {
         this.createPricesViewPanel = this.mainInterface.getCreatePricesViewPanel();
         this.editPricesViewPanel = this.mainInterface.getEditPricesViewPanel();
         this.loginViewPanel = this.mainInterface.getLoginViewPanel();
-        this.userViewPanel = this.userViewPanel.getUserViewPanel();
-        
+        this.userViewPanel = this.mainInterface.getUserViewPanel();
+        this.accountViewPanel = this.mainInterface.getAccountViewPanel();
+
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
-        this.editPricesViewPanel.addButtonEditPricesListner(new EditPricesListener());
-        this.editCustomerViewPanel.addButtonDeleteListner(new DeleteCustomerListener());
+        this.editPricesViewPanel.addButtonEditPricesListener(new EditPricesListener());
+        this.editCustomerViewPanel.addButtonDeleteListener(new DeleteCustomerListener());
         this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener());
-        this.editCustomerViewPanel.addButtonSearchCustomerListner(new SearchCustomerListener());
-        this.editCustomerViewPanel.addButtonEditListner(new EditCustomerListener());
-        this.seeTransactionsViewPanel.addButtonUpdateListner(new UpdateTransactionsListener());
+        this.editCustomerViewPanel.addButtonSearchCustomerListener(new SearchCustomerListener());
+        this.editCustomerViewPanel.addButtonEditListener(new EditCustomerListener());
+        this.seeTransactionsViewPanel.addButtonUpdateListener(new UpdateTransactionsListener());
         this.createPricesViewPanel.addButtonCreatePricesListener(new CreatePricesListener());
-        this.editPricesViewPanel.addButtonDeletePricesListner(new DeletePricesListener());
-        this.editPricesViewPanel.addButtonSearchPricesListner(new SearchPricesListener());
+        this.editPricesViewPanel.addButtonDeletePricesListener(new DeletePricesListener());
+        this.editPricesViewPanel.addButtonSearchPricesListener(new SearchPricesListener());
         this.editPricesViewPanel.addMouseClicked(new TableCustomerListener());
-        this.loginViewPanel.addButtonLoginListner(new LoginListener());
-        this.userViewPanel.addButtonLogOffListner(new LogOffListener());
-        this.userViewPanel.addButtonInsertMoneyListner(new InsertMoneyListner());
-        this.userViewPanel.addButtonSeePricesListner(new SeePricesListner());
-        this.userViewPanel.addButtonSeeUserTransactionsListner(new SeeUserTransactionsListner());
-        this.userViewPanel.addButtonSeeUserAccountListner(new SeeUserAccountListner());
+        this.loginViewPanel.addButtonLoginListener(new LoginListener());
+        this.userViewPanel.addButtonLogOffListener(new LogOffListener());
+        this.userViewPanel.addButtonInsertMoneyListener(new InsertMoneyListener());
+        this.userViewPanel.addButtonSeePricesListener(new SeePricesListener());
+        this.userViewPanel.addButtonSeeUserTransactionsListener(new SeeUserTransactionsListener());
+        this.userViewPanel.addButtonSeeUserAccountListener(new FindSingleCustomerListener());
+        this.accountViewPanel.addButtonSaveListener(new EditSingleCustomerListener());
     }
 
-    
     class CreatePricesListener implements ActionListener {
 
         @Override
@@ -146,7 +152,47 @@ public class Controller {
         }
     }
 
-    // needs to be changed ****************************************
+    class EditSingleCustomerListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            int id = 0;
+            String name;
+            String email;
+            String phone;
+            String password;
+            String retypePassword;
+
+            try {
+                name = accountViewPanel.getTextFieldAccountName();
+                email = accountViewPanel.getTextFieldAccountEmail();
+                phone = accountViewPanel.getTextFieldAccountPhone();
+                password = accountViewPanel.getTextFieldPassword();
+                retypePassword = accountViewPanel.getTextFieldRetypePassword();
+
+                CustomerDao customerDao = new CustomerDao();
+                ArrayList<Customer> customers = customerDao.findCustomers("", LoginAs, "");
+                for (Customer c : customers) {
+                    id = c.getId();
+                }
+                customerDao.updateCustomerName(name, id);
+                customerDao.updateCustomerEmail(email, id);
+                customerDao.updateCustomerPhone(phone, id);
+                if (!"".equals(password)) {
+                    if (password.equals(retypePassword)) {
+                        customerDao.updateCustomerPassword(password, id);
+                    } else {
+                        accountViewPanel.displayErrorMessage("Passwords doesn't match.");
+                    }
+                }
+                accountViewPanel.displayErrorMessage("Account has been updated.");
+            } catch (Exception e) {
+                accountViewPanel.displayErrorMessage("Try again.");
+            }
+        }
+    }
+
+// needs to be changed ****************************************
     class EditPricesListener implements ActionListener {
 
         //Reads what customer that are marked.
@@ -176,7 +222,7 @@ public class Controller {
 
     }
 
-    // when click the creat button, it creates the new customer.
+// when click the creat button, it creates the new customer.
     class CreateCustomerListener implements ActionListener {
 
         @Override
@@ -244,6 +290,31 @@ public class Controller {
         }
     }
 
+    class FindSingleCustomerListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            String email;
+
+            try {
+                email = LoginAs;
+                CustomerDao customerDao = new CustomerDao();
+                ArrayList<Customer> customers = customerDao.findCustomers("", email, "");
+                for (Customer c : customers) {
+                    accountViewPanel.setTextFieldAccountName(c.getName());
+                    accountViewPanel.setTextFieldAccountEmail(c.getEmail());
+                    accountViewPanel.setTextFieldAccountPhone(c.getPhone());
+                    accountViewPanel.setTextFieldAccountBalance(Double.toString(c.getBalance()));
+                }
+                mainInterface.setContentPane(accountViewPanel);//Skift til kommende panel
+                mainInterface.invalidate();
+                mainInterface.validate();
+            } catch (Exception e) {
+                accountViewPanel.displayErrorMessage("Try again.");
+            }
+        }
+    }
+
     class LoginListener implements ActionListener {
 
         @Override
@@ -253,17 +324,24 @@ public class Controller {
             String realPassword;
             try {
                 username = loginViewPanel.getUsername();
-                password = loginViewPanel.getPassword();
+                password = loginViewPanel.getPassword().toUpperCase();
 
                 CustomerDao customerDao = new CustomerDao();
-                realPassword = customerDao.findPassword(username);
+                realPassword = customerDao.findPassword(username).toUpperCase();
                 if (realPassword.equals(password)) {
                     loginViewPanel.displayErrorMessage("You are logged in.");
-                    mainInterface.setContentPane(editCustomerViewPanel);
-                    mainInterface.invalidate();
-                    mainInterface.validate();
+                    LoginAs = username;
+                    if (username.toUpperCase().equals("ADMIN@ADMIN.COM")) {
+                        mainInterface.setContentPane(adminViewPanel);
+                        mainInterface.invalidate();
+                        mainInterface.validate();
+                    } else {
+                        mainInterface.setContentPane(userViewPanel);
+                        mainInterface.invalidate();
+                        mainInterface.validate();
+                    }
                 } else {
-                    loginViewPanel.displayErrorMessage("Wrong username or password.  og Nicklas sutter Dans pik!!!!!!!");
+                    loginViewPanel.displayErrorMessage("Wrong username or password.");
                 }
             } catch (Exception e) {
                 loginViewPanel.displayErrorMessage("Try again");
@@ -271,52 +349,56 @@ public class Controller {
         }
 
     }
-    
+
     class LogOffListener implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent arg0){
-        mainInterface.setContentPane(loginViewPanel);
-        mainInterface.invalidate();
-        mainInterface.validate();
+        public void actionPerformed(ActionEvent arg0) {
+            mainInterface.setContentPane(loginViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
-    
-    class InsertMoneyListner implements ActionListener {
+
+    class InsertMoneyListener implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent arg0){
-        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
-        mainInterface.invalidate();
-        mainInterface.validate();
+        public void actionPerformed(ActionEvent arg0) {
+            mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
-    
-    class SeePricesListner implements ActionListener {
+
+    class SeePricesListener implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent arg0){
-        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
-        mainInterface.invalidate();
-        mainInterface.validate();
+        public void actionPerformed(ActionEvent arg0) {
+            mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
-    
-    class SeeUserTransactionsListner implements ActionListener {
+
+    class SeeUserTransactionsListener implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent arg0){
-        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
-        mainInterface.invalidate();
-        mainInterface.validate();
+        public void actionPerformed(ActionEvent arg0) {
+            mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
-    
-    class SeeUserAccountListner implements ActionListener {
+
+    class SeeUserAccountListener implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent arg0){
-        mainInterface.setContentPane(loginViewPanel);//Skift til kommende panel
-        mainInterface.invalidate();
-        mainInterface.validate();
+        public void actionPerformed(ActionEvent arg0) {
+            mainInterface.setContentPane(accountViewPanel);//Skift til kommende panel
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
-    
 
     class DeletePricesListener implements ActionListener {
 

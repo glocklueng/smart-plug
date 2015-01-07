@@ -17,7 +17,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace pref="15" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="buttonLogUserOff" min="-2" max="-2" attributes="0"/>
@@ -57,7 +57,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="buttonUserAccount">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Account"/>
+        <Property name="text" type="java.lang.String" value="Edit account"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="buttonSeeUserTransactions">

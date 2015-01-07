@@ -78,7 +78,7 @@ public class SeeTransactionsViewPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
-    public void addButtonUpdateListner(ActionListener buttonListener) {
+    public void addButtonUpdateListener(ActionListener buttonListener) {
         buttonUpdate.addActionListener(buttonListener);
     }
 

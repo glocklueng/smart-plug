@@ -172,15 +172,15 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
-    public void addButtonSearchCustomerListner(ActionListener buttonListener) {
+    public void addButtonSearchCustomerListener(ActionListener buttonListener) {
         buttonSearch.addActionListener(buttonListener);
     }
 
-    public void addButtonDeleteListner(ActionListener buttonListener) {
+    public void addButtonDeleteListener(ActionListener buttonListener) {
         buttonDelete.addActionListener(buttonListener);
     }
 
-    public void addButtonEditListner(ActionListener buttonListener) {
+    public void addButtonEditListener(ActionListener buttonListener) {
         buttonEdit.addActionListener(buttonListener);
     }
 

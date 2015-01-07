@@ -162,15 +162,15 @@ public class EditPricesViewPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
-    public void addButtonSearchPricesListner(ActionListener buttonListener) {
+    public void addButtonSearchPricesListener(ActionListener buttonListener) {
         buttonSearchEditPrices.addActionListener(buttonListener);
     }
     
-    public void addButtonDeletePricesListner(ActionListener buttonListener) {
+    public void addButtonDeletePricesListener(ActionListener buttonListener) {
         buttonDeleteEditPrices.addActionListener(buttonListener);
     }
     
-    public void addButtonEditPricesListner(ActionListener buttonListener) {
+    public void addButtonEditPricesListener(ActionListener buttonListener) {
         buttonEditEditPrices.addActionListener(buttonListener);
     }
     

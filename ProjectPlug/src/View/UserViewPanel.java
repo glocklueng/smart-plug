@@ -28,23 +28,23 @@ public class UserViewPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     
-    public void addButtonSeeUserAccountListner(ActionListener buttonListener) {
+    public void addButtonSeeUserAccountListener(ActionListener buttonListener) {
         buttonUserAccount.addActionListener(buttonListener);
     }
     
-     public void addButtonSeeUserTransactionsListner(ActionListener buttonListener) {
+     public void addButtonSeeUserTransactionsListener(ActionListener buttonListener) {
         buttonSeeUserTransactions.addActionListener(buttonListener);
     }
      
-      public void addButtonSeePricesListner(ActionListener buttonListener) {
+      public void addButtonSeePricesListener(ActionListener buttonListener) {
         buttonSeePrices.addActionListener(buttonListener);
     }
       
-       public void addButtonInsertMoneyListner(ActionListener buttonListener) {
+       public void addButtonInsertMoneyListener(ActionListener buttonListener) {
         buttonInsertMoney.addActionListener(buttonListener);
     }
        
-       public void addButtonLogOffListner(ActionListener buttonListener) {
+       public void addButtonLogOffListener(ActionListener buttonListener) {
         buttonLogUserOff.addActionListener(buttonListener);
     }
     
@@ -58,7 +58,7 @@ public class UserViewPanel extends javax.swing.JPanel {
         buttonLogUserOff = new javax.swing.JButton();
         buttonInsertMoney = new javax.swing.JButton();
 
-        buttonUserAccount.setText("Account");
+        buttonUserAccount.setText("Edit account");
 
         buttonSeeUserTransactions.setText("Transactions");
 
@@ -73,7 +73,7 @@ public class UserViewPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(buttonLogUserOff)
