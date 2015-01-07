@@ -52,6 +52,42 @@ public class TransactionDao {
         return transactions;
     }
     
+    public ArrayList<Transaction> findTransactionsByCustomerID(int customerID) {
+        String insertQuery = "select * from TRANSACTIONS where customer_ID=?";
+        Connection con = null;
+        ArrayList transactions = new ArrayList<Transaction>();
+        int rowCount = -1;
+        try {
+            con = DerbyDAOFactory.createConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+            preparedStatement.setInt(1, customerID);
+
+            System.err.println(preparedStatement.toString());
+           
+            /*
+             By executing query on the prepared statement you obtain a result set
+             */
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            while(resultSet.next()) {
+                transactions.add(createTransactionsObject(resultSet));// create a customer object by using the result set
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return transactions;
+    }
+    
+    
      public Transaction findTransactions(int transactionID) {
         /*
          Sql query to be executed in order to obtain a result set
@@ -93,8 +129,6 @@ public class TransactionDao {
         }
         return transaction;
     }
-     
-   
  
       public int addTransaction(Transaction transaction) {
         String insertQuery = "insert into TRANSACTIONS  values (?,?,?,?,?,?,?)";
