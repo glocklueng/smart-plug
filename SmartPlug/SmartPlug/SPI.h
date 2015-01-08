@@ -10,7 +10,8 @@
 #define DD_SCK PB7
 #define DD_SS PB4
 #include <avr/interrupt.h>
-extern int cardPresent;
+extern unsigned char cardPresent;
+extern unsigned char bufferCard[17];
 void SPI_MasterInit();
 void SPI_MasterTransmit( char data);
 char SPIRecieve(void);

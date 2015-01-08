@@ -10,8 +10,10 @@
 
 #include "uart.h"
 unsigned char buffer[16];
-unsigned char buffer2[17];
+unsigned char cardPresent;
+unsigned char bufferCard[17];
 char dataS;
+
 
 void SPI_MasterInit()
 {
@@ -68,7 +70,7 @@ ISR(INT0_vect) {
 ISR(INT1_vect) //interrupt 1
 {   //USART_Transmit('1');
 	PORTB^=(1<<PB0);
-	
+	cardPresent=1;
 	int i=0;
 	while (PIND & (1<<PD3))
 	{   
@@ -83,15 +85,15 @@ ISR(INT1_vect) //interrupt 1
 	while(i<=7){
 		char temp[3];
 		sprintf(temp, "%02x", buffer[i]);
-		buffer2[2*i] = temp[0];
+		bufferCard[2*i] = temp[0];
 		//if (i!=7)
-		buffer2[2*i+1] = temp[1];
+		bufferCard[2*i+1] = temp[1];
 		i++;
 		
 	}
-	buffer2[16]='\0';
+	bufferCard[16]='\0';
 	Usart_sendString("\n");
-	Usart_sendString(buffer2);
+	Usart_sendString(bufferCard);
 	Usart_sendString("\n");
 }
 

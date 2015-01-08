@@ -12,7 +12,7 @@
 #include "uart.h"
 #include "lcd.h"
 #include "SPI.h"
-
+#define DEBUG 1
 extern volatile int ms;
 extern unsigned char key;
 extern volatile int keyPressed;
@@ -26,6 +26,8 @@ int startChargingFlag;
 int chargingFlag;
 int stopChargingFlag;
 int showInfoFlag;
+unsigned char bufferPin[10];
+int pinIndex;
 
 
 
@@ -59,15 +61,89 @@ void doStates(){
 	switch (state)
 	{
 		case idle: if (idleFlag==1) 
-				{ 
-			 LCDPutString("Swipe card to start charging");
+				{   
+					#if DEBUG
+					Usart_sendString("Idle ");
+					#endif
+					lcdClear();
+					
+			 LCDPutString("Swipe");
 			 idleFlag=0;}
-			 
+			 if (cardPresent) {
+			 state=scanCard;
+			 }
 					break; 
-		case scanCard: 
+		case scanCard:{ 
+					if (scanCardFlag==1){
+					scanCardFlag=0;
+					lcdClear();
+					
+					//
+					//GoTo(0,1);
+					LCDPutString("Press any key ->");
+					//LCDPutString(bufferCard);
+					#if DEBUG
+					Usart_sendString("Scan Card ");
+					#endif
+					}
+					keyFound=0;
+					if (scanKeyPad()==1)
+					{	if (key=='A')
+						state=idle;
+						if (key=='B')
+						state=enterPin;
+						#if DEBUG
+						Usart_sendString("KeyPressed ");
+						#endif
+						key='n';
+					}
 					break;
+					}
 		case enterPin:
+					{
+					lcdClear();
+						
+					#if DEBUG
+					Usart_sendString("Enterpin ");
+					#endif
+					pinIndex=0;
+					while (key!='B')
+					{
+						keyFound=0;
+						if (scanKeyPad()==1)
+						{   if (key>='0' & key<='9')
+							{
+							bufferPin[pinIndex]=key;
+							GoTo(pinIndex,0);
+							LCDPutString("*");
+							pinIndex++;
+							Usart_sendString(" Pin:");
+							Usart_sendString(bufferPin);
+							}
+							else
+							if (key=='C' & pinIndex!=0)
+							{	pinIndex-=1;
+								GoTo(pinIndex,0);
+								
+								
+								LCDPutString(" ");
+								Usart_sendString(" Pin:");
+								Usart_sendString(bufferPin);
+								
+								
+							}
+							
+							
+							
+						}
+					}
+					#if DEBUG
+					Usart_sendString("B Key pressed after PIN Inserted ");
+					#endif
+					state=charging;
+					key='n';
 					break;
+					}
 		case showMenu:
 					break;
 		case showPrices:
@@ -75,11 +151,50 @@ void doStates(){
 		case startCharging:
 					break;
 		case charging:
-					break;
+						{
+							startCharge();
+							sprintf(buffer, '%d', calculateEnergy());
+							lcdClear();
+							LCDPutString("Charge      ");
+							 GoTo(10,1);
+							 LCDPutString("      ");
+							 _delay_ms(10);
+							 GoTo(10,1);
+							 LCDPutString(buffer);
+							 //putString(longBuffer);
+							 _delay_ms(10);
+							 #if DEBUG
+							 Usart_sendString("Charging ");
+							 #endif
+							 keyFound=0;
+							 if (scanKeyPad()==1)
+							 {
+								 
+							 if (key=='A')
+							 {
+							 state=stopCharging;
+							 
+							 #if DEBUG
+							 
+							 #endif
+							 }
+							 
+							}
+							 break;
+						}
 		case stopCharging:
-					break;
-		showInfo;
-					break;
+					{	LCDPutString("Stop      ");
+						#if DEBUG
+						Usart_sendString("Charging Stopped ");
+						#endif
+						stopCharge();
+						break;
+					}
+		case showInfo:
+					{
+						
+						break;
+					}
 		default: break;
 		
 		
@@ -96,6 +211,8 @@ int main(void)
 	int2Init();
 	SPI_MasterInit();
 	Init_SPI_interrupts();
+	initADC();
+	onADC();
 	DDRB |= 0x01;
 	PORTB |= (1<<PB0);
 	ms=0;
@@ -106,6 +223,16 @@ int main(void)
 		if (scanKeyPad()==1) {
 			
 			USART_Transmit(key);
+			if (key=='A'){
+				initFlags();
+				state=idle;
+				key='n';
+				while(1){
+					
+					doStates();
+					
+				}
+			}
 			sprintf(buffer,"%c", key);
 			LCDPutString(buffer);
 			}
