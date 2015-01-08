@@ -28,16 +28,16 @@ public class UserViewPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     
-    public void addButtonSeeUserAccountListener(ActionListener buttonListener) {
+    public void addButtonUserAccountListener(ActionListener buttonListener) {
         buttonUserAccount.addActionListener(buttonListener);
     }
     
-     public void addButtonSeeUserTransactionsListener(ActionListener buttonListener) {
-        buttonSeeUserTransactions.addActionListener(buttonListener);
+     public void addButtonUserTransactionsListener(ActionListener buttonListener) {
+        buttonUserTransactions.addActionListener(buttonListener);
     }
      
-      public void addButtonSeePricesListener(ActionListener buttonListener) {
-        buttonSeePrices.addActionListener(buttonListener);
+      public void addButtonPricesListener(ActionListener buttonListener) {
+        buttonPrices.addActionListener(buttonListener);
     }
       
        public void addButtonInsertMoneyListener(ActionListener buttonListener) {
@@ -53,16 +53,16 @@ public class UserViewPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonUserAccount = new javax.swing.JButton();
-        buttonSeeUserTransactions = new javax.swing.JButton();
-        buttonSeePrices = new javax.swing.JButton();
+        buttonUserTransactions = new javax.swing.JButton();
+        buttonPrices = new javax.swing.JButton();
         buttonLogUserOff = new javax.swing.JButton();
         buttonInsertMoney = new javax.swing.JButton();
 
         buttonUserAccount.setText("Edit account");
 
-        buttonSeeUserTransactions.setText("Transactions");
+        buttonUserTransactions.setText("Transactions");
 
-        buttonSeePrices.setText("See Prices");
+        buttonPrices.setText("See Prices");
 
         buttonLogUserOff.setText("Log off");
 
@@ -81,9 +81,9 @@ public class UserViewPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(buttonUserAccount)
                         .addGap(18, 18, 18)
-                        .addComponent(buttonSeeUserTransactions)
+                        .addComponent(buttonUserTransactions)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonSeePrices)
+                        .addComponent(buttonPrices)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonInsertMoney)
                         .addGap(36, 36, 36))))
@@ -96,8 +96,8 @@ public class UserViewPanel extends javax.swing.JPanel {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonInsertMoney)
-                    .addComponent(buttonSeePrices)
-                    .addComponent(buttonSeeUserTransactions)
+                    .addComponent(buttonPrices)
+                    .addComponent(buttonUserTransactions)
                     .addComponent(buttonUserAccount))
                 .addContainerGap(203, Short.MAX_VALUE))
         );
@@ -105,9 +105,9 @@ public class UserViewPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonInsertMoney;
     private javax.swing.JButton buttonLogUserOff;
-    private javax.swing.JButton buttonSeePrices;
-    private javax.swing.JButton buttonSeeUserTransactions;
+    private javax.swing.JButton buttonPrices;
     private javax.swing.JButton buttonUserAccount;
+    private javax.swing.JButton buttonUserTransactions;
     // End of variables declaration//GEN-END:variables
 
 }

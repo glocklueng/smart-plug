@@ -110,7 +110,7 @@ public class UserPricesViewPanel extends javax.swing.JPanel {
     }
 
     public String getTextFieldLocation() {
-        return textFieldLocation.toString();
+        return textFieldLocation.getText();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

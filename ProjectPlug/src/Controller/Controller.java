@@ -12,16 +12,17 @@ import javax.swing.table.DefaultTableModel;
 
 public class Controller {
 
+    //The viewpanels defined.
     CreateCustomerViewPanel createCustomerViewPanel;
     MainInterface mainInterface;
     EditCustomerViewPanel editCustomerViewPanel;
     EditPricesViewPanel editPricesViewPanel;
-    AdminTransactionsViewPanel seeTransactionsViewPanel;
+    AdminTransactionsViewPanel adminTransactionsViewPanel;
     CreatePricesViewPanel createPricesViewPanel;
     LoginViewPanel loginViewPanel;
     UserViewPanel userViewPanel;
     AdminViewPanel adminViewPanel;
-    UserAccountViewPanel accountViewPanel;
+    UserAccountViewPanel userAccountViewPanel;
     UserTransactionsViewPanel userTransactionsViewPanel;
     UserPricesViewPanel userPricesViewPanel;
     InsertMoneyViewPanel insertMoneyViewPanel;
@@ -32,43 +33,60 @@ public class Controller {
     String LoginAs;
 
     public Controller(MainInterface mainInterface) {
+        //The different view panels in the mainfriame.
         this.mainInterface = mainInterface;
         this.createCustomerViewPanel = this.mainInterface.getCreateCustomerPanel();
         this.editCustomerViewPanel = this.mainInterface.getEditCustomerViewPanel();
-        this.seeTransactionsViewPanel = this.mainInterface.getSeeTransactionsViewPanel();
+        this.adminTransactionsViewPanel = this.mainInterface.getSeeTransactionsViewPanel();
         this.createPricesViewPanel = this.mainInterface.getCreatePricesViewPanel();
         this.editPricesViewPanel = this.mainInterface.getEditPricesViewPanel();
         this.loginViewPanel = this.mainInterface.getLoginViewPanel();
         this.userViewPanel = this.mainInterface.getUserViewPanel();
-        this.accountViewPanel = this.mainInterface.getAccountViewPanel();
+        this.userAccountViewPanel = this.mainInterface.getAccountViewPanel();
         this.userTransactionsViewPanel = this.mainInterface.getUserTransactionsViewPanel();
         this.userPricesViewPanel = this.mainInterface.getUserPricesViewPanel();
         this.insertMoneyViewPanel = this.mainInterface.getInsertMoneyViewPanel();
+        this.adminViewPanel = this.mainInterface.getAdminViewPanel();
 
+        //Buttons in the different view panels.
+        this.loginViewPanel.addButtonLoginListener(new LoginListener());
+        this.createPricesViewPanel.addButtonCreatePricesListener(new CreatePricesListener());
+        this.createPricesViewPanel.addButtonBackListener(new BackToAdminViewPanelListener());
         this.createCustomerViewPanel.addButtonCreateCustomerListener(new CreateCustomerListener());
-        
+        this.createCustomerViewPanel.addButtonBackListener(new BackToAdminViewPanelListener());
         this.editPricesViewPanel.addButtonEditPricesListener(new EditPricesListener());
+        this.editPricesViewPanel.addButtonDeletePricesListener(new DeletePricesListener());
+        this.editPricesViewPanel.addButtonSearchPricesListener(new AdminSearchPricesListener());
+        this.editPricesViewPanel.addMouseClicked(new TableCustomerListener());
+        this.editPricesViewPanel.addButtonBackListener(new BackToAdminViewPanelListener());
         this.editCustomerViewPanel.addButtonDeleteListener(new DeleteCustomerListener());
         this.editCustomerViewPanel.addMouseClicked(new TableCustomerListener());
         this.editCustomerViewPanel.addButtonSearchCustomerListener(new SearchCustomerListener());
         this.editCustomerViewPanel.addButtonEditListener(new EditCustomerListener());
-        this.seeTransactionsViewPanel.addButtonUpdateListener(new UpdateTransactionsListener());
-        this.createPricesViewPanel.addButtonCreatePricesListener(new CreatePricesListener());
-        this.editPricesViewPanel.addButtonDeletePricesListener(new DeletePricesListener());
-        this.editPricesViewPanel.addButtonSearchPricesListener(new AdminSearchPricesListener());
-        this.editPricesViewPanel.addMouseClicked(new TableCustomerListener());
-        this.loginViewPanel.addButtonLoginListener(new LoginListener());
-        this.userViewPanel.addButtonLogOffListener(new LogOffListener());
-        this.userViewPanel.addButtonSeeUserTransactionsListener(new SeeTransactionsListener());
-        this.userViewPanel.addButtonSeePricesListener(new UserSearchPricesListener());
+        this.editCustomerViewPanel.addButtonBackListener(new BackToAdminViewPanelListener());
+        this.adminTransactionsViewPanel.addButtonBackListener(new BackToAdminViewPanelListener());
+        this.userViewPanel.addButtonUserTransactionsListener(new UserTransactionsListener());
+        this.userViewPanel.addButtonPricesListener(new UserSearchPricesListener());
         this.userViewPanel.addButtonInsertMoneyListener(new SeeInsertMoneyListener());
-        this.userViewPanel.addButtonSeeUserAccountListener(new FindSingleCustomerListener());
-        this.accountViewPanel.addButtonSaveListener(new EditSingleCustomerListener());
+        this.userViewPanel.addButtonUserAccountListener(new FindSingleCustomerListener());
+        this.userViewPanel.addButtonLogOffListener(new LogOffListener());
+        this.userAccountViewPanel.addButtonSaveListener(new EditSingleCustomerListener());
+        this.userAccountViewPanel.addButtonBackListener(new BackToUserViewPanelListener());
         this.userTransactionsViewPanel.addButtonBackListener(new BackToUserViewPanelListener());
         this.userPricesViewPanel.addButtonSearchListener(new UserSearchPricesListener());
         this.userPricesViewPanel.addButtonBackListener(new BackToUserViewPanelListener());
         this.insertMoneyViewPanel.addButtonInsertMoneyListener(new InsertMoneyListener());
+        this.insertMoneyViewPanel.addButtonBackListener(new BackToUserViewPanelListener());
+        this.adminViewPanel.addButtonLogOffListener(new LogOffListener());
+        this.adminViewPanel.addButtonCreateCustomerListener(new SeeCreateCustomerListener());
+        this.adminViewPanel.addButtonEditCustomerListener(new SearchCustomerListener());
+        this.adminViewPanel.addButtonSeeTransactionsListener(new AdminTransactionsListener());
+        this.adminViewPanel.addButtonCreatePriceListener(new SeeCreatePricesListener());
+        this.adminViewPanel.addButtonEditPricesListener(new AdminSearchPricesListener());
+        this.adminViewPanel.addButtonSeeTransactionsListener(new AdminTransactionsListener());
     }
+
+    //When clicking the Create button, it creates a customer from the written data.
     class CreatePricesListener implements ActionListener {
 
         @Override
@@ -97,7 +115,7 @@ public class Controller {
         }
     }
 
-    // When click the delete button, it deletes the marked customer.
+    //When clicking the Delete button, it deletes the marked customer.
     class DeleteCustomerListener implements ActionListener {
 
         //Reads what customer that are marked.
@@ -111,6 +129,8 @@ public class Controller {
         }
     }
 
+    //When clicking the Edit button, it edits the marked customer with the written
+    //data on the marked area. 
     class EditCustomerListener implements ActionListener {
 
         //Reads what customer that are marked.
@@ -149,6 +169,7 @@ public class Controller {
         }
     }
 
+    //When clicking the Edit button, it edits the customer with the written data.
     class EditSingleCustomerListener implements ActionListener {
 
         @Override
@@ -161,11 +182,11 @@ public class Controller {
             String retypePassword;
 
             try {
-                name = accountViewPanel.getTextFieldAccountName();
-                email = accountViewPanel.getTextFieldAccountEmail();
-                phone = accountViewPanel.getTextFieldAccountPhone();
-                password = accountViewPanel.getTextFieldPassword();
-                retypePassword = accountViewPanel.getTextFieldRetypePassword();
+                name = userAccountViewPanel.getTextFieldAccountName();
+                email = userAccountViewPanel.getTextFieldAccountEmail();
+                phone = userAccountViewPanel.getTextFieldAccountPhone();
+                password = userAccountViewPanel.getTextFieldPassword();
+                retypePassword = userAccountViewPanel.getTextFieldRetypePassword();
 
                 CustomerDao customerDao = new CustomerDao();
                 ArrayList<Customer> customers = customerDao.findCustomers("", LoginAs, "");
@@ -179,17 +200,18 @@ public class Controller {
                     if (password.equals(retypePassword)) {
                         customerDao.updateCustomerPassword(password, id);
                     } else {
-                        accountViewPanel.displayErrorMessage("Passwords doesn't match.");
+                        userAccountViewPanel.displayErrorMessage("Passwords doesn't match.");
                     }
                 }
-                accountViewPanel.displayErrorMessage("Account has been updated.");
+                userAccountViewPanel.displayErrorMessage("Account has been updated.");
             } catch (Exception e) {
-                accountViewPanel.displayErrorMessage("Try again.");
+                userAccountViewPanel.displayErrorMessage("Try again.");
             }
         }
     }
 
-// needs to be changed ****************************************
+    //When clicking the Edit button, it edits the marked price with the written
+    //data on the marked area.
     class EditPricesListener implements ActionListener {
 
         //Reads what customer that are marked.
@@ -219,7 +241,7 @@ public class Controller {
 
     }
 
-// when click the creat button, it creates the new customer.
+    // when click the creat button, it creates the new customer.
     class CreateCustomerListener implements ActionListener {
 
         @Override
@@ -284,10 +306,13 @@ public class Controller {
             } catch (Exception e) {
                 editCustomerViewPanel.displayErrorMessage("Try again.");
             }
+            mainInterface.setContentPane(editCustomerViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
 
-    class SeeTransactionsListener implements ActionListener {
+    class UserTransactionsListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -311,6 +336,9 @@ public class Controller {
             } catch (Exception e) {
                 editCustomerViewPanel.displayErrorMessage("Try again.");
             }
+            mainInterface.setContentPane(userTransactionsViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
 
@@ -332,6 +360,7 @@ public class Controller {
                     tableModel.addRow(objs);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 editCustomerViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(userPricesViewPanel);
@@ -351,15 +380,15 @@ public class Controller {
                 CustomerDao customerDao = new CustomerDao();
                 ArrayList<Customer> customers = customerDao.findCustomers("", email, "");
                 for (Customer c : customers) {
-                    accountViewPanel.setTextFieldAccountName(c.getName());
-                    accountViewPanel.setTextFieldAccountEmail(c.getEmail());
-                    accountViewPanel.setTextFieldAccountPhone(c.getPhone());
-                    accountViewPanel.setTextFieldAccountBalance(Double.toString(c.getBalance()));
+                    userAccountViewPanel.setTextFieldAccountName(c.getName());
+                    userAccountViewPanel.setTextFieldAccountEmail(c.getEmail());
+                    userAccountViewPanel.setTextFieldAccountPhone(c.getPhone());
+                    userAccountViewPanel.setTextFieldAccountBalance(Double.toString(c.getBalance()));
                 }
             } catch (Exception e) {
-                accountViewPanel.displayErrorMessage("Try again.");
+                userAccountViewPanel.displayErrorMessage("Try again.");
             }
-            mainInterface.setContentPane(accountViewPanel);//Skift til kommende panel
+            mainInterface.setContentPane(userAccountViewPanel);//Skift til kommende panel
             mainInterface.invalidate();
             mainInterface.validate();
         }
@@ -399,14 +428,14 @@ public class Controller {
         }
 
     }
-    
+
     class InsertMoneyListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Double balance;
             int ID = 0;
-            
+
             try {
                 balance = insertMoneyViewPanel.getTextFieldInsertMoney();
                 CustomerDao customerDao = new CustomerDao();
@@ -415,12 +444,23 @@ public class Controller {
                     ID = c.getId();
                 }
                 customerDao.updateCustomerBalance(balance, ID);
-            } catch (Exception e){
+            } catch (Exception e) {
                 insertMoneyViewPanel.displayErrorMessage("Try again!");
             }
         }
     }
 
+    class LogOffListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            mainInterface.setContentPane(loginViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
+        }
+    }
+
+    //Jumps back to the UserViewPanel.
     class BackToUserViewPanelListener implements ActionListener {
 
         @Override
@@ -431,11 +471,12 @@ public class Controller {
         }
     }
 
-    class LogOffListener implements ActionListener {
+    //Jumps back to the AdminViewPanel.
+    class BackToAdminViewPanelListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(loginViewPanel);
+            mainInterface.setContentPane(adminViewPanel);//Skift til kommende panel
             mainInterface.invalidate();
             mainInterface.validate();
         }
@@ -451,26 +492,28 @@ public class Controller {
         }
     }
 
-    class SeeUserTransactionsListener implements ActionListener {
+    //Jumps to the CreateCustomerViewPanel
+    class SeeCreateCustomerListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(userTransactionsViewPanel);//Skift til kommende panel
+            mainInterface.setContentPane(createCustomerViewPanel);
             mainInterface.invalidate();
             mainInterface.validate();
         }
     }
 
-    class SeeUserAccountListener implements ActionListener {
+    //Jumps to the CreatePricesViewPanel
+    class SeeCreatePricesListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(accountViewPanel);//Skift til kommende panel
+            mainInterface.setContentPane(createPricesViewPanel);
             mainInterface.invalidate();
             mainInterface.validate();
         }
     }
-
+    
     class DeletePricesListener implements ActionListener {
 
         //Reads what customer that are marked.
@@ -489,36 +532,36 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String location;
-            double price_Day;
-            double price_Night;
 
             String col[] = {"Location", "PriceDay", "PriceNight"};
             tableModel = new DefaultTableModel(col, 0);
             editPricesViewPanel.addTableModel(tableModel);
             try {
                 location = editPricesViewPanel.getPricesLocation();
-                // converts first String to double
                 PricesDao pricesDao = new PricesDao();
                 ArrayList<Prices> prices = pricesDao.findPrices(location);
-                for (Prices c : prices) {
-                    Object[] objs = {c.getLocation(), c.getPrice_day(), c.getPrice_night(),};
+                for (Prices p : prices) {
+                    Object[] objs = {p.getLocation(), p.getPrice_day(), p.getPrice_night(),};
                     tableModel.addRow(objs);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 editCustomerViewPanel.displayErrorMessage("Try again.");
             }
+            mainInterface.setContentPane(editPricesViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
 
-    class UpdateTransactionsListener implements ActionListener {
+    class AdminTransactionsListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
             String col[] = {"Transaction id", "Customer id", "Amount", "Timedate", "Location", "Device", "Time spent"};
             tableModel = new DefaultTableModel(col, 0);
-            seeTransactionsViewPanel.addTableModel(tableModel);
+            adminTransactionsViewPanel.addTableModel(tableModel);
             try {
                 TransactionDao transactionDao = new TransactionDao();
                 ArrayList<Transaction> transactions = transactionDao.findTransactions();
@@ -527,8 +570,11 @@ public class Controller {
                     tableModel.addRow(objs);
                 }
             } catch (Exception e) {
-                seeTransactionsViewPanel.displayErrorMessage("Try again.");
+                adminTransactionsViewPanel.displayErrorMessage("Try again.");
             }
+            mainInterface.setContentPane(adminTransactionsViewPanel);
+            mainInterface.invalidate();
+            mainInterface.validate();
         }
     }
 

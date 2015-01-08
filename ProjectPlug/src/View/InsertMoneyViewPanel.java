@@ -36,6 +36,10 @@ public class InsertMoneyViewPanel extends javax.swing.JPanel {
     public void addButtonInsertMoneyListener(ActionListener buttonListener) {
         buttonInsertMoney.addActionListener(buttonListener);
     }
+    
+    public void addButtonBackListener(ActionListener buttonListener) {
+        buttonBack.addActionListener(buttonListener);
+    }
 
     public Double getTextFieldInsertMoney() {
         return Double.parseDouble(textFieldInsertMoney.toString());
@@ -47,10 +51,13 @@ public class InsertMoneyViewPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         textFieldInsertMoney = new javax.swing.JTextField();
         buttonInsertMoney = new javax.swing.JButton();
+        buttonBack = new javax.swing.JButton();
 
         jLabel1.setText("Money to insert:");
 
         buttonInsertMoney.setText("Insert money");
+
+        buttonBack.setText("Back");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -58,11 +65,16 @@ public class InsertMoneyViewPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textFieldInsertMoney, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonInsertMoney)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textFieldInsertMoney, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonInsertMoney))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonBack)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -74,10 +86,13 @@ public class InsertMoneyViewPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addComponent(textFieldInsertMoney, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(buttonInsertMoney))
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
+                .addComponent(buttonBack)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonBack;
     private javax.swing.JButton buttonInsertMoney;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField textFieldInsertMoney;
