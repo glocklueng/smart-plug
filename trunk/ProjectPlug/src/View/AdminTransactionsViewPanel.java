@@ -33,7 +33,7 @@ public class AdminTransactionsViewPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransactions = new javax.swing.JTable();
-        buttonUpdate = new javax.swing.JButton();
+        buttonBack = new javax.swing.JButton();
 
         tableTransactions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -48,7 +48,7 @@ public class AdminTransactionsViewPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tableTransactions);
 
-        buttonUpdate.setText("Update");
+        buttonBack.setText("Back");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -57,17 +57,20 @@ public class AdminTransactionsViewPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonUpdate)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 625, Short.MAX_VALUE)
+                        .addComponent(buttonBack))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(buttonUpdate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonBack)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     public void addTableModel(DefaultTableModel tableModel) {
@@ -78,12 +81,12 @@ public class AdminTransactionsViewPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
-    public void addButtonUpdateListener(ActionListener buttonListener) {
-        buttonUpdate.addActionListener(buttonListener);
+    public void addButtonBackListener(ActionListener buttonListener) {
+        buttonBack.addActionListener(buttonListener);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonUpdate;
+    private javax.swing.JButton buttonBack;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableTransactions;
     // End of variables declaration//GEN-END:variables
