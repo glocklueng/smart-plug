@@ -8,6 +8,7 @@ package View;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -220,6 +221,11 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
     public String getUpdate() {
         return textFieldUpdate.getText();
     }
+
+    public void setTextFieldUpdate(String textFieldUpdate) {
+        this.textFieldUpdate.setText(textFieldUpdate);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonBack;

@@ -86,9 +86,99 @@ public class Controller {
         this.adminViewPanel.addButtonSeeTransactionsListener(new AdminTransactionsListener());
     }
 
-    //When clicking the Create button, it creates a customer from the written data.
+    class LoginListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            String username;
+            String password;
+            String realPassword;
+            int adminOrUser = 0;
+
+            try {
+                username = loginViewPanel.getUsername();
+                password = loginViewPanel.getPassword().toUpperCase();
+
+                CustomerDao customerDao = new CustomerDao();
+                realPassword = customerDao.findPassword(username).toUpperCase();
+                ArrayList<Customer> customers = customerDao.findCustomers("", username, "");
+                for (Customer c : customers) {
+                    adminOrUser = c.getId();
+                }
+                if (realPassword.equals(password)) {
+                    LoginAs = username;
+                    loginViewPanel.setTextFieldPassword(null);
+                    loginViewPanel.setTextFieldUsername(null);
+                    if (adminOrUser < 10) {
+                        mainInterface.setContentPane(adminViewPanel);
+                        mainInterface.invalidate();
+                        mainInterface.validate();
+                    } else {
+                        mainInterface.setContentPane(userViewPanel);
+                        mainInterface.invalidate();
+                        mainInterface.validate();
+                    }
+                } else {
+                    loginViewPanel.displayErrorMessage("Wrong username or password.");
+                }
+            } catch (Exception e) {
+                loginViewPanel.displayErrorMessage("Try again");
+            }
+        }
+
+    }
+    
+    class CreateCustomerListener implements ActionListener {
+
+        // when click the creat button, it creates the new customer.
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            int ID;
+            String name;
+            String phone;
+            String email;
+            String password;
+            String retypePassword;
+
+            try {
+                //Gets all the textfields from the viewpanel.
+                ID = createCustomerViewPanel.getCosutmerID();
+                name = createCustomerViewPanel.getCustomerName();
+                phone = createCustomerViewPanel.getPhone();
+                email = createCustomerViewPanel.getEmail();
+                password = createCustomerViewPanel.getPassword();
+                retypePassword = createCustomerViewPanel.getRetypePassword();
+
+                //Sees if the to passwords are the same.
+                if (password.equals(retypePassword)) {
+                    //creates a new customer from with the data from the textfields.
+                    CustomerDao customerDao = new CustomerDao();
+                    Customer customer = new Customer(ID, name, phone, 0, email, password);
+                    customerDao.addCustomer(customer);
+                    //Writes when the customer are created.
+                    createCustomerViewPanel.displayErrorMessage("Customer created");
+
+                    createCustomerViewPanel.setTextFieldID(null);
+                    createCustomerViewPanel.setTextFieldName(null);
+                    createCustomerViewPanel.setTextFieldEmail(null);
+                    createCustomerViewPanel.setTextFieldPhone(null);
+                    createCustomerViewPanel.setTextFieldPassword(null);
+                    createCustomerViewPanel.setTextFieldRetypePassword(null);
+                } else {
+                    //Writes if the password does not match.
+                    createCustomerViewPanel.displayErrorMessage("Passwords don't match");
+                }
+
+            } catch (Exception e) {
+                //Writes if there are any other exceptions.
+                createCustomerViewPanel.displayErrorMessage("Try again.");
+            }
+        }
+    }
+    
     class CreatePricesListener implements ActionListener {
 
+        //When clicking the Create button, it creates a customer from the written data.
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
@@ -108,6 +198,9 @@ public class Controller {
                 //Writes when the prices are created.
                 createPricesViewPanel.displayErrorMessage("Prices created");
 
+                createPricesViewPanel.setTextFieldLocation(null);
+                createPricesViewPanel.setTextFieldPriceDay(null);
+                createPricesViewPanel.setTextFieldPriceNight(null);
             } catch (Exception e) {
                 //Writes if there are any other exceptions.
                 createPricesViewPanel.displayErrorMessage("Try again.");
@@ -115,10 +208,9 @@ public class Controller {
         }
     }
 
-    //When clicking the Delete button, it deletes the marked customer.
     class DeleteCustomerListener implements ActionListener {
 
-        //Reads what customer that are marked.
+        //When clicking the Delete button, it deletes the marked customer.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object ID = tableModel.getValueAt(row, 0);
@@ -129,11 +221,10 @@ public class Controller {
         }
     }
 
-    //When clicking the Edit button, it edits the marked customer with the written
-    //data on the marked area. 
     class EditCustomerListener implements ActionListener {
 
-        //Reads what customer that are marked.
+        //When clicking the Edit button, it edits the marked customer with the written
+        //data on the marked area. 
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object ID = tableModel.getValueAt(row, 0);
@@ -165,13 +256,22 @@ public class Controller {
                 CustomerDao customerDao = new CustomerDao();
                 customerDao.updateCustomerBalance(intUpdate, (int) ID);
                 editCustomerViewPanel.displayErrorMessage("Balance changed");
+            } else if (column == 5) {
+                String update = editCustomerViewPanel.getUpdate();
+                
+                CustomerDao customerDao = new CustomerDao();
+                customerDao.updateCustomerPassword(update, (int) ID);
+                editCustomerViewPanel.displayErrorMessage("Password changed");
+            } else {
+                editCustomerViewPanel.displayErrorMessage("Try again!");
             }
+            editCustomerViewPanel.setTextFieldUpdate(null);
         }
     }
 
-    //When clicking the Edit button, it edits the customer with the written data.
     class EditSingleCustomerListener implements ActionListener {
 
+        //When clicking the Edit button, it edits the customer with the written data.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             int id = 0;
@@ -204,17 +304,19 @@ public class Controller {
                     }
                 }
                 userAccountViewPanel.displayErrorMessage("Account has been updated.");
+                
+                userAccountViewPanel.setTextFieldPassword(null);
+                userAccountViewPanel.setTextFieldRetypePassword(null);
             } catch (Exception e) {
                 userAccountViewPanel.displayErrorMessage("Try again.");
             }
         }
     }
 
-    //When clicking the Edit button, it edits the marked price with the written
-    //data on the marked area.
     class EditPricesListener implements ActionListener {
 
-        //Reads what customer that are marked.
+        //When clicking the Edit button, it edits the marked price with the written
+        //data on the marked area.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object Location = tableModel.getValueAt(row, 0);
@@ -237,49 +339,9 @@ public class Controller {
                 editCustomerViewPanel.displayErrorMessage("PriceNight Changed");
 
             }
+            editPricesViewPanel.setTextFieldUpdate(null);
         }
 
-    }
-
-    // when click the creat button, it creates the new customer.
-    class CreateCustomerListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            int ID;
-            String name;
-            String phone;
-            String email;
-            String password;
-            String retypePassword;
-
-            try {
-                //Gets all the textfields from the viewpanel.
-                ID = createCustomerViewPanel.getCosutmerID();
-                name = createCustomerViewPanel.getCustomerName();
-                phone = createCustomerViewPanel.getPhone();
-                email = createCustomerViewPanel.getEmail();
-                password = createCustomerViewPanel.getPassword();
-                retypePassword = createCustomerViewPanel.getRetypePassword();
-
-                //Sees if the to passwords are the same.
-                if (password.equals(retypePassword)) {
-                    //creates a new customer from with the data from the textfields.
-                    CustomerDao customerDao = new CustomerDao();
-                    Customer customer = new Customer(ID, name, phone, 0, email, password);
-                    customerDao.addCustomer(customer);
-                    //Writes when the customer are created.
-                    createCustomerViewPanel.displayErrorMessage("Customer created");
-                } else {
-                    //Writes if the password does not match.
-                    createCustomerViewPanel.displayErrorMessage("Passwords don't match");
-                }
-
-            } catch (Exception e) {
-                //Writes if there are any other exceptions.
-                createCustomerViewPanel.displayErrorMessage("Try again.");
-            }
-        }
     }
 
     class SearchCustomerListener implements ActionListener {
@@ -394,56 +456,28 @@ public class Controller {
         }
     }
 
-    class LoginListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            String username;
-            String password;
-            String realPassword;
-            try {
-                username = loginViewPanel.getUsername();
-                password = loginViewPanel.getPassword().toUpperCase();
-
-                CustomerDao customerDao = new CustomerDao();
-                realPassword = customerDao.findPassword(username).toUpperCase();
-                if (realPassword.equals(password)) {
-                    loginViewPanel.displayErrorMessage("You are logged in.");
-                    LoginAs = username;
-                    if (username.toUpperCase().equals("ADMIN@ADMIN.COM")) {
-                        mainInterface.setContentPane(adminViewPanel);
-                        mainInterface.invalidate();
-                        mainInterface.validate();
-                    } else {
-                        mainInterface.setContentPane(userViewPanel);
-                        mainInterface.invalidate();
-                        mainInterface.validate();
-                    }
-                } else {
-                    loginViewPanel.displayErrorMessage("Wrong username or password.");
-                }
-            } catch (Exception e) {
-                loginViewPanel.displayErrorMessage("Try again");
-            }
-        }
-
-    }
-
     class InsertMoneyListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            Double balance;
+            Double money;
+            Double balance = 0.0;
+            Double newBalance;
             int ID = 0;
 
             try {
-                balance = insertMoneyViewPanel.getTextFieldInsertMoney();
+                money = insertMoneyViewPanel.getTextFieldInsertMoney();
                 CustomerDao customerDao = new CustomerDao();
                 ArrayList<Customer> customers = customerDao.findCustomers("", LoginAs, "");
                 for (Customer c : customers) {
                     ID = c.getId();
+                    balance = c.getBalance();
                 }
-                customerDao.updateCustomerBalance(balance, ID);
+                newBalance = balance + money;
+                customerDao.updateCustomerBalance(newBalance, ID);
+                insertMoneyViewPanel.displayErrorMessage("You're balance was now updated with "+money+" kr.");
+                
+                insertMoneyViewPanel.setTextFieldInsertMoney(null);
             } catch (Exception e) {
                 insertMoneyViewPanel.displayErrorMessage("Try again!");
             }
@@ -457,12 +491,14 @@ public class Controller {
             mainInterface.setContentPane(loginViewPanel);
             mainInterface.invalidate();
             mainInterface.validate();
+            
+            LoginAs = null;
         }
     }
 
-    //Jumps back to the UserViewPanel.
     class BackToUserViewPanelListener implements ActionListener {
 
+        //Jumps back to the UserViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(userViewPanel);
@@ -471,9 +507,9 @@ public class Controller {
         }
     }
 
-    //Jumps back to the AdminViewPanel.
     class BackToAdminViewPanelListener implements ActionListener {
 
+        //Jumps back to the AdminViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(adminViewPanel);//Skift til kommende panel
@@ -492,9 +528,9 @@ public class Controller {
         }
     }
 
-    //Jumps to the CreateCustomerViewPanel
     class SeeCreateCustomerListener implements ActionListener {
 
+        //Jumps to the CreateCustomerViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(createCustomerViewPanel);
@@ -503,9 +539,9 @@ public class Controller {
         }
     }
 
-    //Jumps to the CreatePricesViewPanel
     class SeeCreatePricesListener implements ActionListener {
 
+        //Jumps to the CreatePricesViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(createPricesViewPanel);
@@ -513,7 +549,7 @@ public class Controller {
             mainInterface.validate();
         }
     }
-    
+
     class DeletePricesListener implements ActionListener {
 
         //Reads what customer that are marked.

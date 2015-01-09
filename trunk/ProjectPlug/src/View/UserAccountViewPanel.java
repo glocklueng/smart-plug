@@ -166,6 +166,15 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
         this.textFieldAccountPhone.setText(textFieldAccountPhone);
     }
 
+    public void setTextFieldPassword(String textFieldPassword) {
+        this.textFieldPassword.setText(textFieldPassword);
+    }
+
+    public void setTextFieldRetypePassword(String textFieldRetypePassword) {
+        this.textFieldRetypePassword.setText(textFieldRetypePassword);
+    }
+    
+
     public String getTextFieldAccountEmail() {
         return textFieldAccountEmail.getText();
     }

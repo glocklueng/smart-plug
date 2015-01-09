@@ -33,7 +33,7 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="priceNightTextField" pref="126" max="32767" attributes="0"/>
+                                      <Component id="textFieldPriceNight" pref="126" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -42,15 +42,15 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="locationTextField" pref="126" max="32767" attributes="0"/>
-                                          <Component id="priceDayTextField" max="32767" attributes="0"/>
+                                          <Component id="textFieldLocation" pref="126" max="32767" attributes="0"/>
+                                          <Component id="textFieldPriceDay" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
-                              <Component id="createPricesButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonCreatePrices" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="160" max="32767" attributes="0"/>
@@ -70,20 +70,20 @@
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="locationTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldLocation" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="priceDayTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldPriceDay" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="priceNightTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textFieldPriceNight" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="createPricesButton" min="-2" max="-2" attributes="0"/>
+              <Component id="buttonCreatePrices" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="115" max="32767" attributes="0"/>
               <Component id="buttonBack" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -97,7 +97,7 @@
         <Property name="text" type="java.lang.String" value="Location:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="locationTextField">
+    <Component class="javax.swing.JTextField" name="textFieldLocation">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -109,19 +109,19 @@
         <Property name="text" type="java.lang.String" value="Price Night:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="priceDayTextField">
+    <Component class="javax.swing.JTextField" name="textFieldPriceDay">
     </Component>
-    <Component class="javax.swing.JTextField" name="priceNightTextField">
+    <Component class="javax.swing.JTextField" name="textFieldPriceNight">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="priceNightTextFieldActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textFieldPriceNightActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="createPricesButton">
+    <Component class="javax.swing.JButton" name="buttonCreatePrices">
       <Properties>
         <Property name="text" type="java.lang.String" value="Create Prices"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createPricesButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCreatePricesActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonBack">

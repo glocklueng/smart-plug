@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -22,21 +23,34 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
     }
 
     public String getPriceLocation() {
-        return locationTextField.getText();
+        return textFieldLocation.getText();
     }
 
     public double getPriceDay() {
-        String priceDay = priceDayTextField.getText();
+        String priceDay = textFieldPriceDay.getText();
         return Double.parseDouble(priceDay);
     }
 
     public double getPriceNight() {
-        String priceNight = priceNightTextField.getText();
+        String priceNight = textFieldPriceNight.getText();
         return Double.parseDouble(priceNight);
     }
 
+    public void setTextFieldLocation(String locationTextField) {
+        this.textFieldLocation.setText(locationTextField);
+    }
+
+    public void setTextFieldPriceDay(String priceDayTextField) {
+        this.textFieldPriceDay.setText(priceDayTextField);
+    }
+
+    public void setTextFieldPriceNight(String priceNightTextField) {
+        this.textFieldPriceNight.setText(priceNightTextField);
+    }
+    
+
     public void addButtonCreatePricesListener(ActionListener buttonListnener) {
-        createPricesButton.addActionListener(buttonListnener);
+        buttonCreatePrices.addActionListener(buttonListnener);
     }
     
     public void addButtonBackListener(ActionListener buttonListnener) {
@@ -58,12 +72,12 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        locationTextField = new javax.swing.JTextField();
+        textFieldLocation = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        priceDayTextField = new javax.swing.JTextField();
-        priceNightTextField = new javax.swing.JTextField();
-        createPricesButton = new javax.swing.JButton();
+        textFieldPriceDay = new javax.swing.JTextField();
+        textFieldPriceNight = new javax.swing.JTextField();
+        buttonCreatePrices = new javax.swing.JButton();
         buttonBack = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
@@ -74,16 +88,16 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Price Night:");
 
-        priceNightTextField.addActionListener(new java.awt.event.ActionListener() {
+        textFieldPriceNight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                priceNightTextFieldActionPerformed(evt);
+                textFieldPriceNightActionPerformed(evt);
             }
         });
 
-        createPricesButton.setText("Create Prices");
-        createPricesButton.addActionListener(new java.awt.event.ActionListener() {
+        buttonCreatePrices.setText("Create Prices");
+        buttonCreatePrices.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createPricesButtonActionPerformed(evt);
+                buttonCreatePricesActionPerformed(evt);
             }
         });
 
@@ -103,18 +117,18 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addGap(18, 18, 18)
-                                        .addComponent(priceNightTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                                        .addComponent(textFieldPriceNight, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel3)
                                             .addComponent(jLabel2))
                                         .addGap(24, 24, 24)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(locationTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                                            .addComponent(priceDayTextField)))))
+                                            .addComponent(textFieldLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                            .addComponent(textFieldPriceDay)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(121, 121, 121)
-                                .addComponent(createPricesButton)))
+                                .addComponent(buttonCreatePrices)))
                         .addGap(0, 160, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -127,37 +141,37 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(locationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFieldLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(priceDayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFieldPriceDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(priceNightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFieldPriceNight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(createPricesButton)
+                .addComponent(buttonCreatePrices)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addComponent(buttonBack)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void priceNightTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceNightTextFieldActionPerformed
+    private void textFieldPriceNightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldPriceNightActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_priceNightTextFieldActionPerformed
-    private void createPricesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPricesButtonActionPerformed
+    }//GEN-LAST:event_textFieldPriceNightActionPerformed
+    private void buttonCreatePricesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCreatePricesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_createPricesButtonActionPerformed
+    }//GEN-LAST:event_buttonCreatePricesActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonBack;
-    private javax.swing.JButton createPricesButton;
+    private javax.swing.JButton buttonCreatePrices;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField locationTextField;
-    private javax.swing.JTextField priceDayTextField;
-    private javax.swing.JTextField priceNightTextField;
+    private javax.swing.JTextField textFieldLocation;
+    private javax.swing.JTextField textFieldPriceDay;
+    private javax.swing.JTextField textFieldPriceNight;
     // End of variables declaration//GEN-END:variables
 }

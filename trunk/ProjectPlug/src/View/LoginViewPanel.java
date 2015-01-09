@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -83,6 +84,15 @@ public class LoginViewPanel extends javax.swing.JPanel {
     public void addButtonLoginListener(ActionListener buttonListener) {
         buttonLogin.addActionListener(buttonListener);
     }
+
+    public void setTextFieldPassword(String textFieldPassword) {
+        this.textFieldPassword.setText(textFieldPassword);
+    }
+
+    public void setTextFieldUsername(String textFieldUsername) {
+        this.textFieldUsername.setText(textFieldUsername);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonLogin;

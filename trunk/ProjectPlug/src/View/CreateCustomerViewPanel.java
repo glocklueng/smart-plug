@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -45,6 +46,31 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
     public String getPhone() {
         return textFieldPhone.getText();
     }
+
+    public void setTextFieldEmail(String textFieldEmail) {
+        this.textFieldEmail.setText(textFieldEmail);
+    }
+
+    public void setTextFieldID(String textFieldID) {
+        this.textFieldID.setText(textFieldID);
+    }
+
+    public void setTextFieldName(String textFieldName) {
+        this.textFieldName.setText(textFieldName);
+    }
+
+    public void setTextFieldPassword(String textFieldPassword) {
+        this.textFieldPassword.setText(textFieldPassword);
+    }
+
+    public void setTextFieldPhone(String textFieldPhone) {
+        this.textFieldPhone.setText(textFieldPhone);
+    }
+
+    public void setTextFieldRetypePassword(String textFieldRetypePassword) {
+        this.textFieldRetypePassword.setText(textFieldRetypePassword);
+    }
+    
 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
