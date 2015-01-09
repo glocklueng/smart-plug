@@ -42,8 +42,13 @@ public class InsertMoneyViewPanel extends javax.swing.JPanel {
     }
 
     public Double getTextFieldInsertMoney() {
-        return Double.parseDouble(textFieldInsertMoney.toString());
+        return Double.parseDouble(textFieldInsertMoney.getText());
     }   
+
+    public void setTextFieldInsertMoney(String textFieldInsertMoney) {
+        this.textFieldInsertMoney.setText(textFieldInsertMoney);
+    }
+    
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

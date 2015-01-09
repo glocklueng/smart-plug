@@ -208,8 +208,9 @@ public class EditPricesViewPanel extends javax.swing.JPanel {
         return textFieldUpdateEditPrices.getText();
     }
     
-
-    
+    public void setTextFieldUpdate(String textFieldUpdate) {
+        this.textFieldUpdateEditPrices.setText(textFieldUpdate);
+    }    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonBack;

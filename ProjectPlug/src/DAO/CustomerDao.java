@@ -331,10 +331,11 @@ public class CustomerDao {
         return rowCount;
     }
 
-    private Customer createCustomerObject(ResultSet resultSet) throws SQLException /*
+    private Customer createCustomerObject(ResultSet resultSet) throws SQLException {
+     /*
      This method creates a Customer Object from the resultset obtained by 
      executing the SQL query
-     */ {
+     */ 
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         String phone = resultSet.getString("phone");
