@@ -103,19 +103,20 @@ public class Controller {
 
                 CustomerDao customerDao = new CustomerDao();
                 realPassword = customerDao.findPassword(username).toUpperCase();
-                ArrayList<Customer> customers = customerDao.findCustomers("", username, "");
-                for (Customer c : customers) {
-                    adminOrUser = c.getEmail();
-                }
+
                 if (realPassword.equals(password)) {
-                    LoginAs = username;
-                    loginViewPanel.setTextFieldPassword(null);
-                    loginViewPanel.setTextFieldUsername(null);
+                    ArrayList<Customer> customers = customerDao.findCustomers("", username, "");
+                    for (Customer c : customers) {
+                        adminOrUser = c.getEmail();
+                    }
                     if (adminOrUser.equals("Admin")) {
                         mainInterface.setContentPane(adminViewPanel);
                     } else {
                         mainInterface.setContentPane(userViewPanel);
                     }
+                    LoginAs = username;
+                    loginViewPanel.setTextFieldPassword(null);
+                    loginViewPanel.setTextFieldUsername(null);
                 } else {
                     loginViewPanel.displayErrorMessage("Wrong username or password.");
                 }
@@ -124,8 +125,8 @@ public class Controller {
             }
         }
 
-    }
-    
+    }                
+
     class CreateCustomerListener implements ActionListener {
 
         // when click the creat button, it creates the new customer.
@@ -172,8 +173,8 @@ public class Controller {
                 createCustomerViewPanel.displayErrorMessage("Try again.");
             }
         }
-    }
-    
+    }       
+
     class CreatePricesListener implements ActionListener {
 
         //When clicking the Create button, it creates a customer from the written data.
@@ -204,7 +205,7 @@ public class Controller {
                 createPricesViewPanel.displayErrorMessage("Try again.");
             }
         }
-    }
+    }         
 
     class DeleteCustomerListener implements ActionListener {
 
@@ -213,11 +214,13 @@ public class Controller {
         public void actionPerformed(ActionEvent arg0) {
             Object ID = tableModel.getValueAt(row, 0);
             String id = ID.toString();
-            //Deletes the marked customer.
             CustomerDao customerDao = new CustomerDao();
             customerDao.deleteCustomer(id);
+            editCustomerViewPanel.displayErrorMessage("Customer was deleted.");
+
+            editCustomerViewPanel.getButtonSearch().doClick();
         }
-    }
+    }       
 
     class EditCustomerListener implements ActionListener {
 
@@ -226,7 +229,7 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object ID = tableModel.getValueAt(row, 0);
-            
+
             if (column == 0) {
                 editCustomerViewPanel.displayErrorMessage("You cannot change the ID!");
             } else if (column == 1) {
@@ -256,7 +259,7 @@ public class Controller {
                 editCustomerViewPanel.displayErrorMessage("Balance changed");
             } else if (column == 5) {
                 String update = editCustomerViewPanel.getUpdate();
-                
+
                 CustomerDao customerDao = new CustomerDao();
                 customerDao.updateCustomerPassword(update, (String) ID);
                 editCustomerViewPanel.displayErrorMessage("Password changed");
@@ -266,7 +269,7 @@ public class Controller {
             editCustomerViewPanel.setTextFieldUpdate(null);
             editCustomerViewPanel.getButtonSearch().doClick();
         }
-    }
+    }         
 
     class EditSingleCustomerListener implements ActionListener {
 
@@ -303,14 +306,14 @@ public class Controller {
                     }
                 }
                 userAccountViewPanel.displayErrorMessage("Account has been updated.");
-                
+
                 userAccountViewPanel.setTextFieldPassword(null);
                 userAccountViewPanel.setTextFieldRetypePassword(null);
             } catch (Exception e) {
                 userAccountViewPanel.displayErrorMessage("Try again.");
             }
         }
-    }
+    }   
 
     class EditPricesListener implements ActionListener {
 
@@ -341,7 +344,7 @@ public class Controller {
             editPricesViewPanel.setTextFieldUpdate(null);
         }
 
-    }
+    }           
 
     class SearchCustomerListener implements ActionListener {
 
@@ -371,7 +374,7 @@ public class Controller {
             }
             mainInterface.setContentPane(editCustomerViewPanel);
         }
-    }
+    }       
 
     class UserTransactionsListener implements ActionListener {
 
@@ -400,7 +403,7 @@ public class Controller {
             }
             mainInterface.setContentPane(userTransactionsViewPanel);
         }
-    }
+    }     
 
     class UserSearchPricesListener implements ActionListener {
 
@@ -426,7 +429,7 @@ public class Controller {
             }
             mainInterface.setContentPane(userPricesViewPanel);
         }
-    }
+    }     
 
     class FindSingleCustomerListener implements ActionListener {
 
@@ -450,7 +453,7 @@ public class Controller {
             }
             mainInterface.setContentPane(userAccountViewPanel);//Skift til kommende panel
         }
-    }
+    }   
 
     class InsertMoneyListener implements ActionListener {
 
@@ -472,21 +475,83 @@ public class Controller {
                 }
                 newBalance = balance + money;
                 customerDao.updateCustomerBalance(newBalance, ID);
-                insertMoneyViewPanel.displayErrorMessage("You're balance was now updated with "+money+" kr.");
-                
+                insertMoneyViewPanel.displayErrorMessage("You're balance was now updated with " + money + " kr.");
+
                 insertMoneyViewPanel.setTextFieldInsertMoney(null);
             } catch (Exception e) {
                 insertMoneyViewPanel.displayErrorMessage("Try again!");
             }
         }
-    }
+    }          
+
+    class DeletePricesListener implements ActionListener {
+
+        //Reads what customer that are marked, and deletes it.
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            Object Location = tableModel.getValueAt(row, 0);
+            String location = Location.toString();
+            //Deletes the marked customer.
+            PricesDao pricesDao = new PricesDao();
+            pricesDao.deletePrices(location);
+        }
+    }         
+
+    class AdminSearchPricesListener implements ActionListener {
+
+        //Searches through all the prices, from the deffined location.
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            String location;
+
+            String col[] = {"Location", "PriceDay", "PriceNight"};
+            tableModel = new DefaultTableModel(col, 0);
+            editPricesViewPanel.addTableModel(tableModel);
+            try {
+                location = editPricesViewPanel.getPricesLocation();
+                PricesDao pricesDao = new PricesDao();
+                ArrayList<Prices> prices = pricesDao.findPrices(location);
+                for (Prices p : prices) {
+                    Object[] objs = {p.getLocation(), p.getPrice_day(), p.getPrice_night(),};
+                    tableModel.addRow(objs);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                editPricesViewPanel.displayErrorMessage("Try again.");
+            }
+            mainInterface.setContentPane(editPricesViewPanel);
+        }
+    }    
+
+    class AdminTransactionsListener implements ActionListener {
+
+        //Search through all the transactions.
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+
+            String col[] = {"Transaction id", "Customer id", "Amount", "Timedate", "Location", "Device", "Time spent"};
+            tableModel = new DefaultTableModel(col, 0);
+            adminTransactionsViewPanel.addTableModel(tableModel);
+            try {
+                TransactionDao transactionDao = new TransactionDao();
+                ArrayList<Transaction> transactions = transactionDao.findTransactions();
+                for (Transaction c : transactions) {
+                    Object[] objs = {c.getTransactionID(), c.getCustomerID(), c.getAmount(), c.getTimeDate(), c.getLocation(), c.getDevice(), c.getTimeSpent()};
+                    tableModel.addRow(objs);
+                }
+            } catch (Exception e) {
+                adminTransactionsViewPanel.displayErrorMessage("Try again.");
+            }
+            mainInterface.setContentPane(adminTransactionsViewPanel);
+        }
+    }    
 
     class LogOffListener implements ActionListener {
 
         //Logs of and goes to the logiViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(loginViewPanel);            
+            mainInterface.setContentPane(loginViewPanel);
             LoginAs = null;
         }
     }
@@ -533,68 +598,6 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(createPricesViewPanel);
-        }
-    }
-
-    class DeletePricesListener implements ActionListener {
-
-        //Reads what customer that are marked, and deletes it.
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            Object Location = tableModel.getValueAt(row, 0);
-            String location = Location.toString();
-            //Deletes the marked customer.
-            PricesDao pricesDao = new PricesDao();
-            pricesDao.deletePrices(location);
-        }
-    }
-
-    class AdminSearchPricesListener implements ActionListener {
-
-        //Searches through all the prices, from the deffined location.
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            String location;
-
-            String col[] = {"Location", "PriceDay", "PriceNight"};
-            tableModel = new DefaultTableModel(col, 0);
-            editPricesViewPanel.addTableModel(tableModel);
-            try {
-                location = editPricesViewPanel.getPricesLocation();
-                PricesDao pricesDao = new PricesDao();
-                ArrayList<Prices> prices = pricesDao.findPrices(location);
-                for (Prices p : prices) {
-                    Object[] objs = {p.getLocation(), p.getPrice_day(), p.getPrice_night(),};
-                    tableModel.addRow(objs);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                editPricesViewPanel.displayErrorMessage("Try again.");
-            }
-            mainInterface.setContentPane(editPricesViewPanel);
-        }
-    }
-
-    class AdminTransactionsListener implements ActionListener {
-
-        //Search through all the transactions.
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-
-            String col[] = {"Transaction id", "Customer id", "Amount", "Timedate", "Location", "Device", "Time spent"};
-            tableModel = new DefaultTableModel(col, 0);
-            adminTransactionsViewPanel.addTableModel(tableModel);
-            try {
-                TransactionDao transactionDao = new TransactionDao();
-                ArrayList<Transaction> transactions = transactionDao.findTransactions();
-                for (Transaction c : transactions) {
-                    Object[] objs = {c.getTransactionID(), c.getCustomerID(), c.getAmount(), c.getTimeDate(), c.getLocation(), c.getDevice(), c.getTimeSpent()};
-                    tableModel.addRow(objs);
-                }
-            } catch (Exception e) {
-                adminTransactionsViewPanel.displayErrorMessage("Try again.");
-            }
-            mainInterface.setContentPane(adminTransactionsViewPanel);
         }
     }
 
