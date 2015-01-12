@@ -77,10 +77,12 @@ public class LoginViewPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonLoginListener(ActionListener buttonListener) {
         buttonLogin.addActionListener(buttonListener);
     }

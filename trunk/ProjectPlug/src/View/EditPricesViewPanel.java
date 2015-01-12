@@ -168,26 +168,32 @@ public class EditPricesViewPanel extends javax.swing.JPanel {
         getTablePrices().setModel(tableModel);
     }
 
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonSearchPricesListener(ActionListener buttonListener) {
         buttonSearchEditPrices.addActionListener(buttonListener);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonDeletePricesListener(ActionListener buttonListener) {
         buttonDeleteEditPrices.addActionListener(buttonListener);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonEditPricesListener(ActionListener buttonListener) {
         buttonEditPrices.addActionListener(buttonListener);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonBackListener(ActionListener buttonListener) {
         buttonBack.addActionListener(buttonListener);
     }
     
+    //Makes it possible for the controller to se where in the table there is clicked
     public void addMouseClicked ( MouseListener mouseListener){
         getTablePrices().addMouseListener(mouseListener);
     }

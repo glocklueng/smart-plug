@@ -97,14 +97,17 @@ public class UserPricesViewPanel extends javax.swing.JPanel {
         getTablePrices().setModel(tableModel);
     }
 
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonSearchListener(ActionListener buttonListener) {
         buttonSearch.addActionListener(buttonListener);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonBackListener(ActionListener buttonListener) {
         buttonBack.addActionListener(buttonListener);
     }

@@ -73,10 +73,12 @@ public class UserTransactionsViewPanel extends javax.swing.JPanel {
         getTableTransactions().setModel(tableModel);
     }
 
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonBackListener(ActionListener buttonListener) {
         buttonBack.addActionListener(buttonListener);
     }

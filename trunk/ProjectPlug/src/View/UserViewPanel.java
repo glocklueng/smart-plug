@@ -28,23 +28,28 @@ public class UserViewPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     
+    //Makes it possible for the controller to click the button
     public void addButtonUserAccountListener(ActionListener buttonListener) {
         buttonUserAccount.addActionListener(buttonListener);
     }
     
-     public void addButtonUserTransactionsListener(ActionListener buttonListener) {
+    //Makes it possible for the controller to click the button
+    public void addButtonUserTransactionsListener(ActionListener buttonListener) {
         buttonUserTransactions.addActionListener(buttonListener);
     }
-     
-      public void addButtonPricesListener(ActionListener buttonListener) {
+    
+    //Makes it possible for the controller to click the button
+    public void addButtonPricesListener(ActionListener buttonListener) {
         buttonPrices.addActionListener(buttonListener);
     }
-      
-       public void addButtonInsertMoneyListener(ActionListener buttonListener) {
+    
+    //Makes it possible for the controller to click the button
+    public void addButtonInsertMoneyListener(ActionListener buttonListener) {
         buttonInsertMoney.addActionListener(buttonListener);
     }
        
-       public void addButtonLogOffListener(ActionListener buttonListener) {
+    //Makes it possible for the controller to click the button
+    public void addButtonLogOffListener(ActionListener buttonListener) {
         buttonLogUserOff.addActionListener(buttonListener);
     }
     

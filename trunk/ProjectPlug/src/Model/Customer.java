@@ -11,14 +11,14 @@ package Model;
  * @author Ibrahim
  */
 public class Customer {
-    private int id;
+    private String id;
     private String name;
     private String phone;
     private double balance;
     private String email;
     private String password;
     
-   public Customer(int id, String name, String phone, double balance,
+   public Customer(String id, String name, String phone, double balance,
            String email, String password)
    {
        this.setId(id);
@@ -32,14 +32,14 @@ public class Customer {
     /**
      * @return the id
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

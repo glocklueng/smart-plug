@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Model.Customer;
@@ -20,12 +15,9 @@ import java.util.ArrayList;
 public class CustomerDao {
 
     public Customer findCustomerById(int id) {
-        /*
-         Sql query to be executed in order to obtain a result set
-         */
+
         String customerQuery = "select * from customer where id =?";
-        //
-        // 
+
         Customer customer = null;
         Connection con = null;
 
@@ -141,12 +133,12 @@ public class CustomerDao {
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, customer.getId());
-            preparedStatement.setString(2, customer.getPassword());
-            preparedStatement.setString(3, customer.getName());
-            preparedStatement.setString(4, customer.getPhone());
-            preparedStatement.setString(5, customer.getEmail());
-            preparedStatement.setDouble(6, customer.getBalance());
+            preparedStatement.setString(1, customer.getId());
+            preparedStatement.setString(2, customer.getName());
+            preparedStatement.setString(3, customer.getPassword());
+            preparedStatement.setDouble(4, customer.getBalance());
+            preparedStatement.setString(5, customer.getPhone());
+            preparedStatement.setString(6, customer.getEmail());
 
             rowCount = preparedStatement.executeUpdate();
 
@@ -165,14 +157,14 @@ public class CustomerDao {
         return rowCount;
     }
 
-    public int deleteCustomer(int id) {
+    public int deleteCustomer(String id) {
         String insertQuery = "delete from customer where id =?";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
 
             rowCount = preparedStatement.executeUpdate();
 
@@ -191,7 +183,7 @@ public class CustomerDao {
         return rowCount;
     }
 
-    public int updateCustomerName(String name, int ID) {
+    public int updateCustomerName(String name, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set name=? where id=?";
         Connection con = null;
@@ -201,7 +193,7 @@ public class CustomerDao {
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
             preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, ID);
+            preparedStatement.setString(2, ID);
             rowCount = preparedStatement.executeUpdate();
 
             preparedStatement.close();
@@ -219,7 +211,7 @@ public class CustomerDao {
         return rowCount;
     }
 
-    public int updateCustomerPhone(String phone, int ID) {
+    public int updateCustomerPhone(String phone, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set phone=? where id=?";
         Connection con = null;
@@ -229,7 +221,7 @@ public class CustomerDao {
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
             preparedStatement.setString(1, phone);
-            preparedStatement.setInt(2, ID);
+            preparedStatement.setString(2, ID);
             rowCount = preparedStatement.executeUpdate();
 
             preparedStatement.close();
@@ -247,7 +239,7 @@ public class CustomerDao {
         return rowCount;
     }
 
-    public int updateCustomerEmail(String email, int ID) {
+    public int updateCustomerEmail(String email, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set email=? where id=?";
         Connection con = null;
@@ -257,7 +249,7 @@ public class CustomerDao {
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
             preparedStatement.setString(1, email);
-            preparedStatement.setInt(2, ID);
+            preparedStatement.setString(2, ID);
             rowCount = preparedStatement.executeUpdate();
 
             preparedStatement.close();
@@ -275,7 +267,7 @@ public class CustomerDao {
         return rowCount;
     }
     
-    public int updateCustomerPassword(String password, int ID) {
+    public int updateCustomerPassword(String password, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set password=? where id=?";
         Connection con = null;
@@ -285,7 +277,7 @@ public class CustomerDao {
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
             preparedStatement.setString(1, password);
-            preparedStatement.setInt(2, ID);
+            preparedStatement.setString(2, ID);
             rowCount = preparedStatement.executeUpdate();
 
             preparedStatement.close();
@@ -303,7 +295,7 @@ public class CustomerDao {
         return rowCount;
     }
 
-    public int updateCustomerBalance(double balance, int ID) {
+    public int updateCustomerBalance(double balance, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set balance=? where id=?";
         Connection con = null;
@@ -313,7 +305,7 @@ public class CustomerDao {
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
             preparedStatement.setDouble(1, balance);
-            preparedStatement.setInt(2, ID);
+            preparedStatement.setString(2, ID);
             rowCount = preparedStatement.executeUpdate();
 
             preparedStatement.close();
@@ -336,7 +328,7 @@ public class CustomerDao {
      This method creates a Customer Object from the resultset obtained by 
      executing the SQL query
      */ 
-        int id = resultSet.getInt("id");
+        String id = resultSet.getString("id");
         String name = resultSet.getString("name");
         String phone = resultSet.getString("phone");
         double balance = resultSet.getDouble("balance");

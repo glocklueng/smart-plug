@@ -22,9 +22,8 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public int getCosutmerID() {
-        String SID = textFieldID.getText();
-        return Integer.parseInt(SID);
+    public String getCosutmerID() {
+        return textFieldID.getText();
     }
 
     public String getCustomerName() {
@@ -71,15 +70,17 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         this.textFieldRetypePassword.setText(textFieldRetypePassword);
     }
     
-
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonCreateCustomerListener(ActionListener buttonListnener) {
         buttonCreateCustomer.addActionListener(buttonListnener);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonBackListener(ActionListener buttonListnener) {
         buttonBack.addActionListener(buttonListnener);
     }

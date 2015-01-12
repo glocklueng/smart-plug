@@ -29,14 +29,17 @@ public class InsertMoneyViewPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonInsertMoneyListener(ActionListener buttonListener) {
         buttonInsertMoney.addActionListener(buttonListener);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonBackListener(ActionListener buttonListener) {
         buttonBack.addActionListener(buttonListener);
     }
