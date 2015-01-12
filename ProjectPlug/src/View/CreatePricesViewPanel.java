@@ -48,15 +48,17 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
         this.textFieldPriceNight.setText(priceNightTextField);
     }
     
-
+    //Makes it possible for the controller to click the button
     public void addButtonCreatePricesListener(ActionListener buttonListnener) {
         buttonCreatePrices.addActionListener(buttonListnener);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonBackListener(ActionListener buttonListnener) {
         buttonBack.addActionListener(buttonListnener);
     }
     
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }

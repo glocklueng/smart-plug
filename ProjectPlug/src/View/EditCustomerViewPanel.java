@@ -182,26 +182,32 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
         getTableCustomers().setModel(tableModel);
     }
 
+    //Makes it possible to display an error in the view 
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonSearchCustomerListener(ActionListener buttonListener) {
         buttonSearch.addActionListener(buttonListener);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonDeleteListener(ActionListener buttonListener) {
         buttonDelete.addActionListener(buttonListener);
     }
 
+    //Makes it possible for the controller to click the button
     public void addButtonEditListener(ActionListener buttonListener) {
         buttonEdit.addActionListener(buttonListener);
     }
     
+    //Makes it possible for the controller to click the button
     public void addButtonBackListener(ActionListener buttonListener) {
         buttonBack.addActionListener(buttonListener);
     }
 
+    //Makes it possible for the controller to se where in the table there is clicked
     public void addMouseClicked(MouseListener mouseListener) {
         getTableCustomers().addMouseListener(mouseListener);
     }

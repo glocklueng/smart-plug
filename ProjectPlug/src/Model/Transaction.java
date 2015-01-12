@@ -11,14 +11,14 @@ package Model;
 public class Transaction {
     
     private int transactionID;
-    private int customerID;
+    private String customerID;
     private double amount;
     private String timeDate;
     private String location;
     private String device;
     private double timeSpent;
     
-    public Transaction(int transactionID, int customerID, double amount, 
+    public Transaction(int transactionID, String customerID, double amount, 
             String timeDate, String location, String device, double timeSpent)
     {
         this.setTransactionID(transactionID);
@@ -39,11 +39,11 @@ public class Transaction {
         this.transactionID = transactionID;
     }
 
-    public int getCustomerID() {
+    public String getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(String customerID) {
         this.customerID = customerID;
     }
 

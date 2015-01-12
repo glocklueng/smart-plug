@@ -52,7 +52,7 @@ public class TransactionDao {
         return transactions;
     }
     
-    public ArrayList<Transaction> findTransactionsByCustomerID(int customerID) {
+    public ArrayList<Transaction> findTransactionsByCustomerID(String customerID) {
         String insertQuery = "select * from TRANSACTIONS where customer_ID=?";
         Connection con = null;
         ArrayList transactions = new ArrayList<Transaction>();
@@ -60,7 +60,7 @@ public class TransactionDao {
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, customerID);
+            preparedStatement.setString(1, customerID);
 
             System.err.println(preparedStatement.toString());
            
@@ -138,7 +138,7 @@ public class TransactionDao {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
             preparedStatement.setInt(1, transaction.getTransactionID());
-            preparedStatement.setInt(2, transaction.getCustomerID());
+            preparedStatement.setString(2, transaction.getCustomerID());
             preparedStatement.setDouble(3, transaction.getAmount());
             preparedStatement.setString(4, transaction.getTimeDate());
             preparedStatement.setString(5, transaction.getLocation());
@@ -194,7 +194,7 @@ private Transaction createTransactionsObject(ResultSet resultSet) throws SQLExce
      executing the SQL query
      */ {
         int transactionID = resultSet.getInt("transaction_ID");
-        int customerID = resultSet.getInt("customer_ID");
+        String customerID = resultSet.getString("customer_ID");
         double amount = resultSet.getDouble("amount");
         String timeDate = resultSet.getString("timeDate");
         String location = resultSet.getString("location");

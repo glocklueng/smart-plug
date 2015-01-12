@@ -88,12 +88,14 @@ public class Controller {
 
     class LoginListener implements ActionListener {
 
+        //When clicking it checks if the password is right, and if you are an admin
+        //or a user and then logs you in.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String username;
             String password;
             String realPassword;
-            int adminOrUser = 0;
+            String adminOrUser;
 
             try {
                 username = loginViewPanel.getUsername();
@@ -109,15 +111,15 @@ public class Controller {
                     LoginAs = username;
                     loginViewPanel.setTextFieldPassword(null);
                     loginViewPanel.setTextFieldUsername(null);
-                    if (adminOrUser < 10) {
-                        mainInterface.setContentPane(adminViewPanel);
-                        mainInterface.invalidate();
-                        mainInterface.validate();
-                    } else {
+//                    if (adminOrUser ) {
+//                        mainInterface.setContentPane(adminViewPanel);
+//                        mainInterface.invalidate();
+//                        mainInterface.validate();
+//                    } else {
                         mainInterface.setContentPane(userViewPanel);
                         mainInterface.invalidate();
                         mainInterface.validate();
-                    }
+//                    }
                 } else {
                     loginViewPanel.displayErrorMessage("Wrong username or password.");
                 }
@@ -133,7 +135,7 @@ public class Controller {
         // when click the creat button, it creates the new customer.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            int ID;
+            String ID;
             String name;
             String phone;
             String email;
@@ -217,7 +219,7 @@ public class Controller {
             String id = ID.toString();
             //Deletes the marked customer.
             CustomerDao customerDao = new CustomerDao();
-            customerDao.deleteCustomer(Integer.parseInt(id));
+            customerDao.deleteCustomer(id);
         }
     }
 
@@ -228,39 +230,39 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object ID = tableModel.getValueAt(row, 0);
-
+            
             if (column == 0) {
                 editCustomerViewPanel.displayErrorMessage("You cannot change the ID!");
             } else if (column == 1) {
                 String update = editCustomerViewPanel.getUpdate();
 
                 CustomerDao customerDao = new CustomerDao();
-                customerDao.updateCustomerName(update, (int) ID);
+                customerDao.updateCustomerName(update, (String) ID);
                 editCustomerViewPanel.displayErrorMessage("Name changed");
             } else if (column == 2) {
                 String update = editCustomerViewPanel.getUpdate();
 
                 CustomerDao customerDao = new CustomerDao();
-                customerDao.updateCustomerPhone(update, (int) ID);
+                customerDao.updateCustomerPhone(update, (String) ID);
                 editCustomerViewPanel.displayErrorMessage("Phone number changed");
             } else if (column == 3) {
                 String update = editCustomerViewPanel.getUpdate();
 
                 CustomerDao customerDao = new CustomerDao();
-                customerDao.updateCustomerEmail(update, (int) ID);
+                customerDao.updateCustomerEmail(update, (String) ID);
                 editCustomerViewPanel.displayErrorMessage("Email changed");
             } else if (column == 4) {
                 String update = editCustomerViewPanel.getUpdate();
                 double intUpdate = Integer.parseInt(update);
 
                 CustomerDao customerDao = new CustomerDao();
-                customerDao.updateCustomerBalance(intUpdate, (int) ID);
+                customerDao.updateCustomerBalance(intUpdate, (String) ID);
                 editCustomerViewPanel.displayErrorMessage("Balance changed");
             } else if (column == 5) {
                 String update = editCustomerViewPanel.getUpdate();
                 
                 CustomerDao customerDao = new CustomerDao();
-                customerDao.updateCustomerPassword(update, (int) ID);
+                customerDao.updateCustomerPassword(update, (String) ID);
                 editCustomerViewPanel.displayErrorMessage("Password changed");
             } else {
                 editCustomerViewPanel.displayErrorMessage("Try again!");
@@ -274,7 +276,7 @@ public class Controller {
         //When clicking the Edit button, it edits the customer with the written data.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            int id = 0;
+            String id = null;
             String name;
             String email;
             String phone;
@@ -336,7 +338,7 @@ public class Controller {
 
                 PricesDao pricesDao = new PricesDao();
                 pricesDao.updatePricesNight(intUpdate, Location.toString());
-                editCustomerViewPanel.displayErrorMessage("PriceNight Changed");
+                editPricesViewPanel.displayErrorMessage("PriceNight Changed");
 
             }
             editPricesViewPanel.setTextFieldUpdate(null);
@@ -346,6 +348,8 @@ public class Controller {
 
     class SearchCustomerListener implements ActionListener {
 
+        //When clicking the search button, it will search for all customers, with 
+        //the deffined name, email and/or phone.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String name;
@@ -376,9 +380,10 @@ public class Controller {
 
     class UserTransactionsListener implements ActionListener {
 
+        //Searches through all the transactions for the user.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            int customerID = 0;
+            String customerID = null;
 
             String col[] = {"Transaction ID", "Amount", "Timedate", "Location", "Device", "Time Spent"};
             tableModel = new DefaultTableModel(col, 0);
@@ -396,7 +401,7 @@ public class Controller {
                     tableModel.addRow(objs);
                 }
             } catch (Exception e) {
-                editCustomerViewPanel.displayErrorMessage("Try again.");
+                userTransactionsViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(userTransactionsViewPanel);
             mainInterface.invalidate();
@@ -406,6 +411,7 @@ public class Controller {
 
     class UserSearchPricesListener implements ActionListener {
 
+        //Searches through all the prices, where the location is the deffined.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String location;
@@ -423,7 +429,7 @@ public class Controller {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                editCustomerViewPanel.displayErrorMessage("Try again.");
+                userPricesViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(userPricesViewPanel);
             mainInterface.invalidate();
@@ -433,6 +439,7 @@ public class Controller {
 
     class FindSingleCustomerListener implements ActionListener {
 
+        //Searches for the customers information that are logged in.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String email;
@@ -458,12 +465,13 @@ public class Controller {
 
     class InsertMoneyListener implements ActionListener {
 
+        //Inserts money to the user that are logged in.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Double money;
             Double balance = 0.0;
             Double newBalance;
-            int ID = 0;
+            String ID = null;
 
             try {
                 money = insertMoneyViewPanel.getTextFieldInsertMoney();
@@ -486,6 +494,7 @@ public class Controller {
 
     class LogOffListener implements ActionListener {
 
+        //Logs of and goes to the logiViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(loginViewPanel);
@@ -520,6 +529,7 @@ public class Controller {
 
     class SeeInsertMoneyListener implements ActionListener {
 
+        //Jump to the InsertMoneyViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(insertMoneyViewPanel);//Skift til kommende panel
@@ -552,7 +562,7 @@ public class Controller {
 
     class DeletePricesListener implements ActionListener {
 
-        //Reads what customer that are marked.
+        //Reads what customer that are marked, and deletes it.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             Object Location = tableModel.getValueAt(row, 0);
@@ -565,6 +575,7 @@ public class Controller {
 
     class AdminSearchPricesListener implements ActionListener {
 
+        //Searches through all the prices, from the deffined location.
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String location;
@@ -582,7 +593,7 @@ public class Controller {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                editCustomerViewPanel.displayErrorMessage("Try again.");
+                editPricesViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(editPricesViewPanel);
             mainInterface.invalidate();
@@ -592,6 +603,7 @@ public class Controller {
 
     class AdminTransactionsListener implements ActionListener {
 
+        //Search through all the transactions.
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
@@ -616,6 +628,7 @@ public class Controller {
 
     class TableCustomerListener implements MouseListener {
 
+        //Reads what row and column there are marked.
         @Override
         public void mouseClicked(MouseEvent e) {
             row = editCustomerViewPanel.getTableCustomers().rowAtPoint(e.getPoint());
