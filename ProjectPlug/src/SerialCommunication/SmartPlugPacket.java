@@ -7,14 +7,14 @@ package SerialCommunication;
 import java.util.Arrays;
 
 /**
- * The <code>CityBikePacket</code> class represents a data packet.
+ * The <code>SmartPlugPacket</code> class represents a data packet.
  * The packet is made up of source, destination, 
  * command or status, datalength, data fields, checksum,
  * and 
  * @version 2010/10/11
  * @author ibr, hbe
  */
-public final class CityBikePacket extends Packet {
+public final class SmartPlugPacket extends Packet {
 
     private final int SOURCEINDEX = 0;
     private final int SOURCESIZE = 2; //number of bytes
@@ -32,7 +32,7 @@ public final class CityBikePacket extends Packet {
             SOURCESIZE + DESTINATIONSIZE + COMMANDSTATUSSIZE + DATALENGTHSIZE + CHECKSUMSIZE + ENDOFPACKETSIZE;
     private byte[] bytePacket;
 
-    public CityBikePacket() {
+    public SmartPlugPacket() {
     }
 
     /**
@@ -44,7 +44,7 @@ public final class CityBikePacket extends Packet {
      * @param commandStatus the command or status value
      * @param data the packet data.
      */
-    public CityBikePacket(String source, String destination, String commandStatus, String data) {
+    public SmartPlugPacket(String source, String destination, String commandStatus, String data) {
         super(source, destination, commandStatus, data);
         generateChecksum();
         generateEndofPacket();
@@ -59,7 +59,7 @@ public final class CityBikePacket extends Packet {
      * fields. The byte array is parsed and the <code>CityBikePacket</code> constructed.
      * @param bytePacket the byte array containing the data for all the <code>CityBikePacket</code> fields.
      */
-    public CityBikePacket(byte[] bytePacket) {
+    public SmartPlugPacket(byte[] bytePacket) {
         String source = new String(Arrays.copyOfRange(bytePacket, SOURCEINDEX, SOURCEINDEX + SOURCESIZE));
         setSource(source);
         
@@ -86,8 +86,8 @@ public final class CityBikePacket extends Packet {
     }
 
     /**
-     * Returns the <code>CityBikePacket</code> contents as a byte array.
-     * @return the <code>CityBikePacket</code> contents as a byte array.
+     * Returns the <code>SmartPlugPacket</code> contents as a byte array.
+     * @return the <code>SmartPlugPacket</code> contents as a byte array.
      */
     @Override
     public byte[] getBytes() {
@@ -112,7 +112,7 @@ public final class CityBikePacket extends Packet {
     }
 
     /**
-     * Populate the byte array representing the <code>CityBikePacket</code> contents
+     * Populate the byte array representing the <code>SmartPlugPacket</code> contents
      * with the source value.
      */
     private void putSource() {
@@ -123,7 +123,7 @@ public final class CityBikePacket extends Packet {
     }
 
     /**
-     * Populate the byte array representing the <code>CityBikePacket</code> contents
+     * Populate the byte array representing the <code>SmartPlugPacket</code> contents
      * with the destination value.
      */
     private void putDestination() {
@@ -134,7 +134,7 @@ public final class CityBikePacket extends Packet {
     }
 
     /**
-     * Populate the byte array representing the <code>CityBikePacket</code> contents
+     * Populate the byte array representing the <code>SmartPlugPacket</code> contents
      * with the checksum value.
      */
     private void putCommandStatus() {
@@ -145,7 +145,7 @@ public final class CityBikePacket extends Packet {
     }
 
     /**
-     * Populate the byte array representing the <code>CityBikePacket</code> contents
+     * Populate the byte array representing the <code>SmartPlugPacket</code> contents
      * with the datalength value.
      */
     private void putDataLength() {
@@ -156,7 +156,7 @@ public final class CityBikePacket extends Packet {
     }
 
     /**
-     * Populate the byte array representing the <code>CityBikePacket</code> contents
+     * Populate the byte array representing the <code>SmartPlugPacket</code> contents
      * with the data value.
      */
     private void putData() {
@@ -164,7 +164,7 @@ public final class CityBikePacket extends Packet {
     }
 
     /**
-     * Populate the byte array representing the <code>CityBikePacket</code> contents
+     * Populate the byte array representing the <code>SmartPlugPacket</code> contents
      * with the checksum value.
      */
     private void putChecksum() {
@@ -196,17 +196,17 @@ public final class CityBikePacket extends Packet {
 
     /**
      * Determines whether the byte array represents a complete
-     * <code>CityBikePacket</code> data frame by comparing the number of bytes in the
+     * <code>SmartPlugPacket</code> data frame by comparing the number of bytes in the
      * byte array with the value specified in the datalength field
      * plus the header length.
      * The <code>isPacketComplete</code> method is the "algorithm interface"
-     * for the concrete strategy class <code>CityBikePacket</code> in the
+     * for the concrete strategy class <code>SmartPlugPacket</code> in the
      * Strategy design pattern. The <code>Packet</code> class is the
      * abstract Strategy class and the <code>SerialFrame</code> class is the
      * Context class.
      * @param byteFrame the byte array to check.
      * @return <code>true</code> if the byte array represents a complete
-     * <code>CityBikePacket</code> data frame, <code>false</code> otherwise.
+     * <code>SmartPlugPacket</code> data frame, <code>false</code> otherwise.
      */
     @Override
     public boolean isPacketComplete(byte[] byteFrame) {
@@ -248,7 +248,7 @@ public final class CityBikePacket extends Packet {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CityBikePacket other = (CityBikePacket) obj;
+        final SmartPlugPacket other = (SmartPlugPacket) obj;
         if (!Arrays.equals(this.bytePacket, other.bytePacket)) {
             return false;
         }
