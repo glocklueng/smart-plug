@@ -18,9 +18,10 @@ import java.util.ArrayList;
  */
 public class PricesDao {
 
+    //Finds prices form the location.
     public ArrayList<Prices> findPrices(String location) {
 
-        String pricesQuery = "select * from PRICES where location like '%" +location+ "%'";
+        String pricesQuery = "select * from PRICES where location like '%" + location + "%'";
 
         Connection con = null;
         ArrayList prices = new ArrayList<Prices>();
@@ -33,8 +34,6 @@ public class PricesDao {
              */
             PreparedStatement preparedStatement = con.prepareStatement(pricesQuery);
             System.err.println(preparedStatement.toString());
-
-       
 
             /*
              By executing query on the prepared statement you obtain a result set
@@ -59,6 +58,7 @@ public class PricesDao {
         return prices;
     }
 
+    //Adds prices from the data the admin deffines.
     public int addPrices(Prices prices) {
         String insertQuery = "insert into PRICES  values (?,?,?)";
         Connection con = null;
@@ -87,6 +87,7 @@ public class PricesDao {
         return rowCount;
     }
 
+    //Updates prices at day from the location.
     public int updatePricesDay(double pricesDay, String location) {
         String insertQuery = "update PRICES "
                 + "Set price_day= ?  where location=?";
@@ -115,6 +116,7 @@ public class PricesDao {
         return rowCount;
     }
 
+    //Updates prices at night from the location.
     public int updatePricesNight(double pricesNight, String location) {
         String insertQuery = "update PRICES "
                 + "Set price_night= ?  where location=?";
@@ -143,6 +145,7 @@ public class PricesDao {
         return rowCount;
     }
 
+    //Deletes the prices from the location.
     public int deletePrices(String location) {
         String insertQuery = "delete from prices where location =?";
         Connection con = null;
@@ -169,14 +172,13 @@ public class PricesDao {
         return rowCount;
     }
 
-    private Prices createPricesObject(ResultSet resultSet) throws SQLException /*
-     This method creates a Prices Object from the resultset obtained by 
-     executing the SQL query
-     */ {
+    //This method creates a Prices Object from the resultset obtained by 
+    //executing the SQL query
+    private Prices createPricesObject(ResultSet resultSet) throws SQLException{
+
         String location = resultSet.getString("location");
         double price_day = resultSet.getDouble("price_day");
         double price_night = resultSet.getDouble("price_night");
         return new Prices(location, price_day, price_night);
     }
 }
-// need to make update prices

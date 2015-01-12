@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 /**
  *
  * @author Morten
  */
-import Model.Customer;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +13,8 @@ import Model.Transaction;
 import java.util.ArrayList;
 
 public class TransactionDao {
-    
+
+    //Finds all transactions made.
     public ArrayList<Transaction> findTransactions() {
         String insertQuery = "select * from TRANSACTIONS";
         Connection con = null;
@@ -28,13 +25,13 @@ public class TransactionDao {
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
 
             System.err.println(preparedStatement.toString());
-           
+
             /*
              By executing query on the prepared statement you obtain a result set
              */
             ResultSet resultSet = preparedStatement.executeQuery();
-            
-            while(resultSet.next()) {
+
+            while (resultSet.next()) {
                 transactions.add(createTransactionsObject(resultSet));// create a customer object by using the result set
             }
             preparedStatement.close();
@@ -51,7 +48,8 @@ public class TransactionDao {
         }
         return transactions;
     }
-    
+
+    //Finds all transactions from the customer ID.
     public ArrayList<Transaction> findTransactionsByCustomerID(String customerID) {
         String insertQuery = "select * from TRANSACTIONS where customer_ID=?";
         Connection con = null;
@@ -63,13 +61,13 @@ public class TransactionDao {
             preparedStatement.setString(1, customerID);
 
             System.err.println(preparedStatement.toString());
-           
+
             /*
              By executing query on the prepared statement you obtain a result set
              */
             ResultSet resultSet = preparedStatement.executeQuery();
-            
-            while(resultSet.next()) {
+
+            while (resultSet.next()) {
                 transactions.add(createTransactionsObject(resultSet));// create a customer object by using the result set
             }
             preparedStatement.close();
@@ -86,9 +84,9 @@ public class TransactionDao {
         }
         return transactions;
     }
-    
-    
-     public Transaction findTransactions(int transactionID) {
+
+    //Finds all transactions from the transaction ID.
+    public Transaction findTransactions(int transactionID) {
         /*
          Sql query to be executed in order to obtain a result set
          */
@@ -129,8 +127,9 @@ public class TransactionDao {
         }
         return transaction;
     }
- 
-      public int addTransaction(Transaction transaction) {
+
+    //Adds a new transaction
+    public int addTransaction(Transaction transaction) {
         String insertQuery = "insert into TRANSACTIONS  values (?,?,?,?,?,?,?)";
         Connection con = null;
         int rowCount = -1;
@@ -144,7 +143,7 @@ public class TransactionDao {
             preparedStatement.setString(5, transaction.getLocation());
             preparedStatement.setString(6, transaction.getDevice());
             preparedStatement.setDouble(7, transaction.getTimeSpent());
-            
+
             rowCount = preparedStatement.executeUpdate();
 
             preparedStatement.close();
@@ -161,15 +160,16 @@ public class TransactionDao {
         }
         return rowCount;
     }
-      
-        public int deleteTransaction(int transactionID) {
+
+    //Deletes a transaction from the transaction ID.
+    public int deleteTransaction(int transactionID) {
         String insertQuery = "delete from transactions where transaction_id =?";
         Connection con = null;
         int rowCount = -1;
         try {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
-            preparedStatement.setInt(1,transactionID);
+            preparedStatement.setInt(1, transactionID);
 
             rowCount = preparedStatement.executeUpdate();
 
@@ -188,11 +188,10 @@ public class TransactionDao {
         return rowCount;
     }
 
+    //This method creates a Tranactions Object from the resultset obtained by 
+    //executing the SQL query
+    private Transaction createTransactionsObject(ResultSet resultSet) throws SQLException {
 
-private Transaction createTransactionsObject(ResultSet resultSet) throws SQLException /*
-     This method creates a Tranactions Object from the resultset obtained by 
-     executing the SQL query
-     */ {
         int transactionID = resultSet.getInt("transaction_ID");
         String customerID = resultSet.getString("customer_ID");
         double amount = resultSet.getDouble("amount");
@@ -200,7 +199,7 @@ private Transaction createTransactionsObject(ResultSet resultSet) throws SQLExce
         String location = resultSet.getString("location");
         String device = resultSet.getString("device");
         double timeSpent = resultSet.getDouble("time_Spent");
-        return new Transaction(transactionID, customerID, amount, timeDate, location, device,timeSpent);
+        return new Transaction(transactionID, customerID, amount, timeDate, location, device, timeSpent);
     }
-    
+
 }

@@ -1,7 +1,6 @@
 package DAO;
 
 import Model.Customer;
-import Model.Prices;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
  */
 public class CustomerDao {
 
+    //Searches for customers form the ID.
     public Customer findCustomerById(int id) {
 
         String customerQuery = "select * from customer where id =?";
@@ -54,6 +54,7 @@ public class CustomerDao {
         return customer;
     }
 
+    //Searches for customers from the name, email and/or phone.
     public ArrayList<Customer> findCustomers(String name, String email, String phone) {
         String insertQuery = "select * from CUSTOMER where name like '%" + name + "%'"
                 + " and email like '%" + email + "%'"
@@ -93,6 +94,7 @@ public class CustomerDao {
         return customers;
     }
 
+    //Searches for the password from the email.
     public String findPassword(String email) {
         String insertQuery = "select * from CUSTOMER where"
                 + " email = '" + email + "'";
@@ -126,6 +128,7 @@ public class CustomerDao {
 
     }
 
+    //Adds customer with the data the admin deffines.
     public int addCustomer(Customer customer) throws SQLException {
         String insertQuery = "insert into CUSTOMER  values (?,?,?,?,?,?)";
         Connection con = null;
@@ -157,6 +160,7 @@ public class CustomerDao {
         return rowCount;
     }
 
+    //Deletes a customer from the ID.
     public int deleteCustomer(String id) {
         String insertQuery = "delete from customer where id =?";
         Connection con = null;
@@ -183,6 +187,7 @@ public class CustomerDao {
         return rowCount;
     }
 
+    //Updates the name of a customer from an ID.
     public int updateCustomerName(String name, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set name=? where id=?";
@@ -211,6 +216,7 @@ public class CustomerDao {
         return rowCount;
     }
 
+    //Updates the phone of a customer from an ID.
     public int updateCustomerPhone(String phone, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set phone=? where id=?";
@@ -239,6 +245,7 @@ public class CustomerDao {
         return rowCount;
     }
 
+    //Updates the email of a customer from an ID.
     public int updateCustomerEmail(String email, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set email=? where id=?";
@@ -267,6 +274,7 @@ public class CustomerDao {
         return rowCount;
     }
     
+    //Updates the password of a customer from an ID.
     public int updateCustomerPassword(String password, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set password=? where id=?";
@@ -295,6 +303,7 @@ public class CustomerDao {
         return rowCount;
     }
 
+    //Updates the balance of a customer from the ID.
     public int updateCustomerBalance(double balance, String ID) {
         String insertQuery = "update CUSTOMER "
                 + "Set balance=? where id=?";
@@ -323,11 +332,10 @@ public class CustomerDao {
         return rowCount;
     }
 
+    //This method creates a Customer Object from the resultset obtained by 
+    //executing the SQL query
     private Customer createCustomerObject(ResultSet resultSet) throws SQLException {
-     /*
-     This method creates a Customer Object from the resultset obtained by 
-     executing the SQL query
-     */ 
+
         String id = resultSet.getString("id");
         String name = resultSet.getString("name");
         String phone = resultSet.getString("phone");
