@@ -13,6 +13,7 @@ import Controller.Controller;
  * @author Dan
  */
 public class StartAll {
+    
     public static void main(String[] args)
     {
         MainInterface mainInterface = new MainInterface();
