@@ -4,6 +4,8 @@ public class MainInterface extends javax.swing.JFrame {
 
     public MainInterface() {
         initComponents();
+        //Sets the displayed pane to the login view panel.
+        setContentPane(loginViewPanel1);
     }
 
     @SuppressWarnings("unchecked")
@@ -26,6 +28,8 @@ public class MainInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane1.setToolTipText("");
         jTabbedPane1.addTab("Login", loginViewPanel1);
         jTabbedPane1.addTab("Admin view panel", adminViewPanel2);
         jTabbedPane1.addTab("Create customer", createCustomerViewPanel1);

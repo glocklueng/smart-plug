@@ -178,6 +178,10 @@ public class EditCustomerViewPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEditActionPerformed
 
+    public javax.swing.JButton getButtonSearch(){
+        return buttonSearch;
+    }
+    
     public void addTableModel(DefaultTableModel tableModel) {
         getTableCustomers().setModel(tableModel);
     }

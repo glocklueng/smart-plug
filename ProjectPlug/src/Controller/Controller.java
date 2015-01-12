@@ -95,7 +95,7 @@ public class Controller {
             String username;
             String password;
             String realPassword;
-            String adminOrUser;
+            String adminOrUser = null;
 
             try {
                 username = loginViewPanel.getUsername();
@@ -105,21 +105,17 @@ public class Controller {
                 realPassword = customerDao.findPassword(username).toUpperCase();
                 ArrayList<Customer> customers = customerDao.findCustomers("", username, "");
                 for (Customer c : customers) {
-                    adminOrUser = c.getId();
+                    adminOrUser = c.getEmail();
                 }
                 if (realPassword.equals(password)) {
                     LoginAs = username;
                     loginViewPanel.setTextFieldPassword(null);
                     loginViewPanel.setTextFieldUsername(null);
-//                    if (adminOrUser ) {
-//                        mainInterface.setContentPane(adminViewPanel);
-//                        mainInterface.invalidate();
-//                        mainInterface.validate();
-//                    } else {
+                    if (adminOrUser.equals("Admin")) {
+                        mainInterface.setContentPane(adminViewPanel);
+                    } else {
                         mainInterface.setContentPane(userViewPanel);
-                        mainInterface.invalidate();
-                        mainInterface.validate();
-//                    }
+                    }
                 } else {
                     loginViewPanel.displayErrorMessage("Wrong username or password.");
                 }
@@ -268,6 +264,7 @@ public class Controller {
                 editCustomerViewPanel.displayErrorMessage("Try again!");
             }
             editCustomerViewPanel.setTextFieldUpdate(null);
+            editCustomerViewPanel.getButtonSearch().doClick();
         }
     }
 
@@ -373,8 +370,6 @@ public class Controller {
                 editCustomerViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(editCustomerViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -404,8 +399,6 @@ public class Controller {
                 userTransactionsViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(userTransactionsViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -432,8 +425,6 @@ public class Controller {
                 userPricesViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(userPricesViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -458,8 +449,6 @@ public class Controller {
                 userAccountViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(userAccountViewPanel);//Skift til kommende panel
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -497,10 +486,7 @@ public class Controller {
         //Logs of and goes to the logiViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(loginViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
-            
+            mainInterface.setContentPane(loginViewPanel);            
             LoginAs = null;
         }
     }
@@ -511,8 +497,6 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(userViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -521,9 +505,7 @@ public class Controller {
         //Jumps back to the AdminViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(adminViewPanel);//Skift til kommende panel
-            mainInterface.invalidate();
-            mainInterface.validate();
+            mainInterface.setContentPane(adminViewPanel);
         }
     }
 
@@ -532,9 +514,7 @@ public class Controller {
         //Jump to the InsertMoneyViewPanel.
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            mainInterface.setContentPane(insertMoneyViewPanel);//Skift til kommende panel
-            mainInterface.invalidate();
-            mainInterface.validate();
+            mainInterface.setContentPane(insertMoneyViewPanel);
         }
     }
 
@@ -544,8 +524,6 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(createCustomerViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -555,8 +533,6 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             mainInterface.setContentPane(createPricesViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -596,8 +572,6 @@ public class Controller {
                 editPricesViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(editPricesViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
@@ -621,8 +595,6 @@ public class Controller {
                 adminTransactionsViewPanel.displayErrorMessage("Try again.");
             }
             mainInterface.setContentPane(adminTransactionsViewPanel);
-            mainInterface.invalidate();
-            mainInterface.validate();
         }
     }
 
