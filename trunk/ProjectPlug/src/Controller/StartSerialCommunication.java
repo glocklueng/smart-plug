@@ -6,7 +6,7 @@
 
 package Controller;
 
-import SerialCommunication.CityBikePacket;
+import SerialCommunication.SmartPlugPacket;
 import SerialCommunication.SerialTransceiver;
 import java.util.TooManyListenersException;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ public class StartSerialCommunication {
     {
            RFIDEventManagerSimple rFIDEventManagerSimple = new RFIDEventManagerSimple();
         //Construct another SerialTransceiver for the RFIDEventManager
-     SerialTransceiver rFIDEventManagerTransceiver = new SerialTransceiver(new CityBikePacket(), rFIDEventManagerSimple);
+     SerialTransceiver rFIDEventManagerTransceiver = new SerialTransceiver(new SmartPlugPacket(), rFIDEventManagerSimple);
     
     rFIDEventManagerSimple.setTransmitter(rFIDEventManagerTransceiver);
             

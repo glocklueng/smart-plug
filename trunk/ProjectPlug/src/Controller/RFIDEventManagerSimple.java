@@ -5,7 +5,7 @@
 package Controller;
 
 
-import SerialCommunication.CityBikePacket;
+import SerialCommunication.SmartPlugPacket;
 import SerialCommunication.Packet;
 import SerialCommunication.FrameEvent;
 import SerialCommunication.FrameEventListener;
@@ -115,13 +115,13 @@ public class RFIDEventManagerSimple implements FrameEventListener {
     /**
      * Send the
      * <code>RFIDResponse</code> as an
-     * <code>CityBikePacket</code> using the serial transmitter.
+     * <code>SmartPlugPacket</code> using the serial transmitter.
      *
      * @param status The status response to send
      * @param data The specific data for the status response
      */
     public synchronized void sendRFIDResponse(String status, String data) {
-        CityBikePacket responsePacket = new CityBikePacket(source, destination, status, data);
+        SmartPlugPacket responsePacket = new SmartPlugPacket(source, destination, status, data);
         transmitter.transmit(responsePacket.getBytes());
     }
 
@@ -136,7 +136,7 @@ public class RFIDEventManagerSimple implements FrameEventListener {
         byte[] received = frameEvent.getData();
         System.out.print("\nReceived at Server: [");
         System.out.println(new String(received) + "]");
-        packet = new CityBikePacket(received);
+        packet = new SmartPlugPacket(received);
         System.out.println("           command: [" + packet.getCommandStatus() + "]");
         System.out.println("           data:    [" + packet.getData() + "]");
         //TO DO Process request and send response
