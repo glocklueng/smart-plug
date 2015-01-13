@@ -56,6 +56,7 @@ char bufferBalance[32];
 char bufferNight[32];
 float priceNight;
 float priceDay=10.0;
+float balanceLeft=0.01;
 
 enum state
 {
@@ -400,16 +401,29 @@ void charging()
 	    priceOverall= energy * priceDay/pricePerHourDivider;
 		void *buffer =createBuffer(16);  //create buffer
 		//if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
-			dtostrf(priceOverall,5,4,buffer);
+			dtostrf(priceOverall,7,3,buffer);
 			GoTo(5,0);
 			LCDPutString("      ");
 			_delay_ms(10);
 			GoTo(5,0);
 			LCDPutString(buffer);
-			LCDPutString("kr.");
+			LCDPutString("kr");
 			//putString(longBuffer);
 			_delay_ms(10);
 			free(buffer);      //free buffer
+		    balanceLeft = balance-priceOverall;
+			void *buffer2=createBuffer(16);
+			dtostrf(balanceLeft,7,3,buffer2);
+			GoTo(5,1);
+			LCDPutString("      ");
+			_delay_ms(10);
+			GoTo(5,1);
+			LCDPutString(buffer2);
+			LCDPutString("kr");
+			//putString(longBuffer);
+			_delay_ms(10);
+			free(buffer2);
+			
 		//}
 		//else
 		//LCDPutString("not converted correct");
