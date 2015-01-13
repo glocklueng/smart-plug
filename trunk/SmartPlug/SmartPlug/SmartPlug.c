@@ -43,13 +43,16 @@ char* showPricesCommand="41";
 char* pricesSentOkCommand="42";
 char* transactionCommand="51";
 char* transactionOkCommand="52";
+char* getBalanceCommand="61";
 char* card;
 double pricePerHourDivider=6000000;
 unsigned long energy=0;
 char* location = "Copenhagen";
 float priceOverall=0.01;
+float balance=0.01;
 
 char bufferDay[32];
+char bufferBalance[32];
 char bufferNight[32];
 float priceNight;
 float priceDay=10.0;
@@ -258,6 +261,34 @@ void enterPin()
 		//sprintf(buffer, "%f", (float)priceDay);
 		LCDPutString(buffer);
 		GoTo(0,1);
+		
+		lcdClear();
+		
+		sendData(getBalanceCommand,location,bufferPin,20);
+		SerialGetString(inbuffer, sizeof(inbuffer));
+		LCDPutString(inbuffer);
+		count1=0;
+		for (count = 10; count < strlen(inbuffer)-3; count ++){
+			ch = inbuffer[count];
+			bufferBalance[count1]= ch;
+			count1++;
+		}
+		bufferBalance[count1]='\0';
+		
+		lcdClear();
+		free(buffer);
+		
+		
+		sprintf(bufferBalance,"%s", bufferBalance);
+		//LCDPutString(bufferNight);
+		
+		balance=atof(bufferBalance);
+		dtostrf(balance,10,10,buffer);
+		LCDPutString(buffer);
+		_delay_ms(5000);
+		
+		
+		
 		
 		
 	}
