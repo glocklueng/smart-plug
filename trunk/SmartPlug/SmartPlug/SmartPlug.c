@@ -37,8 +37,16 @@ char*checkPasswordCommand= "21";
 char* passswordOkCommand="22";
 char* passwordNotOkCommand="23";
 char* showBalanceCommand="31";
+char* showPricesCommand="41";
+char* pricesSentOkCommand="42";
 char* card;
-
+double pricePerHourDivider=1000000;
+unsigned long energy=0;
+char* location = "Copenhagen";
+char* priceDay;
+char* priceNight;
+char bufferDay[32];
+char bufferNight[32];
 
 
 enum state
@@ -55,10 +63,24 @@ enum state
 };
 state= idleState;
 
-void sendData(char* command,char* id, char* pin)
+void sendData(char* command,char* id, char* pin, int letters)
 {   //sprintf(buffer, "%02i%02i%02i%04s%16s%4s%1s%01s%03i%2s",12,34,11,"0022","868b5310e1000000","0123","9","9",123,"\r\n");
-	sprintf(buffer, "%02i%02i%02s%04s%16s%4s%1s%01s%03i%2s",12,34,command,"0022",id,pin,"9","9",123, "\r\n");
+	sprintf(buffer, "%02i%02i%02s%04i%16s%4s%03i%2s",12,34,command,letters,id,pin,123, "\r\n");
 	Usart_sendString(buffer);
+}
+
+initEverything()
+{
+	sei();
+	lcd_init();
+	initKeypad();
+	USART_Init(64);
+	timer1Init();
+	int2Init();
+	SPI_MasterInit();
+	Init_SPI_interrupts();
+	initADC();
+	onADC();
 }
 
 void initFlags(){
@@ -97,7 +119,7 @@ void scanCard()
 		scanCardFlag=0;
 		lcdClear();
 		card=bufferCard;
-		sendData(checkIdCommand,bufferCard,bufferPin);
+		sendData(checkIdCommand,bufferCard,bufferPin,20);
 		
 		SerialGetString(inbuffer, sizeof(inbuffer));
 		LCDPutString(inbuffer);
@@ -164,7 +186,7 @@ void enterPin()
 	else
 	{
 	lcdClear();
-	sendData(checkPasswordCommand,card,bufferPin);
+	sendData(checkPasswordCommand,card,bufferPin,20);
 	SerialGetString(inbuffer, sizeof(inbuffer));
 	LCDPutString(inbuffer);
 	_delay_ms(5000);	
@@ -173,8 +195,48 @@ void enterPin()
 	{
 	
 	if (inbuffer[5] == passswordOkCommand[1])
-	{
-		state=chargingState;
+	{   
+		sendData(showPricesCommand,location,bufferPin,20);
+		
+		state=showMenuState;
+		SerialGetString(inbuffer, sizeof(inbuffer));
+		LCDPutString(inbuffer);
+		_delay_ms(5000);
+		
+		int count;
+		
+		int count2=0;
+		int found=0;
+		char ch;
+		for (count = 10; count < strlen(inbuffer)-3; count ++){
+			ch = inbuffer[count];
+			if (found==0){
+				if (ch!='-')
+				{
+					bufferDay[count2]=ch;
+					count2++;
+				}
+				else
+				{   bufferDay[count2]='\0';
+					found=1;
+					count2=0;
+				}
+			}
+			else
+			{
+				bufferNight[count2]=ch;
+				count2++;
+			}
+		}
+		bufferNight[count2+1]='\0';
+		lcdClear();
+		free(buffer);
+		sprintf(buffer,"%s", bufferDay);
+		LCDPutString(buffer);
+		GoTo(0,1);
+		sprintf(buffer,"%s", bufferNight);
+		LCDPutString(buffer);
+		_delay_ms(5000);
 	}
 	else
 	{
@@ -182,18 +244,44 @@ void enterPin()
 	}
 	}
 	}
-	key='n';
+	
 	
 }
 
 void showMenu()
 {
-	
+	if(showMenuFlag)
+	{   lcdClear();
+		LCDPutString("1.Show prices");
+		LCDPutString("2.Start Charging");
+		showMenuFlag=0;
+	}
+	keyFound=0;
+	if (scanKeyPad()==1)
+	{
+		if (key=='1')
+		{
+			state=showPricesState;
+		}
+		if (key=='2')
+		{
+			state=chargingState;
+		}
+		if (key=='F')
+		{
+			state=idleState;
+			initFlags();
+		}
+		
+	}
 }
 
 void showPrices()
-{
-	
+{	if (showPricesFlag)
+	{	lcdClear();
+		LCDPutString("Show prices menu");
+		showPricesFlag=0;
+	}
 }
 
 void startCharging()
@@ -202,23 +290,48 @@ void startCharging()
 }
 
 void charging()
-{	if (chargingFlag)
-	{
-	startCharge();
-	
-	lcdClear();
-	LCDPutString("Charge      ");
-	chargingFlag=0;
-	}
-	
-		calculateEnergy();
-		//ultoa(calculateEnergy(),bufferADC,10);
-		//Usart_sendString("charging: ");
-		//Usart_sendString(bufferADC);
+	{	if (chargingFlag)
+		{
+			startCharge();
+			PORTB^=(1<<PB0);
+			lcdClear();
+			LCDPutString("Charge      ");
+			chargingFlag=0;
+			energy=0;
+			
+			timer1Init();
+			startTimer();
+		}
 		
-		//putString(longBuffer);
-		_delay_ms(10);
-		ms=0;
+		if (ms>2000)
+		
+		PORTB &=~(1<<PB0);
+		else
+		
+		PORTB |=(1<<PB0);
+		
+		//	onADC();
+		
+		if(ms>2000) {
+			ms=0;
+			
+		//unsigned long totalEnergy=1000.0;
+		calculateEnergy();
+		void *buffer =createBuffer(16);  //create buffer
+		if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
+			
+			GoTo(6,1);
+			LCDPutString("      ");
+			_delay_ms(10);
+			GoTo(6,1);
+			LCDPutString(buffer);
+			//putString(longBuffer);
+			_delay_ms(10);
+			free(buffer);      //free buffer
+		}
+		else
+		LCDPutString("not converted correct");
+		}
 	
 	
 	
@@ -321,9 +434,11 @@ int main(void)
 			{
 				state= chargingState;
 				initFlags();
-				while(1)
+				//startTimer();
+				while(1){
 				doStates();
-				startTimer();
+				}
+				
 			}
 			
 			}
