@@ -10,12 +10,7 @@
 char disp_buffer[32];    // One dimensional
 
 
-unsigned char indx=0;
-unsigned char inx=0;
-unsigned char tmp;
-unsigned char lcd_x=0;
-unsigned char lcd_y=0;
-unsigned char lcd_maxx=16;
+
 int line =0;
 char index=0;
 
@@ -237,7 +232,7 @@ void GoTo(unsigned char x, unsigned char y){
 switch (y) {
 case 0: 
 
- lcd_cmd_write(SET_DRAM_ADDR+x);
+ lcd_cmd_write(SET_DRAM_ADDR+line_0+x);
  lcd_wait(WAIT_15m);  
  break;
 
@@ -252,6 +247,7 @@ default:
 
 break;
 }
+index=x;
 
 }
 

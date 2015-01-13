@@ -5,10 +5,11 @@
  *  Author: Dan
  */ 
 #include "ADC.h"
-#include <avr/io.h>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-
-unsigned char data;
-double energy;
+#include <util/delay.h>
+ unsigned long energy=0;
+ uint16_t data=0;
+ double lastPower=0;
+ uint16_t lastData=0;
 
 void initADC(){
 	ADMUX|=   (1<<REFS0)|(1<<MUX4) ;   //(1<<REFS1) |(1<<REFS0) the internal adcref: external ref  (1<<REFS0); and adc0 selected
@@ -24,11 +25,15 @@ void initADC(){
 void startCharge()
 {
 	PORTD|=(1<<PIND4); //start charging
+	timer1Init();
+	TIMSK|= (1<<TOIE1);
+	
 }
 
 void stopCharge()
 {
 	PORTD&=~(1<<PIND4); //stop charging
+	TIMSK&= ~(1<<TOIE1);
 }
    
    
@@ -44,6 +49,7 @@ unsigned int doSample(){
 void onADC(){
 	ADCSRA|= (1<<ADEN);
 	
+	
 }
 void offADC() {
 	ADCSRA &=~(1<<ADEN);
@@ -51,19 +57,108 @@ void offADC() {
 }
 
 
-double calculateEnergy(){
-	data=doSample();
-	double vin= data*5000/512;   //mW  uW 0.4*1.023
-	double power= vin * vin;
-
-	if (power==0)
-	{
-		energy=0;
-	}
+long calculateEnergy(){
+	if (ms>4000)
+	
+	PORTB &=~(1<<PB0);
 	else
-	{
-		energy+=   power;
-	}
+	
+	PORTB |=(1<<PB0);
+	
+	//	onADC();
+	
+	if(ms>4000) {
+		ms=0;
+		
 
+		
+		data=doSample();
+		
+		//only update is different values
+		if(lastData!=data) {
+			
+			GoTo(10,3);
+			_delay_ms(10);
+			LCDPutString("    ");
+			GoTo(10,1);
+			_delay_ms(10);
+			//create buffer
+			void *buffer =createBuffer(5);
+			//unsigned integer check for correct converting
+			if(sprintf(buffer, "%u", data ) ){
+				
+				LCDPutString(buffer);
+				lastData=data;
+				free(buffer);  //free buffer
+			}
+			else
+			LCDPutString("not correct converted");
+		}
+		double vin= data*5000/512;   //mW  uW 0.4*1.023
+		double power= vin * vin;
+		
+		if (power==0)
+		{
+			energy=0;
+		}
+		else
+		{
+			energy+=   power;
+		}
+		
+		
+		//only update if new value
+		if(lastPower!=power) {
+			//check for correct update!
+			void *buffer =createBuffer(8);   //create buffer
+			if(snprintf(buffer, 8,"%.3f \r\n", (double) power )) {
+				
+				
+				GoTo(10,1);
+				_delay_ms(10);
+				LCDPutString("       ");   //clear number
+				_delay_ms(10);
+				GoTo(10,1);
+				_delay_ms(10);
+				LCDPutString(buffer);
+				lastPower=power;
+				free(buffer);   // free buffer
+			}
+			else
+			LCDPutString("not converted");
+			
+		}
+		void *buffer =createBuffer(16);  //create buffer
+		if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
+			
+			GoTo(10,1);
+			LCDPutString("      ");
+			_delay_ms(10);
+			GoTo(10,1);
+			LCDPutString(buffer);
+			//putString(longBuffer);
+			_delay_ms(10);
+			free(buffer);      //free buffer
+		}
+		else
+		LCDPutString("not converted correct");
+		
+	}
 	return energy;
 }
+
+   void * createBuffer (size_t n) {
+	   void *arrayPtr;
+	   if((arrayPtr =malloc(n))==NULL)   //dynamic allocation 23 elements
+	   exit(1);  //forced stop of execution
+	   return arrayPtr;
+   }
+   
+   
+   void * gcalloc( size_t n, size_t sizeof_something){
+	   void *p;
+	   if((p =calloc(n, sizeof_something))==NULL){
+		   exit(1);
+	   }
+	   return p;
+   }

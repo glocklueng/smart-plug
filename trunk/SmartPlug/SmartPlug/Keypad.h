@@ -25,3 +25,5 @@ void setRow(char cnt);
 char scanKeyPad();
 char findKey(char row, char temp);
 int startKeypad();
+void startTimer();
+void stopTimer();
