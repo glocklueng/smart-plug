@@ -154,7 +154,7 @@ void enterPin()
 	GoTo(0,1);
 	LCDPutString("Press A after");
 	int count=0; //count index
-	while (key!='A' )
+	while (key!='A')
 	{
 		keyFound=0;
 		if (scanKeyPad()==1)
@@ -182,19 +182,17 @@ void enterPin()
 					//Usart_sendString(" Pin:");
 					//Usart_sendString(bufferPin);
 				}
-			if (key=='F')
-			{
-				state=idleState;
-				initFlags();
-			}
-			}
+			
+		}
 			
 			
 		}
 	}
 	if (count<4)
-	{
-		state=enterPinState;	
+	{	
+		state=idleState;
+		initFlags();	
+		key='n';
 	}
 	else
 	{
@@ -263,7 +261,9 @@ void enterPin()
 	}
 	else
 	{
-		state=enterPinState;
+		state=idleState;
+		initFlags();
+		key='n';
 	}
 	}
 	}
