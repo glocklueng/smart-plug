@@ -36,7 +36,7 @@ public final class SmartPlugPacket extends Packet {
     }
 
     /**
-     * Constructs a new <code>CityBikePacket</code> based upon the source, destination,
+     * Constructs a new <code>SmartPlugPacket</code> based upon the source, destination,
      * command or status and data supplied.
      * The datalength and checksum fields are defined automatically from the parameters supplied.
      * @param source the packet source.
@@ -54,7 +54,7 @@ public final class SmartPlugPacket extends Packet {
     }
 
     /**
-     * Constructs a new <code>CityBikePacket</code> from the byte array supplied.
+     * Constructs a new <code>SmartPlugPacket</code> from the byte array supplied.
      * The byte array should contain data corresponding to all the <code>CityBikePacket</code>
      * fields. The byte array is parsed and the <code>CityBikePacket</code> constructed.
      * @param bytePacket the byte array containing the data for all the <code>CityBikePacket</code> fields.
