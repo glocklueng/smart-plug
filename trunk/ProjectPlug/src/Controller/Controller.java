@@ -364,6 +364,9 @@ public class Controller {
                     Object[] objs = {c.getId(), c.getName(), c.getPhone(), c.getEmail(), c.getBalance(), c.getPassword()};
                     tableModel.addRow(objs);
                 }
+                if (customers.isEmpty()){
+                    editCustomerViewPanel.displayErrorMessage("There was no match.");
+                }
             } catch (Exception e) {
                 editCustomerViewPanel.displayErrorMessage("Try again.");
             }
