@@ -277,6 +277,7 @@ void showMenu()
 	if(showMenuFlag)
 	{   lcdClear();
 		LCDPutString("1.Show prices");
+		GoTo(0,1);
 		LCDPutString("2.Start Charging");
 		showMenuFlag=0;
 	}
