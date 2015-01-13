@@ -102,12 +102,12 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         textFieldName = new javax.swing.JTextField();
-        textFieldPassword = new javax.swing.JTextField();
-        textFieldRetypePassword = new javax.swing.JTextField();
         buttonCreateCustomer = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         textFieldID = new javax.swing.JTextField();
         buttonBack = new javax.swing.JButton();
+        textFieldRetypePassword = new javax.swing.JPasswordField();
+        textFieldPassword = new javax.swing.JPasswordField();
 
         textFieldEmail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -130,10 +130,6 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
 
         textFieldName.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        textFieldPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        textFieldRetypePassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         buttonCreateCustomer.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonCreateCustomer.setText("Create customer");
         buttonCreateCustomer.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -146,6 +142,10 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
         buttonBack.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonBack.setText("Back");
         buttonBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        textFieldRetypePassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        textFieldPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -164,12 +164,12 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonCreateCustomer)
-                    .addComponent(textFieldEmail)
+                    .addComponent(textFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                     .addComponent(textFieldPhone)
                     .addComponent(textFieldName)
-                    .addComponent(textFieldPassword)
-                    .addComponent(textFieldRetypePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                    .addComponent(textFieldID))
+                    .addComponent(textFieldID)
+                    .addComponent(textFieldRetypePassword)
+                    .addComponent(textFieldPassword))
                 .addContainerGap(80, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -222,8 +222,8 @@ public class CreateCustomerViewPanel extends javax.swing.JPanel {
     private javax.swing.JTextField textFieldEmail;
     private javax.swing.JTextField textFieldID;
     private javax.swing.JTextField textFieldName;
-    private javax.swing.JTextField textFieldPassword;
+    private javax.swing.JPasswordField textFieldPassword;
     private javax.swing.JTextField textFieldPhone;
-    private javax.swing.JTextField textFieldRetypePassword;
+    private javax.swing.JPasswordField textFieldRetypePassword;
     // End of variables declaration//GEN-END:variables
 }

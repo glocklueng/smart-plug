@@ -33,9 +33,7 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        textFieldAccountPhone = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textFieldPassword = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         textFieldAccountName = new javax.swing.JTextField();
@@ -45,24 +43,17 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
         textFieldAccountBalance = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        textFieldRetypePassword = new javax.swing.JTextField();
         buttonSave = new javax.swing.JButton();
         buttonBack = new javax.swing.JButton();
+        textFieldPassword = new javax.swing.JPasswordField();
+        textFieldAccountPhone = new javax.swing.JTextField();
+        textFieldRetypePassword = new javax.swing.JPasswordField();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Here is your account information");
 
-        textFieldAccountPhone.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Name:");
-
-        textFieldPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        textFieldPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldPasswordActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("E-mail:");
@@ -89,8 +80,6 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setText("Retype password:");
 
-        textFieldRetypePassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         buttonSave.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonSave.setText("Save");
         buttonSave.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -98,6 +87,12 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
         buttonBack.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonBack.setText("Back");
         buttonBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        textFieldPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        textFieldAccountPhone.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        textFieldRetypePassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -108,7 +103,6 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(buttonSave)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5)
@@ -118,16 +112,20 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(39, 39, 39)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textFieldAccountPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textFieldAccountName, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1)
-                                .addComponent(textFieldAccountEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textFieldRetypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4)
-                                .addComponent(textFieldAccountBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(buttonBack)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                                .addComponent(textFieldAccountName, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                .addComponent(textFieldAccountEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                .addComponent(textFieldAccountBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                .addComponent(textFieldPassword)
+                                .addComponent(textFieldAccountPhone)
+                                .addComponent(textFieldRetypePassword)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel4))
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(109, 109, 109))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,16 +142,16 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFieldAccountPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(textFieldAccountPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(textFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFieldRetypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(textFieldRetypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonSave)
                 .addGap(18, 18, 18)
@@ -228,10 +226,6 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
         buttonBack.addActionListener(buttonListener);
     }
     
-    private void textFieldPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldPasswordActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonBack;
@@ -248,7 +242,7 @@ public class UserAccountViewPanel extends javax.swing.JPanel {
     private javax.swing.JTextField textFieldAccountEmail;
     private javax.swing.JTextField textFieldAccountName;
     private javax.swing.JTextField textFieldAccountPhone;
-    private javax.swing.JTextField textFieldPassword;
-    private javax.swing.JTextField textFieldRetypePassword;
+    private javax.swing.JPasswordField textFieldPassword;
+    private javax.swing.JPasswordField textFieldRetypePassword;
     // End of variables declaration//GEN-END:variables
 }
