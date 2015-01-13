@@ -55,17 +55,33 @@ public class EditPricesViewPanel extends javax.swing.JPanel {
         buttonDeleteEditPrices = new javax.swing.JButton();
         buttonBack = new javax.swing.JButton();
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Location:");
 
+        textFieldLocationEditPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Prices Day:");
 
+        textFieldPricesDayEditPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Prices Night:");
 
-        buttonSearchEditPrices.setText("Search");
+        textFieldPricesNightEditPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonSearchEditPrices.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        buttonSearchEditPrices.setText("Search");
+        buttonSearchEditPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("Update");
 
+        textFieldUpdateEditPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        buttonEditPrices.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonEditPrices.setText("Edit");
+        buttonEditPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         tablePrices.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,9 +96,13 @@ public class EditPricesViewPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablePrices);
 
+        buttonDeleteEditPrices.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonDeleteEditPrices.setText("Delete");
+        buttonDeleteEditPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonBack.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonBack.setText("Back");
+        buttonBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -124,7 +144,7 @@ public class EditPricesViewPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonDeleteEditPrices)
                     .addComponent(buttonEditPrices))
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(0, 69, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +177,7 @@ public class EditPricesViewPanel extends javax.swing.JPanel {
                     .addComponent(buttonSearchEditPrices)
                     .addComponent(buttonDeleteEditPrices))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonBack)
                 .addContainerGap())

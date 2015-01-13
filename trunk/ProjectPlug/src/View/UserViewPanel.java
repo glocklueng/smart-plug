@@ -63,48 +63,61 @@ public class UserViewPanel extends javax.swing.JPanel {
         buttonLogUserOff = new javax.swing.JButton();
         buttonInsertMoney = new javax.swing.JButton();
 
+        buttonUserAccount.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonUserAccount.setText("Edit account");
+        buttonUserAccount.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonUserTransactions.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonUserTransactions.setText("Transactions");
+        buttonUserTransactions.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonPrices.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonPrices.setText("See Prices");
+        buttonPrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonLogUserOff.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonLogUserOff.setText("Log off");
+        buttonLogUserOff.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        buttonInsertMoney.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonInsertMoney.setText("Insert Money");
+        buttonInsertMoney.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(buttonLogUserOff)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(buttonUserAccount)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonUserTransactions)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonPrices)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonInsertMoney)
-                        .addGap(36, 36, 36))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonUserAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(360, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(buttonPrices, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonInsertMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonUserTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonLogUserOff, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(buttonLogUserOff)
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonInsertMoney)
-                    .addComponent(buttonPrices)
-                    .addComponent(buttonUserTransactions)
-                    .addComponent(buttonUserAccount))
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(buttonUserAccount)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonPrices)
+                .addGap(18, 18, 18)
+                .addComponent(buttonInsertMoney)
+                .addGap(18, 18, 18)
+                .addComponent(buttonUserTransactions)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

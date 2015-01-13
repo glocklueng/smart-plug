@@ -84,26 +84,38 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
 
         jLabel1.setText("jLabel1");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Location:");
 
+        textFieldLocation.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Price Day:");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("Price Night:");
 
+        textFieldPriceDay.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        textFieldPriceNight.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         textFieldPriceNight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textFieldPriceNightActionPerformed(evt);
             }
         });
 
+        buttonCreatePrices.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonCreatePrices.setText("Create Prices");
+        buttonCreatePrices.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         buttonCreatePrices.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonCreatePricesActionPerformed(evt);
             }
         });
 
+        buttonBack.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonBack.setText("Back");
+        buttonBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -131,7 +143,7 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(121, 121, 121)
                                 .addComponent(buttonCreatePrices)))
-                        .addGap(0, 160, Short.MAX_VALUE))
+                        .addGap(0, 151, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(buttonBack)))
@@ -154,7 +166,7 @@ public class CreatePricesViewPanel extends javax.swing.JPanel {
                     .addComponent(textFieldPriceNight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonCreatePrices)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(buttonBack)
                 .addContainerGap())
         );
