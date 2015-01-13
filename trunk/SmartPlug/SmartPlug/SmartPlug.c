@@ -303,13 +303,15 @@ void showMenu()
 void showPrices()
 {	if (showPricesFlag)
 	{	lcdClear();
-		dtostrf(priceDay,5,3,bufferDay);
-		dtostrf(priceNight,5,4,buffer);
+		dtostrf(priceDay,4,2,bufferDay);
+		dtostrf(priceNight,4,2,bufferNight);
 		lcdClear();
 		GoTo(0,0);
-		LCDPutString("Price day: ");
+		LCDPutString("Day:");
 		LCDPutString(bufferDay);
-		LCDPutString("Price night: ");
+		LCDPutString("kr.");
+		GoTo(0,1);
+		LCDPutString("Night:");
 		LCDPutString(bufferNight);
 		showPricesFlag=0;
 	}
