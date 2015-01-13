@@ -58,7 +58,7 @@ void offADC() {
 
 
 long calculateEnergy(){
-	if (ms>4000)
+	if (ms>2000)
 	
 	PORTB &=~(1<<PB0);
 	else
@@ -67,7 +67,7 @@ long calculateEnergy(){
 	
 	//	onADC();
 	
-	if(ms>4000) {
+	if(ms>2000) {
 		ms=0;
 		
 
