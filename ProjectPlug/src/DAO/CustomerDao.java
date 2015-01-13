@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class CustomerDao {
 
     //Searches for customers form the ID.
-    public Customer findCustomerById(int id) {
+    public Customer findCustomerById(String id) {
 
         String customerQuery = "select * from customer where id =?";
 
@@ -28,7 +28,7 @@ public class CustomerDao {
              is added to the statement. The location changes the question mark inside the query
              */
             PreparedStatement preparedStatement = con.prepareStatement(customerQuery);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             System.out.println(preparedStatement.toString());
 
             /*
