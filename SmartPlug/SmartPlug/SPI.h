@@ -16,4 +16,5 @@ void SPI_MasterInit();
 void SPI_MasterTransmit( char data);
 char SPIRecieve(void);
 void Init_SPI_interrupts();
+extern int ignoreFirstRead;
 

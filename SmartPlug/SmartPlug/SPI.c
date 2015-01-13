@@ -13,6 +13,7 @@ unsigned char buffer[16];
 unsigned char cardPresent;
 unsigned char bufferCard[17];
 char dataS;
+int ignoreFirstRead=0;
 
 
 void SPI_MasterInit()
@@ -69,6 +70,9 @@ ISR(INT0_vect) {
 
 ISR(INT1_vect) //interrupt 1
 {   //USART_Transmit('1');
+	ignoreFirstRead++;
+		
+	
 	PORTB^=(1<<PB0);
 	cardPresent=1;
 	int i=0;
@@ -92,8 +96,8 @@ ISR(INT1_vect) //interrupt 1
 		
 	}
 	bufferCard[16]='\0';
-	Usart_sendString("\n");
-	Usart_sendString(bufferCard);
-	Usart_sendString("\n");
+	//Usart_sendString("\n");
+	//Usart_sendString(bufferCard);
+	//Usart_sendString("\n");
 }
 

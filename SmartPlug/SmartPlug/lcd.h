@@ -41,7 +41,7 @@
 #define MOV_BIT         0x08	
 #define LFT_BIT         0x04
 
-
+extern char index;
 #define RTN_HOME        0x02 	//return home
 #define RD_DISPLAY      0x00
 

@@ -78,7 +78,7 @@ char scanKeyPad()
 		case getKey:  state1= waitRelease; key=findKey(count,temp);  break;
 		case waitRelease:  if ((PINB& (1<<PB2)) !=0) {state1= releasedDebounce;} else {state1=released;}break ;
 		case releasedDebounce: if((ms>= 70) && ((PINB& (1<<PB2)) ==0)) {state1= released;} else { state1= releasedDebounce;} break;
-		case released: state1=idle; count=1; TIMSK&= ~(1<<TOIE1); keyFound=1; break;
+		case released: state1=idle; count=1; stopTimer(); keyFound=1; break;
 		default: state1=idle; count=1; break;
 	}	
 	return keyFound;
@@ -136,8 +136,16 @@ ISR(INT2_vect){
 		MCUCSR|= (1<< ISC2);// switch on the rising edge the interrupt
 	}
 	PORTB^=(1<<PB0);
-	TIMSK|= (1<<TOIE1);
+	startTimer();
 }
 
-
+void startTimer()
+{
+	TIMSK|= (1<<TOIE1);
+	ms=0;
+}
+void stopTimer()
+{
+	TIMSK&= ~(1<<TOIE1);
+}
 	
