@@ -39,9 +39,14 @@ public class UserPricesViewPanel extends javax.swing.JPanel {
         tablePrices = new javax.swing.JTable();
         buttonBack = new javax.swing.JButton();
 
+        textFieldLocation.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        Location.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         Location.setText("Location");
 
+        buttonSearch.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonSearch.setText("Search");
+        buttonSearch.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         tablePrices.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -56,7 +61,9 @@ public class UserPricesViewPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablePrices);
 
+        buttonBack.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonBack.setText("Back");
+        buttonBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -88,7 +95,7 @@ public class UserPricesViewPanel extends javax.swing.JPanel {
                     .addComponent(buttonSearch))
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(buttonBack)
                 .addContainerGap())
         );
