@@ -202,7 +202,7 @@ void enterPin()
 	sendData(checkPasswordCommand,card,bufferPin,20);
 	SerialGetString(inbuffer, sizeof(inbuffer));
 	LCDPutString(inbuffer);
-	_delay_ms(5000);	
+	
 	
 	if (inbuffer[4]==passswordOkCommand[0])
 	{
@@ -214,7 +214,6 @@ void enterPin()
 		state=showMenuState;
 		SerialGetString(inbuffer, sizeof(inbuffer));
 		LCDPutString(inbuffer);
-		_delay_ms(5000);
 		
 		int count;
 		int count1=0;
@@ -260,7 +259,7 @@ void enterPin()
 		LCDPutString(buffer);
 		GoTo(0,1);
 		
-		_delay_ms(5000);
+		
 	}
 	else
 	{
