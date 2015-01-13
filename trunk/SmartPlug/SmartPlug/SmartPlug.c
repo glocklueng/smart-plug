@@ -399,9 +399,13 @@ void charging()
 }
 
 void stopCharging()
-{	LCDPutString("Stop      ");
-	
-	stopCharge();
+{	if (stopChargingFlag==1)
+	{
+		lcdClear();
+		LCDPutString("Stop      ");
+		stopChargingFlag=0;
+		stopCharge();
+	}
 	
 }
 
