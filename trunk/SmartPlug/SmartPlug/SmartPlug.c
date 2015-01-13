@@ -41,6 +41,8 @@ char* passwordNotOkCommand="23";
 char* showBalanceCommand="31";
 char* showPricesCommand="41";
 char* pricesSentOkCommand="42";
+char* transactionCommand="51";
+char* transactionOkCommand="52";
 char* card;
 double pricePerHourDivider=6000000;
 unsigned long energy=0;
@@ -403,10 +405,39 @@ void stopCharging()
 {	if (stopChargingFlag==1)
 	{
 		lcdClear();
-		LCDPutString("Stop      ");
+		
 		stopChargingFlag=0;
 		stopCharge();
+		void *buffer =createBuffer(16);
+		LCDPutString("Paid:");  //create buffer
+		//if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
+		dtostrf(priceOverall,5,4,buffer);
+		LCDPutString(buffer);
+		LCDPutString("kr.");
+		sendData(transactionCommand,buffer,bufferPin,20);
+		SerialGetString(inbuffer, sizeof(inbuffer));
+		
+		
+		
+		if (inbuffer[4]==transactionOkCommand[0])
+		{
+			
+			if (inbuffer[5] == transactionOkCommand[1])
+			{	
+				GoTo(0,1);
+				LCDPutString("Transaction ok");
+			}
+			else
+			{
+				GoTo(0,1);
+				LCDPutString("error");
+			}
+		}
+		
 	}
+	_delay_ms(10000);
+	state=idleState;
+	initFlags();
 	
 }
 
