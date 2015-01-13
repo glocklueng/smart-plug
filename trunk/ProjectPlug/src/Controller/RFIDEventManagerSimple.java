@@ -5,11 +5,15 @@
 package Controller;
 
 
-import SerialCommunication.SmartPlugPacket;
-import SerialCommunication.Packet;
+import DAO.CustomerDao;
+import DAO.PricesDao;
+import DAO.TransactionDao;
+import Model.Customer;
 import SerialCommunication.FrameEvent;
 import SerialCommunication.FrameEventListener;
+import SerialCommunication.Packet;
 import SerialCommunication.SerialTransceiver;
+import SerialCommunication.SmartPlugPacket;
 import java.util.TooManyListenersException;
 
 /**
@@ -34,6 +38,17 @@ public class RFIDEventManagerSimple implements FrameEventListener {
     private String PINff;
     private String bikeRackIDff;
     private String BikeBrokenff;
+    String checkIdCommand = "11";
+    String idOkCommand="12";
+    String idNotOkCommand="13";
+    String checkPasswordCommand= "21";
+   
+    String passswordOkCommand="22";
+    String passwordNotOkCommand="23";
+    String showBalanceCommand="31";
+    String showPricesCommand="41";
+    String pricesSentOkCommand="42";
+    
 
     public RFIDEventManagerSimple() {
     }
@@ -141,29 +156,12 @@ public class RFIDEventManagerSimple implements FrameEventListener {
         System.out.println("           data:    [" + packet.getData() + "]");
         //TO DO Process request and send response
 
-        System.out.println();
+      
 
-        String cardID = packet.getData();
-        String cardid = cardID.substring(0, 10);
-        System.out.println("Card ID from terminal: " + cardid);
+       
 
-        String PIN = packet.getData();
-        String pin = PIN.substring(16, 20);
-        System.out.println("PIN from terminal: " + pin);
-
-        String bikeRackID = packet.getData();
-        String bikerackid = bikeRackID.substring(20, 21);
-        System.out.println("Choosed Bike-Rack ID form terminal: " + bikerackid);
-
-        String bikeBroken = packet.getData();
-        String bikebroken = bikeBroken.substring(21, 22);
-        System.out.println("Is the Bike Broken ? 1= Yes , 0 = No :" + " " + bikebroken);
-        System.out.println();
-
-        this.cardIDff = cardid;
-        this.PINff = pin;
-        this.bikeRackIDff = bikerackid;
-        this.BikeBrokenff = bikebroken;
+        
+       
 
 
         processRequest(packet);
@@ -177,11 +175,85 @@ public class RFIDEventManagerSimple implements FrameEventListener {
        
          //Here we are taking info about PIN if correct od no to this class.
 
-      
+        CustomerDao customerDao= new CustomerDao();
+        TransactionDao transactionDao =new TransactionDao();
+        PricesDao pricesDao= new PricesDao();
+        Customer customer= null;
+        try {
+            
+                customer= customerDao.findCustomerById(cardIDff);
+       }
+        catch (Error e)
+        {
+           e.printStackTrace();
+        }
         System.out.println();
-
         String command = packet.getCommandStatus();
         System.out.println("Command: " + command);
+        if (command.equals(checkIdCommand))
+        {   
+            System.out.println();
+
+            String cardID = packet.getData();
+            String cardid = cardID.substring(0, 15);
+            System.out.println("Card ID from terminal: " + cardid);
+
+            String PIN = packet.getData();
+            String pin = PIN.substring(16, 20);
+            System.out.println("PIN from terminal: " + pin);
+            this.cardIDff = cardid;
+            this.PINff = pin;
+            if (customer==null){
+                sendRFIDResponse(idNotOkCommand, "notOk" );
+                System.out.println("Id not ok");
+            }
+            else
+            {
+                sendRFIDResponse(idOkCommand, "okCommand" );
+                System.out.println("Id ok");
+            }
+        }
+        if (command.equals(checkPasswordCommand))
+        {   
+            System.out.println();
+
+            String cardID = packet.getData();
+            String cardid = cardID.substring(0, 15);
+            System.out.println("Card ID from terminal: " + cardid);
+
+            String PIN = packet.getData();
+            String pin = PIN.substring(16, 20);
+            System.out.println("PIN from terminal: " + pin);
+            this.cardIDff = cardid;
+            this.PINff = pin;
+            if (PINff.equals(customer.getPassword()))
+            {
+                sendRFIDResponse(passswordOkCommand, "passwordOk" );
+                System.out.println("Password ok");
+            }
+            else
+            {
+                sendRFIDResponse(passwordNotOkCommand, "passwordNotOk" );
+                System.out.println("Password not ok");
+            }
+        }
+        
+        if (command.equals(showPricesCommand))
+        {
+            System.out.println("Show prices command");
+            String data = packet.getData(); 
+            String location= data.substring(0,16);
+            location=location.replaceAll("\\s","");
+            System.out.println(location);
+            System.out.println(pricesDao.findPrices(location).get(0).getPrice_day());
+            double priceDay=pricesDao.findPrices(location).get(0).getPrice_day();
+            double priceNight=pricesDao.findPrices(location).get(0).getPrice_night();
+            String prices= priceDay+ "-"+priceNight;
+            sendRFIDResponse(pricesSentOkCommand,prices);
+            
+        }
+        
+        
        
                
         

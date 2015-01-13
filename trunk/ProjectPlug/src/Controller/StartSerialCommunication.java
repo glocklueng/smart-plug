@@ -16,7 +16,11 @@ import java.util.logging.Logger;
  *
  * @author Dan
  */
+
 public class StartSerialCommunication {
+    
+    
+    
     public static void main(String[] args)
     {
            RFIDEventManagerSimple rFIDEventManagerSimple = new RFIDEventManagerSimple();
