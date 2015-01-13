@@ -372,7 +372,9 @@ void charging()
 			startCharge();
 			PORTB^=(1<<PB0);
 			lcdClear();
-			LCDPutString("Charge      ");
+			LCDPutString(" Pay:");
+			GoTo(0,1);
+			LCDPutString("Left");
 			chargingFlag=0;
 			energy=0;
 			
@@ -399,10 +401,10 @@ void charging()
 		void *buffer =createBuffer(16);  //create buffer
 		//if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
 			dtostrf(priceOverall,5,4,buffer);
-			GoTo(3,1);
+			GoTo(5,0);
 			LCDPutString("      ");
 			_delay_ms(10);
-			GoTo(3,1);
+			GoTo(5,0);
 			LCDPutString(buffer);
 			LCDPutString("kr.");
 			//putString(longBuffer);
