@@ -6,7 +6,7 @@
  */ 
 #include "ADC.h"
 #include <util/delay.h>
- unsigned long energy=0;
+ 
  uint16_t data=0;
  double lastPower=0;
  uint16_t lastData=0;
@@ -57,43 +57,11 @@ void offADC() {
 }
 
 
-long calculateEnergy(){
-	if (ms>2000)
-	
-	PORTB &=~(1<<PB0);
-	else
-	
-	PORTB |=(1<<PB0);
-	
-	//	onADC();
-	
-	if(ms>2000) {
-		ms=0;
-		
-
-		
+unsigned long calculateEnergy(){
 		data=doSample();
 		
 		//only update is different values
-		if(lastData!=data) {
-			
-			GoTo(10,3);
-			_delay_ms(10);
-			LCDPutString("    ");
-			GoTo(10,1);
-			_delay_ms(10);
-			//create buffer
-			void *buffer =createBuffer(5);
-			//unsigned integer check for correct converting
-			if(sprintf(buffer, "%u", data ) ){
-				
-				LCDPutString(buffer);
-				lastData=data;
-				free(buffer);  //free buffer
-			}
-			else
-			LCDPutString("not correct converted");
-		}
+		
 		double vin= data*5000/512;   //mW  uW 0.4*1.023
 		double power= vin * vin;
 		
@@ -108,42 +76,10 @@ long calculateEnergy(){
 		
 		
 		//only update if new value
-		if(lastPower!=power) {
-			//check for correct update!
-			void *buffer =createBuffer(8);   //create buffer
-			if(snprintf(buffer, 8,"%.3f \r\n", (double) power )) {
-				
-				
-				GoTo(10,1);
-				_delay_ms(10);
-				LCDPutString("       ");   //clear number
-				_delay_ms(10);
-				GoTo(10,1);
-				_delay_ms(10);
-				LCDPutString(buffer);
-				lastPower=power;
-				free(buffer);   // free buffer
-			}
-			else
-			LCDPutString("not converted");
-			
-		}
-		void *buffer =createBuffer(16);  //create buffer
-		if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
-			
-			GoTo(10,1);
-			LCDPutString("      ");
-			_delay_ms(10);
-			GoTo(10,1);
-			LCDPutString(buffer);
-			//putString(longBuffer);
-			_delay_ms(10);
-			free(buffer);      //free buffer
-		}
-		else
-		LCDPutString("not converted correct");
 		
-	}
+		
+		
+	
 	return energy;
 }
 
