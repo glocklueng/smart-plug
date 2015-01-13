@@ -45,7 +45,7 @@ char* card;
 double pricePerHourDivider=6000000;
 unsigned long energy=0;
 char* location = "Copenhagen";
-float priceOverall;
+float priceOverall=0.01;
 
 char bufferDay[32];
 char bufferNight[32];
@@ -361,6 +361,7 @@ void charging()
 			
 		//unsigned long totalEnergy=1000.0;
 		calculateEnergy();
+		if (energy!=0)
 	    priceOverall= energy * priceDay/pricePerHourDivider;
 		void *buffer =createBuffer(16);  //create buffer
 		//if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
