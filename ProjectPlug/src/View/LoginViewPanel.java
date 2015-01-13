@@ -39,6 +39,8 @@ public class LoginViewPanel extends javax.swing.JPanel {
         textFieldPassword = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
 
+        setForeground(new java.awt.Color(51, 51, 55));
+
         jLabel1.setText("Username");
 
         textFieldUsername.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

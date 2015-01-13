@@ -41,6 +41,8 @@ public class MainInterface extends javax.swing.JFrame {
         jTabbedPane1.addTab("User Transations", userTransactionsViewPanel1);
         jTabbedPane1.addTab("User Prices", userPricesViewPanel1);
         jTabbedPane1.addTab("Insert money", insertMoneyViewPanel1);
+
+        loginViewPanel1.setForeground(new java.awt.Color(51, 51, 55));
         jTabbedPane1.addTab("Login", loginViewPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
