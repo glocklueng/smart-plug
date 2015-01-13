@@ -7,7 +7,9 @@
 
 
 #include <avr/io.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Keypad.h"
 #include "uart.h"
 #include "lcd.h"
@@ -40,14 +42,15 @@ char* showBalanceCommand="31";
 char* showPricesCommand="41";
 char* pricesSentOkCommand="42";
 char* card;
-double pricePerHourDivider=1000000;
+double pricePerHourDivider=6000000;
 unsigned long energy=0;
 char* location = "Copenhagen";
-char* priceDay;
-char* priceNight;
+float priceOverall;
+
 char bufferDay[32];
 char bufferNight[32];
-
+float priceNight;
+float priceDay=10.0;
 
 enum state
 {
@@ -168,15 +171,25 @@ void enterPin()
 				//Usart_sendString(bufferPin);
 			}
 			else
-			if (key=='C' & pinIndex!=0)
-			{	pinIndex=pinIndex-1;
-				GoTo(pinIndex,0);
-				LCDPutString(" ");
-				count--;
-				GoTo(pinIndex,0);
-				//Usart_sendString(" Pin:");
-				//Usart_sendString(bufferPin);
+			{	
+				if (key=='C' & pinIndex!=0)
+				{	
+					pinIndex=pinIndex-1;
+					GoTo(pinIndex,0);
+					LCDPutString(" ");
+					count--;
+					GoTo(pinIndex,0);
+					//Usart_sendString(" Pin:");
+					//Usart_sendString(bufferPin);
+				}
+			if (key=='F')
+			{
+				state=idleState;
+				initFlags();
 			}
+			}
+			
+			
 		}
 	}
 	if (count<4)
@@ -204,7 +217,7 @@ void enterPin()
 		_delay_ms(5000);
 		
 		int count;
-		
+		int count1=0;
 		int count2=0;
 		int found=0;
 		char ch;
@@ -213,13 +226,13 @@ void enterPin()
 			if (found==0){
 				if (ch!='-')
 				{
-					bufferDay[count2]=ch;
-					count2++;
+					bufferDay[count1]=ch;
+					count1++;
 				}
 				else
-				{   bufferDay[count2]='\0';
+				{   bufferDay[count1]='\0';
 					found=1;
-					count2=0;
+					
 				}
 			}
 			else
@@ -228,14 +241,25 @@ void enterPin()
 				count2++;
 			}
 		}
-		bufferNight[count2+1]='\0';
+		bufferNight[count2]='\0';
+		
 		lcdClear();
 		free(buffer);
-		sprintf(buffer,"%s", bufferDay);
+		sprintf(bufferDay,"%s", bufferDay);
+		//LCDPutString(bufferDay);
+		
+		sprintf(bufferNight,"%s", bufferNight);
+		//LCDPutString(bufferNight);
+		
+		priceDay=atof(bufferDay);
+		priceNight=atof(bufferNight);
+		dtostrf(priceDay,10,10,buffer);
+		//ultoa(priceDay,buffer, 10);
+		//snprintf(buffer, 8,"%.3f \r\n", (float) priceDay);
+		//sprintf(buffer, "%f", (float)priceDay);
 		LCDPutString(buffer);
 		GoTo(0,1);
-		sprintf(buffer,"%s", bufferNight);
-		LCDPutString(buffer);
+		
 		_delay_ms(5000);
 	}
 	else
@@ -279,8 +303,26 @@ void showMenu()
 void showPrices()
 {	if (showPricesFlag)
 	{	lcdClear();
-		LCDPutString("Show prices menu");
+		dtostrf(priceDay,5,3,bufferDay);
+		dtostrf(priceNight,5,4,buffer);
+		lcdClear();
+		GoTo(0,0);
+		LCDPutString("Price day: ");
+		LCDPutString(bufferDay);
+		LCDPutString("Price night: ");
+		LCDPutString(bufferNight);
 		showPricesFlag=0;
+	}
+	
+	keyFound=0;
+	if (scanKeyPad()==1)
+	{
+		
+		if (key=='F')
+		{
+			state=showMenuState;
+			initFlags();
+		}
 	}
 }
 
@@ -317,20 +359,22 @@ void charging()
 			
 		//unsigned long totalEnergy=1000.0;
 		calculateEnergy();
+	    priceOverall= energy * priceDay/pricePerHourDivider;
 		void *buffer =createBuffer(16);  //create buffer
-		if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
-			
-			GoTo(6,1);
+		//if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
+			dtostrf(priceOverall,5,4,buffer);
+			GoTo(3,1);
 			LCDPutString("      ");
 			_delay_ms(10);
-			GoTo(6,1);
+			GoTo(3,1);
 			LCDPutString(buffer);
+			LCDPutString("kr.");
 			//putString(longBuffer);
 			_delay_ms(10);
 			free(buffer);      //free buffer
-		}
-		else
-		LCDPutString("not converted correct");
+		//}
+		//else
+		//LCDPutString("not converted correct");
 		}
 	
 	
@@ -425,6 +469,14 @@ int main(void)
 					//Usart_sendString("After sending  ");
 					
 					sprintf(buffer, "%02i%02i%02i%04s%16s%4s%1s%01s%03i%2s",12,34,11,"0022","868b5310e1000000","0123","9","9",123,"\r\n");
+					Usart_sendString(buffer);
+					
+				    double d= 55.55;
+					dtostrf(d,10,5,buffer);
+					//snprintf(buffer, 8,"%.3f \r\n", (float) d );
+					lcdClear();
+					GoTo(0,0);
+					LCDPutString(buffer);
 					Usart_sendString(buffer);
 					
 				
