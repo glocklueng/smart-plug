@@ -98,7 +98,7 @@ public class Controller {
             String adminOrUser = null;
 
             try {
-                username = loginViewPanel.getUsername().toUpperCase();
+                username = loginViewPanel.getUsername();
                 password = loginViewPanel.getPassword().toUpperCase();
 
                 CustomerDao customerDao = new CustomerDao();
@@ -107,9 +107,9 @@ public class Controller {
                 if (realPassword.equals(password)) {
                     ArrayList<Customer> customers = customerDao.findCustomers("", username, "");
                     for (Customer c : customers) {
-                        adminOrUser = c.getEmail().toUpperCase();
+                        adminOrUser = c.getEmail();
                     }
-                    if (adminOrUser.equals("ADMIN")) {
+                    if (adminOrUser.equals("Admin")) {
                         mainInterface.setContentPane(adminViewPanel);
                     } else {
                         mainInterface.setContentPane(userViewPanel);
