@@ -63,6 +63,8 @@ public class UserViewPanel extends javax.swing.JPanel {
         buttonLogUserOff = new javax.swing.JButton();
         buttonInsertMoney = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 51, 51));
+
         buttonUserAccount.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonUserAccount.setText("Edit account");
         buttonUserAccount.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

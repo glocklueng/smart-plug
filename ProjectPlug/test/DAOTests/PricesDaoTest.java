@@ -4,18 +4,16 @@ package DAOTests;
 
 import DAO.PricesDao;
 import Model.Prices;
+import java.util.ArrayList;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
 /**
  *
- * @author Dan
+ * @author Nicklas
  */
 public class PricesDaoTest {
     PricesDao pricesDao;
@@ -23,59 +21,58 @@ public class PricesDaoTest {
     Prices pricesToBeFound;
     Prices pricesToBeDeleted;
     Prices pricesToBeUpdated;
- public PricesDaoTest() {
-        
+    
+ public PricesDaoTest() {  
     }
     
     @Before
     public void setUp() {
        pricesDao = new PricesDao();
-       pricesToBeAdded = new Prices ("Brøndby", 3.5, 6.9);
-       pricesToBeFound = new Prices ("FCK", 3.0, 6.5);
-       pricesToBeDeleted = new Prices ("Pakistan", 3.5, 999.9);
-       pricesToBeUpdated = new Prices ("Heaven", 3.5, 999.9);
+       pricesToBeAdded = new Prices ("Copenhagen", 3.5, 6.9);
+       pricesToBeFound = new Prices ("Ballerup", 3.0, 6.5);
+       pricesToBeDeleted = new Prices ("Rødovre", 3.5, 999.9);
+       pricesToBeUpdated = new Prices ("Taastrup", 3.5, 999.9);
     }
     
     @After
     public void tearDown() {
        pricesDao.deletePrices(pricesToBeAdded.getLocation());
        pricesDao.deletePrices(pricesToBeFound.getLocation());
-       pricesDao.deletePrices(pricesToBeUpdated.getLocation()); //delete after use
+       pricesDao.deletePrices(pricesToBeUpdated.getLocation());
     }
 
-    /**
-     * Test of get Customer by id method, of class CsustomerDao.
-     */
     @Test
-    public void test1addPrices(){
+    public void testAddPrices(){
         int value = pricesDao.addPrices(pricesToBeAdded);
-        assertEquals(1,value);
+        
+        assertEquals(1, value);
     }
    
     
     @Test
-    public void test2findPrices()
-    {
+    public void testFindPrices() {
         pricesDao.addPrices(pricesToBeFound);
-        Prices priceFound = pricesDao.findPrices(pricesToBeFound.getLocation());
-        assertEquals(pricesToBeFound.getLocation(), priceFound.getLocation());
+        
+        ArrayList<Prices> priceFound = pricesDao.findPrices(pricesToBeFound.getLocation());
+        assertEquals(pricesToBeFound.getLocation(), priceFound.get(0).getLocation());
     }
   
     @Test 
-    public void test3deletePrices()
-    {  
+    public void testDeletePrices() {  
         pricesDao.addPrices(pricesToBeDeleted);
+        
         int value = pricesDao.deletePrices(pricesToBeDeleted.getLocation());
         assertEquals(1,value);
     }
-     @Test 
-    public void test4updatePrices()
-    {   
+    
+    @Test 
+    public void testUpdatePrices() {   
         pricesDao.addPrices(pricesToBeUpdated);
-        Prices updatePrice= new Prices(pricesToBeUpdated.getLocation(), 150,250);
-        int value = pricesDao.updatePrices(updatePrice);
-        assertEquals(1,value);
-        Prices afterUpdate= pricesDao.findPrices(updatePrice.getLocation());
-        assertEquals(updatePrice.getPrice_day(), afterUpdate.getPrice_day(),0.0);
+        
+        Prices updatePrice= new Prices(pricesToBeUpdated.getLocation(), 150, 250);
+        pricesDao.updatePricesDay(updatePrice.getPrice_day(), updatePrice.getLocation());
+        pricesDao.updatePricesNight(updatePrice.getPrice_night(), updatePrice.getLocation());
+        assertEquals(updatePrice.getPrice_day(), pricesDao.findPrices(updatePrice.getLocation()).get(0).getPrice_day(), 0.0);
+        assertEquals(updatePrice.getPrice_night(), pricesDao.findPrices(updatePrice.getLocation()).get(0).getPrice_night(), 0.0);
     }
 }

@@ -62,6 +62,8 @@ public class AdminViewPanel extends javax.swing.JPanel {
         buttonEditPrices = new javax.swing.JButton();
         buttonSeeTransactions = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 51, 51));
+
         buttonLogOff.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         buttonLogOff.setText("Log off");
         buttonLogOff.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
