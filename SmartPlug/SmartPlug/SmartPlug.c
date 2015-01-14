@@ -381,6 +381,7 @@ void charging()
 			
 			timer1Init();
 			startTimer();
+			sendData("99","insideCharging",bufferPin,20);
 		}
 		
 		if (ms>2000)
@@ -452,25 +453,41 @@ void stopCharging()
 {	if (stopChargingFlag==1)
 	{
 		lcdClear();
-		
+		LCDPutString("	Wish you");
+		GoTo(0,1);
+		LCDPutString("A Nice day");
 		stopChargingFlag=0;
 		stopCharge();
+		_delay_ms(5000);
+		
+		
+	}
+	
+	state=showInfoState;
+	
+	
+}
+
+void showInfo()
+{   if(showInfoFlag){
+		showInfoFlag=0;
 		void *buffer =createBuffer(16);
+		lcdClear();
 		LCDPutString("Paid:");  //create buffer
 		//if (buffer==ultoa(energy, buffer, 10)) {  //last number is the radix
-		dtostrf(priceOverall,5,4,buffer);
+		dtostrf(priceOverall,7,2,buffer);
 		LCDPutString(buffer);
 		LCDPutString("kr.");
 		sendData(transactionCommand,buffer,bufferPin,20);
 		SerialGetString(inbuffer, sizeof(inbuffer));
-		
-		
-		
+	
+	
+	
 		if (inbuffer[4]==transactionOkCommand[0])
 		{
-			
+		
 			if (inbuffer[5] == transactionOkCommand[1])
-			{	
+			{
 				GoTo(0,1);
 				LCDPutString("Transaction ok");
 			}
@@ -480,17 +497,10 @@ void stopCharging()
 				LCDPutString("error");
 			}
 		}
-		
-	}
-	_delay_ms(10000);
-	state=idleState;
-	initFlags();
-	
-}
-
-void showInfo()
-{
-	
+		}
+		_delay_ms(10000);
+		state=idleState;
+		initFlags();
 }
 
 void doStates(){

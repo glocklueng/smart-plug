@@ -6,7 +6,7 @@
  */ 
 #include <avr/io.h>
 #include "Keypad.h"
-#include "uart.h"
+
 #include <util/delay.h>
 
 char key_table[4][4]= {{'F','E','D','C'},
