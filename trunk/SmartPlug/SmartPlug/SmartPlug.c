@@ -50,13 +50,13 @@ unsigned long energy=0;
 char* location = "Copenhagen";
 float priceOverall=0.01;
 float balance=2;
-
+float balanceLeft=2;
 char bufferDay[32];
 char bufferBalance[32];
 char bufferNight[32];
 float priceNight;
 float priceDay=10.0;
-float balanceLeft=2;
+
 
 enum state
 {
@@ -115,11 +115,15 @@ void idle()
 		GoTo(0,1);
 		LCDPutString("to charge");
 	idleFlag=0;
+	
 	}
 	if (cardPresent==1 & ignoreFirstRead>0) 
 	{
 		state=scanCardState;
 	}
+	priceOverall=0.01;
+	balance=2;
+	balanceLeft=2;
 }
 
 void scanCard()
@@ -513,6 +517,7 @@ void showInfo()
 			initFlags();
 			state=stopChargingState;
 		}
+		
 		state=idleState;
 		initFlags();
 }
