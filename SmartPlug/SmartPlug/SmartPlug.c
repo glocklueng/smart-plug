@@ -502,7 +502,17 @@ void showInfo()
 			}
 		}
 		}
-		_delay_ms(10000);
+		_delay_ms(5000);
+		if (balanceLeft<1.00)
+		{
+			lcdClear();
+			LCDPutString("No more funds");
+			GoTo(0,1);
+			LCDPutString("Charge account");
+			_delay_ms(5000);
+			initFlags();
+			state=stopChargingState;
+		}
 		state=idleState;
 		initFlags();
 }
@@ -557,29 +567,7 @@ int main(void)
 					
 				}
 			}
-			if (key=='B')
-			{
-				   //Usart_sendString("In while loop    ");
-					//SerialGetString(inbuffer, sizeof(inbuffer));
-					//char c= USART_Receive();
-					//Usart_sendString("After receiving  ");
-					//Usart_sendString("hello21312412312312\0");
-					//USART_Transmit(c)
-					//Usart_sendString("After sending  ");
-					
-					sprintf(buffer, "%02i%02i%02i%04s%16s%4s%1s%01s%03i%2s",12,34,11,"0022","868b5310e1000000","0123","9","9",123,"\r\n");
-					Usart_sendString(buffer);
-					
-				    double d= 55.55;
-					dtostrf(d,10,5,buffer);
-					//snprintf(buffer, 8,"%.3f \r\n", (float) d );
-					lcdClear();
-					GoTo(0,0);
-					LCDPutString(buffer);
-					Usart_sendString(buffer);
-					
-				
-			}
+			
 			
 			if(key=='C')
 			{
