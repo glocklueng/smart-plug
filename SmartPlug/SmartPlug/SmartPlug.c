@@ -49,14 +49,14 @@ double pricePerHourDivider=6000000;
 unsigned long energy=0;
 char* location = "Copenhagen";
 float priceOverall=0.01;
-float balance=0.01;
+float balance=2;
 
 char bufferDay[32];
 char bufferBalance[32];
 char bufferNight[32];
 float priceNight;
 float priceDay=10.0;
-float balanceLeft=0.01;
+float balanceLeft=2;
 
 enum state
 {
@@ -431,7 +431,11 @@ void charging()
 		}
 	
 	
-	
+	if (balanceLeft<1.00)
+	{
+		initFlags();
+		state=stopChargingState;
+	}
 	keyFound=0;
 	if (scanKeyPad()==1)
 	{
@@ -480,7 +484,7 @@ void showInfo()
 		LCDPutString("kr.");
 		sendData(transactionCommand,buffer,bufferPin,20);
 		SerialGetString(inbuffer, sizeof(inbuffer));
-	
+		
 	
 	
 		if (inbuffer[4]==transactionOkCommand[0])
