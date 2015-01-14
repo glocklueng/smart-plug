@@ -16,7 +16,7 @@ public class TransactionDao {
 
     //Finds all transactions made.
     public ArrayList<Transaction> findTransactions() {
-        String insertQuery = "select * from TRANSACTIONS";
+        String insertQuery = "select * from TRANSACTIONS ORDER BY transaction_id ASC ";
         Connection con = null;
         ArrayList transactions = new ArrayList<Transaction>();
         int rowCount = -1;

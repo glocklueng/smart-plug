@@ -9,12 +9,15 @@ import DAO.CustomerDao;
 import DAO.PricesDao;
 import DAO.TransactionDao;
 import Model.Customer;
+import Model.Transaction;
 import SerialCommunication.FrameEvent;
 import SerialCommunication.FrameEventListener;
 import SerialCommunication.Packet;
 import SerialCommunication.SerialTransceiver;
 import SerialCommunication.SmartPlugPacket;
 import java.util.TooManyListenersException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * The
@@ -38,6 +41,7 @@ public class RFIDEventManagerSimple implements FrameEventListener {
     private String PINff;
     private String bikeRackIDff;
     private String BikeBrokenff;
+    String location;
     String checkIdCommand = "11";
     String idOkCommand="12";
     String idNotOkCommand="13";
@@ -48,8 +52,11 @@ public class RFIDEventManagerSimple implements FrameEventListener {
     String showBalanceCommand="31";
     String showPricesCommand="41";
     String pricesSentOkCommand="42";
-    
-
+    String transactionCommand="51";
+    String transactionOkCommand="52";
+    String transactionNotOkCommand="53";
+    String getBalanceCommand="61";
+Customer customer= null;
     public RFIDEventManagerSimple() {
     }
 
@@ -178,31 +185,26 @@ public class RFIDEventManagerSimple implements FrameEventListener {
         CustomerDao customerDao= new CustomerDao();
         TransactionDao transactionDao =new TransactionDao();
         PricesDao pricesDao= new PricesDao();
-        Customer customer= null;
-        try {
-            
-                customer= customerDao.findCustomerById(cardIDff);
-       }
-        catch (Error e)
-        {
-           e.printStackTrace();
-        }
+        
         System.out.println();
         String command = packet.getCommandStatus();
         System.out.println("Command: " + command);
         if (command.equals(checkIdCommand))
-        {   
-            System.out.println();
-
-            String cardID = packet.getData();
+        {    String cardID = packet.getData();
             String cardid = cardID.substring(0, 15);
             System.out.println("Card ID from terminal: " + cardid);
-
-            String PIN = packet.getData();
-            String pin = PIN.substring(16, 20);
-            System.out.println("PIN from terminal: " + pin);
+            System.out.println();
             this.cardIDff = cardid;
-            this.PINff = pin;
+            
+                try {
+                if (customerDao.findCustomerById(cardIDff)!=null);
+                customer= customerDao.findCustomerById(cardIDff);
+                }
+                 catch (Error e)
+                {
+                    e.printStackTrace();
+                }
+            
             if (customer==null){
                 sendRFIDResponse(idNotOkCommand, "notOk" );
                 System.out.println("Id not ok");
@@ -213,18 +215,13 @@ public class RFIDEventManagerSimple implements FrameEventListener {
                 System.out.println("Id ok");
             }
         }
+        
         if (command.equals(checkPasswordCommand))
         {   
             System.out.println();
-
-            String cardID = packet.getData();
-            String cardid = cardID.substring(0, 15);
-            System.out.println("Card ID from terminal: " + cardid);
-
             String PIN = packet.getData();
             String pin = PIN.substring(16, 20);
             System.out.println("PIN from terminal: " + pin);
-            this.cardIDff = cardid;
             this.PINff = pin;
             if (PINff.equals(customer.getPassword()))
             {
@@ -242,7 +239,7 @@ public class RFIDEventManagerSimple implements FrameEventListener {
         {
             System.out.println("Show prices command");
             String data = packet.getData(); 
-            String location= data.substring(0,16);
+             location= data.substring(0,16);
             location=location.replaceAll("\\s","");
             System.out.println(location);
             System.out.println(pricesDao.findPrices(location).get(0).getPrice_day());
@@ -253,6 +250,33 @@ public class RFIDEventManagerSimple implements FrameEventListener {
             
         }
         
+        if (command.equals(transactionCommand))
+        {   String data = packet.getData().substring(0,16); 
+            double value = Double.parseDouble(data);
+            System.out.println(value+"price");
+            
+            int idMax= transactionDao.findTransactions().get(transactionDao.findTransactions().size()-1).getTransactionID();
+            System.out.println(idMax);
+            Calendar cal = Calendar.getInstance();
+            cal.getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+            System.out.println( sdf.format(cal.getTime()) );
+            String locationS= pricesDao.findPrices(location).get(0).getLocation();
+            customer.setBalance(customer.getBalance()-value);
+            customerDao.updateCustomerBalance(customer.getBalance(), customer.getId());
+            
+            if(transactionDao.addTransaction(new Transaction(idMax+1,customer.getId(),value,sdf.format(cal.getTime()),locationS,"Samsung",120))>0)
+            sendRFIDResponse(transactionOkCommand,"transactionOk");
+            else
+                sendRFIDResponse(transactionNotOkCommand,"transactionNotOk");
+        }
+        
+        if (command.equals(getBalanceCommand))
+        {   
+            String balance= customer.getBalance()+"";
+            System.out.println("Get Balance" + balance);
+            sendRFIDResponse(getBalanceCommand,balance);
+        }
         
        
                
