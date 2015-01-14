@@ -381,7 +381,7 @@ public class Controller {
         public void actionPerformed(ActionEvent arg0) {
             String customerID = null;
 
-            String col[] = {"Transaction ID", "Amount", "Timedate", "Location", "Device", "Time Spent"};
+            String col[] = {"Transaction ID", "Amount", "Timedate", "Location", "Device"};
             tableModel = new DefaultTableModel(col, 0);
             userTransactionsViewPanel.addTableModel(tableModel);
             try {
@@ -393,7 +393,7 @@ public class Controller {
                 TransactionDao transactionDao = new TransactionDao();
                 ArrayList<Transaction> transactions = transactionDao.findTransactionsByCustomerID(customerID);
                 for (Transaction t : transactions) {
-                    Object[] objs = {t.getTransactionID(), t.getAmount(), t.getTimeDate(), t.getLocation(), t.getDevice(), t.getTimeSpent()};
+                    Object[] objs = {t.getTransactionID(), t.getAmount(), t.getTimeDate(), t.getLocation(), t.getDevice()};
                     tableModel.addRow(objs);
                 }
             } catch (Exception e) {
@@ -527,14 +527,14 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            String col[] = {"Transaction id", "Customer id", "Amount", "Timedate", "Location", "Device", "Time spent"};
+            String col[] = {"Transaction id", "Customer id", "Amount", "Timedate", "Location", "Device"};
             tableModel = new DefaultTableModel(col, 0);
             adminTransactionsViewPanel.addTableModel(tableModel);
             try {
                 TransactionDao transactionDao = new TransactionDao();
                 ArrayList<Transaction> transactions = transactionDao.findTransactions();
                 for (Transaction c : transactions) {
-                    Object[] objs = {c.getTransactionID(), c.getCustomerID(), c.getAmount(), c.getTimeDate(), c.getLocation(), c.getDevice(), c.getTimeSpent()};
+                    Object[] objs = {c.getTransactionID(), c.getCustomerID(), c.getAmount(), c.getTimeDate(), c.getLocation(), c.getDevice()};
                     tableModel.addRow(objs);
                 }
             } catch (Exception e) {
