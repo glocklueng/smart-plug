@@ -61,7 +61,10 @@ public class InsertMoneyViewPanel extends javax.swing.JPanel {
         buttonInsertMoney = new javax.swing.JButton();
         buttonBack = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 51, 51));
+
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Money to insert:");
 
         textFieldInsertMoney.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

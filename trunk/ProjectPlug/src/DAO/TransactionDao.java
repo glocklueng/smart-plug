@@ -137,12 +137,12 @@ public class TransactionDao {
             con = DerbyDAOFactory.createConnection();
             PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
             preparedStatement.setInt(1, transaction.getTransactionID());
-            preparedStatement.setString(2, transaction.getCustomerID());
-            preparedStatement.setDouble(3, transaction.getAmount());
-            preparedStatement.setString(4, transaction.getTimeDate());
-            preparedStatement.setString(5, transaction.getLocation());
-            preparedStatement.setString(6, transaction.getDevice());
-            preparedStatement.setDouble(7, transaction.getTimeSpent());
+            preparedStatement.setDouble(2, transaction.getAmount());
+            preparedStatement.setString(3, transaction.getTimeDate());
+            preparedStatement.setString(4, transaction.getLocation());
+            preparedStatement.setString(5, transaction.getDevice());
+            preparedStatement.setDouble(6, transaction.getTimeSpent());
+            preparedStatement.setString(7, transaction.getCustomerID());
 
             rowCount = preparedStatement.executeUpdate();
 

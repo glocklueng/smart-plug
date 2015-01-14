@@ -30,6 +30,8 @@ public class AdminTransactionsViewPanel extends javax.swing.JPanel {
         tableTransactions = new javax.swing.JTable();
         buttonBack = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 51, 51));
+
         tableTransactions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -41,6 +43,7 @@ public class AdminTransactionsViewPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableTransactions.setPreferredSize(null);
         jScrollPane1.setViewportView(tableTransactions);
 
         buttonBack.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N

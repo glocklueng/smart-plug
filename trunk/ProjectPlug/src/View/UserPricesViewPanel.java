@@ -39,9 +39,12 @@ public class UserPricesViewPanel extends javax.swing.JPanel {
         tablePrices = new javax.swing.JTable();
         buttonBack = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 51, 51));
+
         textFieldLocation.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         Location.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        Location.setForeground(new java.awt.Color(255, 255, 255));
         Location.setText("Location");
 
         buttonSearch.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
