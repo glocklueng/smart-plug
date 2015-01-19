@@ -112,6 +112,20 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    @Override
+    public boolean equals(Object anObject){
+        if (anObject instanceof Customer)
+        {
+            Customer theCustomer = (Customer)anObject;
+            return theCustomer.getName().equals(name) && theCustomer.getBalance()==(balance) &&
+                    theCustomer.getEmail().equals(email) && theCustomer.getPassword().equals(password) && 
+                    theCustomer.getId().equals(id) && theCustomer.getPhone().equals(phone);
+                    
+        }
+        return false;
+        
+    }
   
     
 }
