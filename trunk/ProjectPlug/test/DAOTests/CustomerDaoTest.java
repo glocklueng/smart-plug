@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -33,7 +34,7 @@ public class CustomerDaoTest {
         customerToBeFound = new Customer("2", "Found", "Found", 100, "12345678", "Found@found.com");
         customerToBeDeleted = new Customer("3", "Deleted", "Deleted", 100, "12345678", "Deleted@deleted.com");
         customerToBeUpdated = new Customer("4", "Updated", "Update", 100, "12345678", "Updated@updated.com");
-
+        customerDao.deleteCustomer(customerToBeDeleted.getId());
     }
 
     @After // it's called after the tests ends.
@@ -42,7 +43,7 @@ public class CustomerDaoTest {
         customerDao.deleteCustomer(customerToBeFound.getId());
         customerDao.deleteCustomer(customerToBeUpdated.getId());
     }
-
+    @Ignore
     @Test //Testing if the customer is added to the database.
     public void testAddCustomer() throws SQLException {
         int value = customerDao.addCustomer(customerToBeAdded);
@@ -60,10 +61,12 @@ public class CustomerDaoTest {
         assertEquals(customerToBeFound.getEmail(), customerFound.getEmail());
         assertEquals(customerToBeFound.getPassword(), customerFound.getPassword());
         assertEquals(customerToBeFound.getBalance(), customerFound.getBalance(), 0.0);
+        assertEquals(true,customerToBeFound.equals(customerFound));
     }
 
     @Test
     public void testDeleteCustomer() throws SQLException {
+        
         customerDao.addCustomer(customerToBeDeleted);
         
         int value = customerDao.deleteCustomer(customerToBeDeleted.getId());
@@ -79,5 +82,13 @@ public class CustomerDaoTest {
         
         Customer afterUpdate = customerDao.findCustomerById(customerToBeUpdated.getId());
         assertEquals(customerToBeUpdated.getBalance(), afterUpdate.getBalance(), 0.0);
+    }
+    
+    @Test
+    public void testFindCustomerWithEqualsMethod() throws SQLException
+    {
+        customerDao.addCustomer(customerToBeAdded);
+        Customer foundCustomer= customerDao.findCustomerById(customerToBeAdded.getId());
+        assertEquals(true,customerToBeAdded.equals(foundCustomer));
     }
 }
